@@ -24,6 +24,7 @@ async function createPosts() {
       data: {
         id: postData.id,
         authorId: postData.authorId,
+        category: postData.category,
         title: postData.title,
         firstWords: postData.firstWords,
         content: postData.content,
