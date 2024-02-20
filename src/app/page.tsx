@@ -1,12 +1,25 @@
 import type { Metadata } from "next/types";
-import CardsList from "./_components/CardsList";
 import "@/app/homePage.css";
+import type { filteringOptions, postCategories } from "./constants/posts";
+import SearchingForm from "./_components/SearchingForm";
+import CardsGrid from "./_components/CardsGrid";
+import { fetchPostsBySearchParams } from "@/db/posts";
 
 export const metadata: Metadata = {
   title: "Blog Posts",
 };
 
-export default function HomePage() {
+export type SearchProps = {
+  searchParams: {
+    query: string;
+    filterBy: (typeof filteringOptions)[number];
+    category: (typeof postCategories)[number] | "";
+  };
+};
+
+export default async function HomePage({ searchParams }: SearchProps) {
+  const posts = await fetchPostsBySearchParams({ searchParams });
+
   return (
     <>
       <header className="home-page-header">
@@ -19,7 +32,9 @@ export default function HomePage() {
       </header>
 
       <main className="home-page-main">
-        <CardsList />
+        <SearchingForm searchParams={searchParams} />
+
+        <CardsGrid posts={posts} />
       </main>
     </>
   );
