@@ -1,0 +1,30 @@
+.navbar {
+  --gap: 1em;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1em;
+
+  & ul {
+    display: flex;
+    gap: var(--gap);
+    font-size: 1.6em;
+
+    & a {
+      transition: 300ms ease-in-out;
+    }
+
+    & a:hover,
+    & a.active {
+      text-decoration: underline;
+      color: rgb(38, 38, 149);
+    }
+  }
+
+  .auth-container {
+    display: flex;
+    gap: var(--gap);
+    font-size: 1.2em;
+  }
+}

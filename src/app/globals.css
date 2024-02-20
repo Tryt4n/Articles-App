@@ -19,7 +19,8 @@
 }
 
 body,
-p {
+p,
+ul {
   margin: 0;
 }
 
@@ -69,6 +70,29 @@ p {
   text-wrap: pretty;
 }
 
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+legend {
+  padding: 0;
+}
+
+input,
+select {
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  border-width: 1px;
+}
+
+label,
+select {
+  cursor: pointer;
+}
+
 .visually-hidden {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px);
@@ -77,4 +101,28 @@ p {
   height: 1px !important;
   width: 1px !important;
   overflow: hidden;
+}
+
+.btn {
+  display: grid;
+  place-content: center;
+  padding: 0.5em 1.5em;
+  background-color: transparent;
+  border: 1px solid rgba(54, 54, 54, 0.6);
+  border-radius: 50vw;
+  color: var(--tx-black);
+  font-weight: bold;
+  &:hover,
+  &:focus-visible {
+    background-color: var(--tx-black);
+    color: white;
+  }
+}
+
+.btn--accent {
+  background-color: var(--tx-black);
+  color: white;
+  &:hover {
+    opacity: 0.8;
+  }
 }
