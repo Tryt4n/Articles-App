@@ -3,10 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { fetchUser } from "@/db/users";
 import { format } from "date-fns/format";
-import type { Post } from "@/types/posts";
+import type { Post } from "@prisma/client";
 
-export default async function Card({ post }: { post: Post }) {
+export default async function Card({ post, priority }: { post: Post; priority: boolean }) {
   const author = await fetchUser({ id: post.authorId });
+
+  const postPublishedDate = new Date(post.publishedAt!);
 
   return (
     <li className="card-container">
@@ -19,6 +21,7 @@ export default async function Card({ post }: { post: Post }) {
               height={200}
               alt={`${post.title} image`}
               className="card-image"
+              priority={priority}
             />
           </div>
 
@@ -43,10 +46,10 @@ export default async function Card({ post }: { post: Post }) {
                     {author?.name}
                   </span>
                   <time
-                    dateTime={post.publishedAt!.toLocaleDateString()}
+                    dateTime={postPublishedDate.toLocaleDateString()}
                     className="card-details-time"
                   >
-                    {format(post.publishedAt!, "d MMM yyyy")}
+                    {format(postPublishedDate, "d MMM yyyy")}
                   </time>
                 </div>
               </div>
