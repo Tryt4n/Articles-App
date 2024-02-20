@@ -1,0 +1,25 @@
+export const postCategories = [
+  "general",
+  "technology",
+  "lifestyle",
+  "life",
+  "work",
+  "hobbies",
+  "gadgets",
+  "art",
+  "music",
+  "movies",
+  "books",
+  "food",
+  "travel",
+  "fitness",
+  "sports",
+  "games",
+  "education",
+  "science",
+  "politics",
+  "news",
+  "others",
+] as const;
+
+export const filteringOptions = ["title", "author"] as const;
