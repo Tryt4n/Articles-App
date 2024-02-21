@@ -2,8 +2,15 @@ import React, { Suspense } from "react";
 import Card from "./Card";
 import CardSkeleton from "./CardSkeleton";
 import type { Post } from "@prisma/client";
+import type { SearchProps } from "../page";
 
-export default async function CardsGrid({ posts }: { posts: Post[] }) {
+export default async function CardsGrid({
+  posts,
+  searchParams,
+}: {
+  posts: Post[];
+  searchParams: SearchProps["searchParams"];
+}) {
   return (
     <>
       {posts && posts.length === 0 ? (
@@ -18,6 +25,7 @@ export default async function CardsGrid({ posts }: { posts: Post[] }) {
                 key={post.id}
                 post={post}
                 priority={index <= 4 ? true : false}
+                searchParams={searchParams}
               />
             ))}
           </Suspense>
