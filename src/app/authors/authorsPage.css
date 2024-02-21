@@ -1,0 +1,59 @@
+.authors-page {
+  margin-top: 2em;
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+
+  & h2 {
+    font-size: var(--fs-header);
+    text-wrap: balance;
+  }
+}
+
+.author-container {
+  margin-block: 3em;
+  padding: 1em;
+  border-radius: 2em;
+  gap: 1em;
+  background-color: hsla(0, 0%, 50%, 0.15);
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    display: flex;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 1em;
+
+    &:hover {
+      background-color: hsla(0, 0%, 50%, 0.25);
+    }
+  }
+
+  h3 {
+    margin: 0;
+  }
+
+  address {
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+
+    span {
+      font-style: normal;
+    }
+  }
+
+  .author-img-wrapper {
+    border-radius: 50vw;
+    width: 60px;
+    aspect-ratio: 1;
+    overflow: hidden;
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
