@@ -13,6 +13,7 @@ async function createUsers() {
           email: user.email,
           password: user.password,
           avatar: user.avatar,
+          role: user.role,
         },
       });
     })
@@ -54,6 +55,10 @@ async function createPosts() {
 }
 
 async function main() {
+  await prisma.comment.deleteMany();
+  await prisma.post.deleteMany();
+  await prisma.user.deleteMany();
+
   await createUsers();
   await createPosts();
 }
