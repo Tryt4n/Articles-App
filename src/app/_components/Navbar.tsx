@@ -17,11 +17,13 @@ export default async function Navbar() {
         <li>
           <NavLink href="/authors">Authors</NavLink>
         </li>
+        {/*// TODO: add roles to users auth and display it only for admin and moderator */}
         {session && (
           <li>
             <NavLink href="/drafts">Drafts</NavLink>
           </li>
         )}
+        {/*// TODO: add roles to users auth and display dashboard if user is admin */}
       </ul>
 
       <div className="auth-container">
@@ -39,12 +41,18 @@ export default async function Navbar() {
             Signup
           </Link>
         ) : (
-          <Image
-            src={session.user?.image || ""}
-            alt="user image"
-            width={50}
-            height={50}
-          />
+          <Link
+            href={"/profile"}
+            className="profile-icon-link card-image-placeholder"
+          >
+            <span className="visually-hidden">Profile</span>
+            <Image
+              src={session.user?.image || ""}
+              alt="user image"
+              width={50}
+              height={50}
+            />
+          </Link>
         )}
       </div>
     </nav>
