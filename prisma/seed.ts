@@ -11,6 +11,7 @@ async function createUsers() {
           id: user.id,
           name: user.name,
           email: user.email,
+          password: user.password,
           avatar: user.avatar,
         },
       });
