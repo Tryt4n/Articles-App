@@ -71,8 +71,7 @@ export default async function Card({
                         itemProp="author"
                       >
                         {searchParams.filterBy === "author" && searchParams.query !== ""
-                          ? //TODO Change delete `as` casting after reloading database
-                            markSearchedPhrase(author.name as string)
+                          ? markSearchedPhrase(author.name)
                           : author!.name}
                       </span>
                       <time
