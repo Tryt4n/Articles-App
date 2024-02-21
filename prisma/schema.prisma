@@ -11,38 +11,99 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  name     String    @unique
-  avatar   String
-  email    String    @unique
-  password String
-  posts    Post[]
-  comments Comment[]
+  id            String      @id @default(uuid())
+  name          String      @unique
+  email         String      @unique
+  password      String
+  avatar        String
+  role          String      @default("user")
+  posts         Post[]
+  comments      Comment[]
+  receivedLikes Like[]
+  followers     Follow[]    @relation("Follower")
+  followings    Follow[]    @relation("Following")
+  savedPosts    SavedPost[]
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  author      User      @relation(fields: [authorId], references: [id])
+  id          String      @id @default(uuid())
   authorId    String
-  category    String    @default("general")
+  author      User        @relation(fields: [authorId], references: [id])
+  category    String      @default("general")
   title       String
   firstWords  String
   content     String
   image       String
-  published   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
+  published   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
   publishedAt DateTime?
-  updatedAt   DateTime? @updatedAt
+  updatedAt   DateTime?   @updatedAt
   comments    Comment[]
+  likes       Like[]
+  savedBy     SavedPost[]
+  tags        PostTag[]
 }
 
 model Comment {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User      @relation(fields: [authorId], references: [id])
   content   String
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post      @relation(fields: [postId], references: [id])
   postId    String
+  replyToId String?
+  replyTo   Comment?  @relation("Replies", fields: [replyToId], references: [id])
+  replies   Comment[] @relation("Replies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  like      Like[]
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id])
+  commentId String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+}
+
+model Follow {
+  id              String   @id @default(uuid())
+  followerId      String
+  follower        User     @relation("Follower", fields: [followerId], references: [id])
+  followingUserId String
+  followingUser   User     @relation("Following", fields: [followingUserId], references: [id])
+  createdAt       DateTime @default(now())
+
+  @@unique([followerId, followingUserId])
+}
+
+model SavedPost {
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  postId String
+  post   Post   @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
+}
+
+model Tag {
+  id    String    @id @default(uuid())
+  name  String    @unique
+  posts PostTag[]
+}
+
+model PostTag {
+  postId String
+  post   Post   @relation(fields: [postId], references: [id])
+  tagId  String
+  tag    Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId])
 }
