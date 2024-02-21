@@ -4,12 +4,14 @@
   --tx-gray: #696969;
   --tx-card: rgb(113, 107, 107);
   --card-border: rgb(233, 224, 224);
+  --bg-highlight: hsla(29, 100%, 60%, 0.9);
 
   /* Spacing */
   --card-spacing: 1.5em;
 
   /* Fonts */
   --fs-primary: clamp(0.9rem, 5vw, 1rem);
+  --fs-header: clamp(1.5rem, 5vw, 1.7rem);
 }
 
 *,
@@ -125,4 +127,11 @@ select {
   &:hover {
     opacity: 0.8;
   }
+}
+
+.card-image-placeholder {
+  background-image: url("/img-placeholder.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
