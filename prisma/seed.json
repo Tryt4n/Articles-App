@@ -1,57 +1,52 @@
 {
   "User": [
     {
+      "id": "a9a86469-5aac-43df-a4c5-3ac208185a3f",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "name": "Admin",
+      "role": "admin",
+      "avatar": "https://images.unsplash.com/photo-1705648326797-24cb0324a951?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwODUzNzk5Nw&ixlib=rb-4.0.3&q=80&w=100"
+    },
+    {
       "id": "237d1483-5694-47ec-8403-11874f1e6a52",
       "email": "john@example.com",
       "password": "password123",
       "name": "John Doe",
-      "avatar": "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ3OA&ixlib=rb-4.0.3&q=80&w=1080",
-      "drafts": [
-        {
-          "id": "edad1830-6e12-4aa8-b7c1-69a45dd4cfba",
-          "authorId": "237d1483-5694-47ec-8403-11874f1e6a52",
-          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-          "firstWords": "This is the content of the seventh post.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est facere soluta a cupiditate voluptates tenetur error nisi molestias, totam quis consequuntur, exercitationem autem enim iusto officiis. Officiis quos iste asperiores expedita non impedit, doloremque dolores omnis totam similique officia accusamus libero eius eligendi. Molestiae assumenda porro officia amet voluptate sed excepturi blanditiis rerum nemo eum hic nesciunt adipisci repudiandae, harum, laudantium eveniet nisi, at placeat accusantium! Sequi earum voluptates quo quam vel neque a, officiis commodi possimus mollitia tempore quisquam soluta nesciunt tenetur, aperiam rerum quis dolor accusamus. Ad dolor, nostrum tempora ipsa aspernatur nesciunt ipsum esse voluptate eos sit eveniet autem. Magnam, laudantium cum recusandae consequuntur rerum eum aliquid omnis voluptatem? Laborum, accusantium! Esse distinctio doloribus asperiores itaque laudantium dolore nobis facere iste quia numquam aperiam qui eaque eum dolorem, illum quae delectus ad provident ipsum deleniti, quibusdam non deserunt. Et rem fugiat laborum aliquid. Fugiat numquam corrupti sequi magnam odio, dolorem voluptatum doloremque eveniet velit vero vitae aliquid modi, delectus quibusdam soluta quaerat adipisci tenetur nobis quae ratione porro esse. Cumque, adipisci! Inventore maiores quidem ullam, aliquam assumenda veniam, placeat aut adipisci incidunt ex deleniti unde rem exercitationem asperiores suscipit, vitae sint sunt? Magni perferendis debitis suscipit excepturi officia unde quidem sequi minus praesentium architecto, explicabo voluptatibus facere in neque error libero et iusto placeat, itaque est enim autem corrupti assumenda? Placeat dignissimos repellat laboriosam ipsum dolorum neque distinctio officia facilis enim. A, hic ad, odit sequi quibusdam est eum architecto facere quo distinctio, officiis enim. Omnis, accusantium?",
-          "image": "https://images.unsplash.com/photo-1707653056939-5bf9eae73228?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwODUxNjcxMQ&ixlib=rb-4.0.3&q=80&w=400",
-          "published": false,
-          "createdAt": "2024-02-13T17:30:00Z",
-          "publishedAt": null,
-          "updatedAt": "2024-02-13T17:30:00Z"
-        }
-      ]
+      "role": "moderator",
+      "avatar": "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ3OA&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "ea843bb2-c0b1-41c1-a13b-a388c79912c0",
       "email": "jane@example.com",
       "password": "password123",
       "name": "Jane Smith",
-      "avatar": "https://images.unsplash.com/photo-1641312874336-6279a832a3dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUyNw&ixlib=rb-4.0.3&q=80&w=1080",
-      "drafts": []
+      "role": "moderator",
+      "avatar": "https://images.unsplash.com/photo-1641312874336-6279a832a3dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUyNw&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "abec12a7-9d46-4e05-aee8-6b301c9b71a3",
       "email": "alice@example.com",
       "password": "password123",
       "name": "Alice Johnson",
-      "avatar": "https://images.unsplash.com/photo-1640952131659-49a06dd90ad2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUxMg&ixlib=rb-4.0.3&q=80&w=1080",
-      "drafts": []
+      "role": "moderator",
+      "avatar": "https://images.unsplash.com/photo-1640952131659-49a06dd90ad2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUxMg&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "75ddec17-e989-4851-8f63-592adcd73dc2",
       "email": "bob@example.com",
       "password": "password123",
       "name": "Bob Brown",
-      "avatar": "https://images.unsplash.com/photo-1636041282610-781dc189e8fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUwMQ&ixlib=rb-4.0.3&q=80&w=1080",
-      "drafts": []
+      "role": "moderator",
+      "avatar": "https://images.unsplash.com/photo-1636041282610-781dc189e8fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUwMQ&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "47ac78a6-90d7-4691-8c91-ae84dd83d66d",
       "email": "emma@example.com",
       "password": "password123",
       "name": "Emma Wilson",
-      "avatar": "https://images.unsplash.com/photo-1625426193702-15200f5c008f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ4NQ&ixlib=rb-4.0.3&q=80&w=1080",
-      "drafts": []
+      "role": "moderator",
+      "avatar": "https://images.unsplash.com/photo-1625426193702-15200f5c008f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ4NQ&ixlib=rb-4.0.3&q=80&w=1080"
     }
   ],
   "Post": [
@@ -181,6 +176,19 @@
       "publishedAt": "2024-02-15T16:40:00Z",
       "updatedAt": "2024-02-14T14:55:00Z",
       "comments": []
+    },
+    {
+      "id": "edad1830-6e12-4aa8-b7c1-69a45dd4cfba",
+      "authorId": "237d1483-5694-47ec-8403-11874f1e6a52",
+      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+      "category": "politics",
+      "firstWords": "This is the content of the seventh post.",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est facere soluta a cupiditate voluptates tenetur error nisi molestias, totam quis consequuntur, exercitationem autem enim iusto officiis. Officiis quos iste asperiores expedita non impedit, doloremque dolores omnis totam similique officia accusamus libero eius eligendi. Molestiae assumenda porro officia amet voluptate sed excepturi blanditiis rerum nemo eum hic nesciunt adipisci repudiandae, harum, laudantium eveniet nisi, at placeat accusantium! Sequi earum voluptates quo quam vel neque a, officiis commodi possimus mollitia tempore quisquam soluta nesciunt tenetur, aperiam rerum quis dolor accusamus. Ad dolor, nostrum tempora ipsa aspernatur nesciunt ipsum esse voluptate eos sit eveniet autem. Magnam, laudantium cum recusandae consequuntur rerum eum aliquid omnis voluptatem? Laborum, accusantium! Esse distinctio doloribus asperiores itaque laudantium dolore nobis facere iste quia numquam aperiam qui eaque eum dolorem, illum quae delectus ad provident ipsum deleniti, quibusdam non deserunt. Et rem fugiat laborum aliquid. Fugiat numquam corrupti sequi magnam odio, dolorem voluptatum doloremque eveniet velit vero vitae aliquid modi, delectus quibusdam soluta quaerat adipisci tenetur nobis quae ratione porro esse. Cumque, adipisci! Inventore maiores quidem ullam, aliquam assumenda veniam, placeat aut adipisci incidunt ex deleniti unde rem exercitationem asperiores suscipit, vitae sint sunt? Magni perferendis debitis suscipit excepturi officia unde quidem sequi minus praesentium architecto, explicabo voluptatibus facere in neque error libero et iusto placeat, itaque est enim autem corrupti assumenda? Placeat dignissimos repellat laboriosam ipsum dolorum neque distinctio officia facilis enim. A, hic ad, odit sequi quibusdam est eum architecto facere quo distinctio, officiis enim. Omnis, accusantium?",
+      "image": "https://images.unsplash.com/photo-1707653056939-5bf9eae73228?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=200&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwODUxNjcxMQ&ixlib=rb-4.0.3&q=80&w=400",
+      "published": false,
+      "createdAt": "2024-02-13T17:30:00Z",
+      "publishedAt": null,
+      "updatedAt": "2024-02-13T17:30:00Z"
     }
   ]
 }
