@@ -34,7 +34,10 @@ export default async function HomePage({ searchParams }: SearchProps) {
       <main className="home-page-main">
         <SearchingForm searchParams={searchParams} />
 
-        <CardsGrid posts={posts} />
+        <CardsGrid
+          posts={posts}
+          searchParams={searchParams}
+        />
       </main>
     </>
   );
