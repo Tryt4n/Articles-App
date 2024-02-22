@@ -1,15 +1,15 @@
 import React from "react";
-import { fetchAllUsers } from "@/db/users";
-import type { Metadata } from "next/types";
+import { fetchAllAuthors } from "@/db/users";
 import "./authorsPage.css";
 import AuthorCard from "./AuthorCard";
+import type { Metadata } from "next/types";
 
 export const metadata: Metadata = {
   title: "Authors",
 };
 
 export default async function AuthorsPage() {
-  const authors = await fetchAllUsers();
+  const authors = await fetchAllAuthors();
 
   return (
     <main className="authors-page">
