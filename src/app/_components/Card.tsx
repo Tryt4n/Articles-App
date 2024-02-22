@@ -59,7 +59,7 @@ export default async function Card({
                 {author ? (
                   <>
                     <Image
-                      src={author.avatar}
+                      src={author.image}
                       alt={`${author.name} avatar`}
                       width={40}
                       height={40}

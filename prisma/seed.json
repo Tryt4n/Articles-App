@@ -6,7 +6,7 @@
       "password": "admin",
       "name": "Admin",
       "role": "admin",
-      "avatar": "https://images.unsplash.com/photo-1705648326797-24cb0324a951?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwODUzNzk5Nw&ixlib=rb-4.0.3&q=80&w=100"
+      "image": "https://images.unsplash.com/photo-1705648326797-24cb0324a951?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=100&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwODUzNzk5Nw&ixlib=rb-4.0.3&q=80&w=100"
     },
     {
       "id": "237d1483-5694-47ec-8403-11874f1e6a52",
@@ -14,7 +14,7 @@
       "password": "password123",
       "name": "John Doe",
       "role": "moderator",
-      "avatar": "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ3OA&ixlib=rb-4.0.3&q=80&w=1080"
+      "image": "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ3OA&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "ea843bb2-c0b1-41c1-a13b-a388c79912c0",
@@ -22,7 +22,7 @@
       "password": "password123",
       "name": "Jane Smith",
       "role": "moderator",
-      "avatar": "https://images.unsplash.com/photo-1641312874336-6279a832a3dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUyNw&ixlib=rb-4.0.3&q=80&w=1080"
+      "image": "https://images.unsplash.com/photo-1641312874336-6279a832a3dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUyNw&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "abec12a7-9d46-4e05-aee8-6b301c9b71a3",
@@ -30,7 +30,7 @@
       "password": "password123",
       "name": "Alice Johnson",
       "role": "moderator",
-      "avatar": "https://images.unsplash.com/photo-1640952131659-49a06dd90ad2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUxMg&ixlib=rb-4.0.3&q=80&w=1080"
+      "image": "https://images.unsplash.com/photo-1640952131659-49a06dd90ad2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUxMg&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "75ddec17-e989-4851-8f63-592adcd73dc2",
@@ -38,7 +38,7 @@
       "password": "password123",
       "name": "Bob Brown",
       "role": "moderator",
-      "avatar": "https://images.unsplash.com/photo-1636041282610-781dc189e8fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUwMQ&ixlib=rb-4.0.3&q=80&w=1080"
+      "image": "https://images.unsplash.com/photo-1636041282610-781dc189e8fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzUwMQ&ixlib=rb-4.0.3&q=80&w=1080"
     },
     {
       "id": "47ac78a6-90d7-4691-8c91-ae84dd83d66d",
@@ -46,7 +46,7 @@
       "password": "password123",
       "name": "Emma Wilson",
       "role": "moderator",
-      "avatar": "https://images.unsplash.com/photo-1625426193702-15200f5c008f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ4NQ&ixlib=rb-4.0.3&q=80&w=1080"
+      "image": "https://images.unsplash.com/photo-1625426193702-15200f5c008f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8YXZhdGFyfHx8fHx8MTcwODMzNzQ4NQ&ixlib=rb-4.0.3&q=80&w=1080"
     }
   ],
   "Post": [

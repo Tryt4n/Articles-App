@@ -12,8 +12,8 @@ async function createUsers() {
           name: user.name,
           email: user.email,
           password: user.password,
-          avatar: user.avatar,
-          role: user.role,
+          image: user.image,
+          role: user.role as "user" | "moderator" | "admin",
         },
       });
     })
