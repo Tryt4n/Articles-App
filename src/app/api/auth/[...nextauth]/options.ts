@@ -1,11 +1,20 @@
-import GitHubProvider from "next-auth/providers/github";
+import GitHubProvider, { type GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import type { NextAuthOptions } from "next-auth";
 import prisma from "@/db/db";
+import type { NextAuthOptions } from "next-auth";
+import type { UserRole } from "@/types/users";
 
 export const options: NextAuthOptions = {
   providers: [
     GitHubProvider({
+      profile(profile: GithubProfile) {
+        return {
+          ...profile,
+          role: "user",
+          id: profile.id.toString(),
+          image: profile.avatar_url,
+        };
+      },
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
@@ -25,11 +34,22 @@ export const options: NextAuthOptions = {
           credentials?.username === user.email &&
           credentials?.password === user.password
         ) {
-          return { id: user.id, name: user.name, email: user.email, image: user.avatar };
+          return { ...user, role: (user.role as UserRole) || "user" };
         } else {
           return null;
         }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role;
+      return token;
+    },
+    // Only for client components
+    async session({ session, token }) {
+      if (session?.user) session.user.role = token.role;
+      return session;
+    },
+  },
 };
