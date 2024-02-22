@@ -15,7 +15,7 @@ model User {
   name          String      @unique
   email         String      @unique
   password      String
-  avatar        String
+  image         String
   role          String      @default("user")
   posts         Post[]
   comments      Comment[]
