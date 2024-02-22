@@ -17,13 +17,16 @@ export default async function Navbar() {
         <li>
           <NavLink href="/authors">Authors</NavLink>
         </li>
-        {/*// TODO: add roles to users auth and display it only for admin and moderator */}
-        {session && (
+        {session && session.user.role === "moderator" && (
           <li>
             <NavLink href="/drafts">Drafts</NavLink>
           </li>
         )}
-        {/*// TODO: add roles to users auth and display dashboard if user is admin */}
+        {session && session.user.role === "admin" && (
+          <li>
+            <NavLink href="/dashboard">Dashboard</NavLink>
+          </li>
+        )}
       </ul>
 
       <div className="auth-container">
