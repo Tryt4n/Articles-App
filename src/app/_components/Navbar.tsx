@@ -17,7 +17,7 @@ export default async function Navbar() {
         <li>
           <NavLink href="/authors">Authors</NavLink>
         </li>
-        {session && session.user.role === "moderator" && (
+        {session && (session.user.role === "moderator" || session.user.role === "admin") && (
           <li>
             <NavLink href="/drafts">Drafts</NavLink>
           </li>
