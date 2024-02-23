@@ -1,6 +1,7 @@
 import React from "react";
 import { filteringOptions, postCategories } from "../constants/posts";
 import ResetButton from "./ResetButton";
+import FilterButton from "./FilterButton";
 import type { SearchProps } from "../page";
 
 export default function SearchingForm({ searchParams }: SearchProps) {
@@ -63,16 +64,10 @@ export default function SearchingForm({ searchParams }: SearchProps) {
         </div>
 
         <div className="btns-container">
-          <button
-            type="submit"
-            className="btn"
-          >
-            Filter
-          </button>
+          <FilterButton />
 
           <ResetButton
             params={searchParams}
-            key={`${query}+${filterBy}+${category}`}
             className="btn"
           />
         </div>
