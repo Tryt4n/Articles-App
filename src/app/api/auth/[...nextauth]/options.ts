@@ -1,18 +1,37 @@
 import GitHubProvider, { type GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/db/db";
+import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
 import type { UserRole } from "@/types/users";
 
 export const options: NextAuthOptions = {
   providers: [
     GitHubProvider({
-      profile(profile: GithubProfile) {
+      async profile(profile: GithubProfile) {
+        const email = profile.email;
+        const username = profile.login;
+        const image = profile.avatar_url;
+
+        // Create new profile for user if it doesn't exist
+        const isUnique = await isNewUserEmailUnique(email as string);
+
+        if (isUnique) {
+          const newUser = {
+            name: username,
+            email,
+            image,
+            role: "user",
+          };
+
+          await createNewUser(newUser);
+        }
+
         return {
           ...profile,
-          role: "user",
           id: profile.id.toString(),
-          image: profile.avatar_url,
+          role: "user",
+          image: image,
         };
       },
       clientId: process.env.GITHUB_ID as string,
