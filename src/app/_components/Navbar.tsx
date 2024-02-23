@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import NavLink from "./NavLink";
+import SignupLink from "./SignupLink";
 import Image from "next/image";
 import { getServerSession } from "next-auth/next";
-import { options } from "../api/auth/[...nextauth]/options";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function Navbar() {
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
 
   return (
     <nav className="navbar">
@@ -37,12 +38,7 @@ export default async function Navbar() {
           {session ? "Logout" : "Login"}
         </Link>
         {!session ? (
-          <Link
-            href="/signup"
-            className="btn"
-          >
-            Signup
-          </Link>
+          <SignupLink />
         ) : (
           <Link
             href={"/profile"}
