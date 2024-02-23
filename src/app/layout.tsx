@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./layout.css";
 import Navbar from "./_components/Navbar";
+import AuthProvider from "./context/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Home page",
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="container">
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
