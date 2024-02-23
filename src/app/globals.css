@@ -114,17 +114,22 @@ select {
   border-radius: 50vw;
   color: var(--tx-black);
   font-weight: bold;
-  &:hover,
-  &:focus-visible {
+
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
     background-color: var(--tx-black);
     color: white;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 
 .btn--accent {
   background-color: var(--tx-black);
   color: white;
-  &:hover {
+  &:not(:disabled):hover {
     opacity: 0.8;
   }
 }
