@@ -11,10 +11,10 @@ datasource db {
 }
 
 model User {
-  id            String      @id @default(uuid())
+  id            String      @id @unique @default(uuid())
   name          String      @unique
   email         String      @unique
-  password      String
+  password      String?
   image         String
   role          String      @default("user")
   posts         Post[]
@@ -26,7 +26,7 @@ model User {
 }
 
 model Post {
-  id          String      @id @default(uuid())
+  id          String      @id @unique @default(uuid())
   authorId    String
   author      User        @relation(fields: [authorId], references: [id])
   category    String      @default("general")
@@ -45,7 +45,7 @@ model Post {
 }
 
 model Comment {
-  id        String    @id @default(uuid())
+  id        String    @id @unique @default(uuid())
   authorId  String
   author    User      @relation(fields: [authorId], references: [id])
   content   String
@@ -60,7 +60,7 @@ model Comment {
 }
 
 model Like {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   postId    String?
@@ -74,7 +74,7 @@ model Like {
 }
 
 model Follow {
-  id              String   @id @default(uuid())
+  id              String   @id @unique @default(uuid())
   followerId      String
   follower        User     @relation("Follower", fields: [followerId], references: [id])
   followingUserId String
@@ -94,7 +94,7 @@ model SavedPost {
 }
 
 model Tag {
-  id    String    @id @default(uuid())
+  id    String    @id @unique @default(uuid())
   name  String    @unique
   posts PostTag[]
 }
