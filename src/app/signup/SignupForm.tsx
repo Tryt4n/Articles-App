@@ -6,7 +6,7 @@ import CreateButton from "./CreateButton";
 import { signupUserAction } from "../_actions/users";
 
 export default function SignupForm() {
-  const [error, action] = useFormState(signupUserAction, { errorMessage: "" });
+  const [errors, action] = useFormState(signupUserAction, []);
 
   return (
     <form action={action}>
@@ -16,7 +16,7 @@ export default function SignupForm() {
           type="email"
           name="signup-email"
           id="signup-email"
-          autoComplete="false"
+          autoComplete="off"
           autoFocus
           placeholder="Enter your email"
         />
@@ -28,7 +28,7 @@ export default function SignupForm() {
           type="text"
           name="signup-username"
           id="signup-username"
-          autoComplete="false"
+          autoComplete="off"
           placeholder="Enter your username"
         />
       </div>
@@ -39,7 +39,7 @@ export default function SignupForm() {
           type="password"
           name="signup-password"
           id="signup-password"
-          autoComplete="false"
+          autoComplete="off"
           placeholder="Enter your password"
         />
       </div>
@@ -50,12 +50,20 @@ export default function SignupForm() {
           type="password"
           name="signup-password-confirmation"
           id="signup-password-confirmation"
-          autoComplete="false"
+          autoComplete="off"
           placeholder="Confirm your password"
         />
       </div>
 
-      {error ? <strong>{error.errorMessage}</strong> : null}
+      {errors && errors.length > 0 ? (
+        <ul>
+          {errors.map((error, index) => (
+            <li key={index}>
+              <strong>{error}</strong>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       <CreateButton />
     </form>
