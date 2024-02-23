@@ -1,6 +1,6 @@
 import prisma from "./db";
 import { cache } from "react";
-import { revalidatePath, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { wait } from "@/app/_helpers/helpers";
 import type { UserRole } from "@/types/users";
 import type { User } from "@prisma/client";
@@ -32,7 +32,6 @@ export const fetchAllAuthors = unstable_cache(
 
 export async function createNewUser(user: any) {
   // await wait(1000);
-  revalidatePath("/signup");
   return prisma.user.create({ data: user });
 }
 
