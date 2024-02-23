@@ -3,12 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/db/db";
 import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
-import type { UserRole } from "@/types/users";
+import type { User, UserRole } from "@/types/users";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
       async profile(profile: GithubProfile) {
+        const id = profile.id.toString();
         const email = profile.email;
         const username = profile.login;
         const image = profile.avatar_url;
@@ -16,11 +17,12 @@ export const authOptions: NextAuthOptions = {
         // Create new profile for user if it doesn't exist
         const isUnique = email ? await isNewUserEmailUnique(email) : null;
 
-        if (isUnique) {
-          const newUser = {
-            id: profile.id.toString(),
+        if (isUnique && email) {
+          const newUser: User = {
+            id,
             name: username,
             email,
+            password: null,
             image,
             role: "user",
           };
@@ -30,7 +32,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           ...profile,
-          id: profile.id.toString(),
+          id,
           role: "user",
           image: image,
         };

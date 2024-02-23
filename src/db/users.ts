@@ -2,8 +2,7 @@ import prisma from "./db";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { wait } from "@/app/_helpers/helpers";
-import type { UserRole } from "@/types/users";
-import type { User } from "@prisma/client";
+import type { User, UserRole } from "@/types/users";
 
 export const fetchUser = unstable_cache(
   cache(async ({ id }: { id: string }) => {
@@ -30,7 +29,8 @@ export const fetchAllAuthors = unstable_cache(
   ["authors"]
 );
 
-export async function createNewUser(user: any) {
+// export async function createNewUser(user: any) {
+export async function createNewUser(user: User) {
   // await wait(1000);
   return prisma.user.create({ data: user });
 }
