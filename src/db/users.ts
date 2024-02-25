@@ -7,14 +7,33 @@ import type { User, UserRole } from "@/types/users";
 export const fetchUser = unstable_cache(
   cache(async ({ id }: { id: string }) => {
     // await wait(1000);
-    return prisma.user.findUnique({ where: { id } });
+
+    const user = prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        role: true,
+        posts: true,
+        comments: true,
+        followers: true,
+        followings: true,
+        receivedLikes: true,
+        savedPosts: true,
+      },
+    });
+
+    return user;
   }),
   ["user"]
 );
 
 export const fetchAllAuthors = unstable_cache(
-  // await wait(1000);
   cache(async () => {
+    // await wait(1000);
+
     const authors = await prisma.user.findMany({
       where: {
         role: "moderator" || "admin",
@@ -29,7 +48,6 @@ export const fetchAllAuthors = unstable_cache(
   ["authors"]
 );
 
-// export async function createNewUser(user: any) {
 export async function createNewUser(user: User) {
   // await wait(1000);
   return prisma.user.create({ data: user });
