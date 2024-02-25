@@ -12,7 +12,7 @@ export default function CreateButton() {
       className="btn"
       disabled={pending}
     >
-      {pending ? "Creating account" : "Signup"}
+      {pending ? "Creating account" : "Create new account"}
     </button>
   );
 }
