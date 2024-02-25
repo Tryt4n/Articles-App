@@ -3,14 +3,15 @@ import Card from "./Card";
 import CardSkeleton from "./CardSkeleton";
 import type { Post } from "@prisma/client";
 import type { SearchProps } from "../page";
+import { fetchPostsBySearchParams } from "@/db/posts";
 
 export default async function CardsGrid({
-  posts,
   searchParams,
 }: {
-  posts: Post[];
   searchParams: SearchProps["searchParams"];
 }) {
+  const posts = await fetchPostsBySearchParams({ searchParams });
+
   return (
     <>
       {posts && posts.length === 0 ? (
