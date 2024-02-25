@@ -9,7 +9,10 @@ export default function SignupForm() {
   const [errors, action] = useFormState(signupUserAction, []);
 
   return (
-    <form action={action}>
+    <form
+      action={action}
+      className="signup-form"
+    >
       <div>
         <label htmlFor="signup-email">Enter email: </label>
         <input
@@ -30,6 +33,8 @@ export default function SignupForm() {
           id="signup-username"
           autoComplete="off"
           placeholder="Enter your username"
+          minLength={3}
+          maxLength={50}
         />
       </div>
 
@@ -41,6 +46,8 @@ export default function SignupForm() {
           id="signup-password"
           autoComplete="off"
           placeholder="Enter your password"
+          minLength={8}
+          maxLength={50}
         />
       </div>
 
@@ -52,6 +59,8 @@ export default function SignupForm() {
           id="signup-password-confirmation"
           autoComplete="off"
           placeholder="Confirm your password"
+          minLength={8}
+          maxLength={50}
         />
       </div>
 
