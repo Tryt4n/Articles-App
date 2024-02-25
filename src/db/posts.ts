@@ -4,12 +4,13 @@ import { unstable_cache } from "next/cache";
 import { wait } from "@/app/_helpers/helpers";
 import type { Prisma } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
+import type { Post } from "@/types/posts";
 
 export const fetchPost = unstable_cache(
   cache(async ({ id }: { id: string }) => {
     // await wait(1000);
 
-    return prisma.post.findUnique({ where: { id } });
+    return prisma.post.findUnique({ where: { id } }) as unknown as Post;
   }),
   ["post"]
 );
@@ -43,7 +44,7 @@ export const fetchPostsBySearchParams = unstable_cache(
 
     return prisma.post.findMany({
       where: whereClause,
-    });
+    }) as unknown as Post[];
   }),
   ["post", "posts"]
 );
@@ -56,7 +57,7 @@ export const fetchAllUserPosts = unstable_cache(
       where: {
         authorId,
       },
-    });
+    }) as unknown as Post[];
   }),
   ["posts"]
 );
