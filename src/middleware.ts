@@ -6,7 +6,11 @@ export default withAuth(
     if (req.nextUrl.pathname.startsWith("/dashboard") && req.nextauth.token?.role !== "admin") {
       return NextResponse.rewrite(new URL("/", req.url));
     }
-    if (req.nextUrl.pathname.startsWith("/drafts") && req.nextauth.token?.role !== "moderator") {
+    if (
+      req.nextUrl.pathname.startsWith("/drafts") &&
+      req.nextauth.token?.role !== "moderator" &&
+      req.nextauth.token?.role !== "admin"
+    ) {
       return NextResponse.rewrite(new URL("/", req.url));
     }
     if (req.nextUrl.pathname.startsWith("/profile") && !req.nextauth.token) {
