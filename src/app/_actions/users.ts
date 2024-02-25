@@ -28,7 +28,15 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
 
   const results = SignupSchema.safeParse(validationData);
 
-  if (!isEmailUnique || !isUsernameUnique) {
+  if (
+    !isEmailUnique ||
+    !isUsernameUnique ||
+    email === "" ||
+    username === "" ||
+    password === "" ||
+    passwordConfirmation === "" ||
+    password !== passwordConfirmation
+  ) {
     if (!results.success) {
       const errorMessages = [
         ...customErrors,
