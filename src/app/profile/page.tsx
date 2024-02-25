@@ -2,7 +2,9 @@ import React from "react";
 import { fetchUser } from "@/db/users";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import UserData from "./components/UserData";
 import type { Metadata } from "next/types";
+import "./profilePage.css";
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -10,18 +12,13 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
-  const user = session?.user ? await fetchUser({ id: session.user.id }) : null;
+  const user = session?.user && (await fetchUser({ id: session.user.id }));
 
   return (
-    <main>
+    <main className="profile-page">
       <h1>Profile</h1>
-      {user && (
-        <>
-          <div>Name: {user.name}</div>
-          <div>User ID: {user.id}</div>
-          <div>User Role: {user.role}</div>
-        </>
-      )}
+
+      {user && <UserData user={user} />}
     </main>
   );
 }
