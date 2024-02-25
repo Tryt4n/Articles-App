@@ -47,3 +47,16 @@ export const fetchPostsBySearchParams = unstable_cache(
   }),
   ["post", "posts"]
 );
+
+export const fetchAllUserPosts = unstable_cache(
+  cache(async ({ authorId }: { authorId: string }) => {
+    await wait(1000);
+
+    return prisma.post.findMany({
+      where: {
+        authorId,
+      },
+    });
+  }),
+  ["posts"]
+);
