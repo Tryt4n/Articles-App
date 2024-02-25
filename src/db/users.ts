@@ -6,7 +6,7 @@ import type { User, UserRole } from "@/types/users";
 
 export const fetchUser = unstable_cache(
   cache(async ({ id }: { id: string }) => {
-    // await wait(1000);
+    await wait(3000);
 
     const user = prisma.user.findUnique({
       where: { id },
@@ -25,7 +25,7 @@ export const fetchUser = unstable_cache(
       },
     });
 
-    return user;
+    return user as unknown as User;
   }),
   ["user"]
 );
@@ -43,12 +43,15 @@ export const fetchAllAuthors = unstable_cache(
     return authors.map((author) => ({
       ...author,
       role: author.role as UserRole,
-    }));
+    })) as unknown as User[];
   }),
   ["authors"]
 );
 
-export async function createNewUser(user: User) {
+// export async function createNewUser(user: User) {
+export async function createNewUser(
+  user: Pick<User, "id" | "email" | "name" | "image" | "role" | "password">
+) {
   // await wait(1000);
   return prisma.user.create({ data: user });
 }
