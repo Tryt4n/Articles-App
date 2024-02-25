@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import SignupForm from "./SignupForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import "./signupPage.css";
 
 export default function SignupPage() {
   const { status } = useSession();
@@ -25,7 +26,7 @@ export default function SignupPage() {
       )}
       {status !== "loading" && status !== "authenticated" ? (
         <main className="container">
-          <h1>Signup</h1>
+          <h1 className="signup-header">Signup</h1>
 
           <SignupForm />
         </main>
