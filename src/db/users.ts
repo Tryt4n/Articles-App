@@ -1,4 +1,5 @@
 import prisma from "./db";
+import { Prisma } from "@prisma/client";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { wait } from "@/app/_helpers/helpers";
@@ -6,7 +7,7 @@ import type { User, UserRole } from "@/types/users";
 
 export const fetchUser = unstable_cache(
   cache(async ({ id }: { id: string }) => {
-    await wait(3000);
+    // await wait(1000);
 
     const user = prisma.user.findUnique({
       where: { id },
@@ -48,7 +49,6 @@ export const fetchAllAuthors = unstable_cache(
   ["authors"]
 );
 
-// export async function createNewUser(user: User) {
 export async function createNewUser(
   user: Pick<User, "id" | "email" | "name" | "image" | "role" | "password">
 ) {
@@ -57,11 +57,39 @@ export async function createNewUser(
 }
 
 export async function isNewUserEmailUnique(email: string) {
+  // await wait(1000);
+
   const user = await prisma.user.findUnique({ where: { email } });
   return user === null;
 }
 
 export async function isNewUserUsernameUnique(username: string) {
+  // await wait(1000);
+
   const user = await prisma.user.findUnique({ where: { name: username } });
   return user === null;
+}
+
+export async function updateUserName(id: string, name: string) {
+  try {
+    return await prisma.user.update({ where: { id }, data: { name } });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      throw new Error("Username is already taken");
+    } else {
+      throw error;
+    }
+  }
+}
+
+export async function updateUserEmail(id: string, email: string) {
+  try {
+    return await prisma.user.update({ where: { id }, data: { email } });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      throw new Error("User email is already taken");
+    } else {
+      throw error;
+    }
+  }
 }
