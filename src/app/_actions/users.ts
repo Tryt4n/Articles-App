@@ -1,9 +1,15 @@
 "use server";
 
-import { createNewUser, isNewUserEmailUnique, isNewUserUsernameUnique } from "@/db/users";
+import {
+  createNewUser,
+  isNewUserEmailUnique,
+  isNewUserUsernameUnique,
+  updateUserEmail,
+  updateUserName,
+} from "@/db/users";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { SignupSchema } from "@/zod/userSchema";
+import { ChangeEmailSchema, ChangeUsernameSchema, SignupSchema } from "@/zod/userSchema";
 import type { User } from "@/types/users";
 
 export async function signupUserAction(prevState: unknown, formData: FormData) {
@@ -62,4 +68,43 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
     revalidatePath("/signup");
     redirect("/api/auth/signin");
   }
+}
+
+export async function updateUserAction(
+  options: { id: string; isName: boolean; oldValue: string },
+  prevState: string[],
+  formData: FormData
+) {
+  const value = formData.get("edit-profile") as string;
+
+  const { id, isName } = options;
+
+  if (value === options.oldValue) {
+    return [`${isName ? "Username" : "Email"} is the same.`];
+  }
+
+  const isValueUnique = isName
+    ? await isNewUserUsernameUnique(value)
+    : await isNewUserEmailUnique(value);
+
+  if (!isValueUnique) {
+    return [`${isName ? "Username" : "Email"} is already taken.`];
+  }
+
+  const results = isName
+    ? ChangeUsernameSchema.safeParse({ username: value })
+    : ChangeEmailSchema.safeParse({ email: value });
+
+  if (!results.success) {
+    return results.error.issues.map((issue) => issue.message);
+  }
+
+  if (isName) {
+    updateUserName(id, value);
+  } else {
+    updateUserEmail(id, value);
+  }
+  revalidatePath(`/profile`);
+  revalidatePath(`/authors`);
+  redirect(`/profile`);
 }
