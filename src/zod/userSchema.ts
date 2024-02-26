@@ -34,3 +34,29 @@ export const SignupSchema = z
     message: invalid_password_confirmation_error,
     path: ["passwordConfirmation"],
   });
+
+export const ChangeUsernameSchema = z.object({
+  username: z
+    .string()
+    .min(1, required_username_error)
+    .min(3, invalid_username_too_short_error)
+    .max(50, invalid_username_too_long_error),
+});
+
+export const ChangeEmailSchema = z.object({
+  email: z.string().min(1, required_email_error).email(invalid_email_error),
+});
+
+export const ChangePasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(1, required_password_error)
+      .min(8, invalid_password_too_short_error)
+      .max(50, invalid_password_too_long_error),
+    passwordConfirmation: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: invalid_password_confirmation_error,
+    path: ["passwordConfirmation"],
+  });
