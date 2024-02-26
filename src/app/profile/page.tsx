@@ -3,8 +3,8 @@ import { fetchUser } from "@/db/users";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import UserData from "./components/UserData";
+import EditProfileBtn from "./components/EditProfileBtn";
 import type { Metadata } from "next/types";
-import "./profilePage.css";
 
 export const metadata: Metadata = {
   title: "Profile",
@@ -15,10 +15,14 @@ export default async function ProfilePage() {
   const user = session?.user && (await fetchUser({ id: session.user.id }));
 
   return (
-    <main className="profile-page">
-      <h1>Profile</h1>
+    <>
+      {user && (
+        <UserData user={user}>
+          <EditProfileBtn name={user.name} />
 
-      {user && <UserData user={user} />}
-    </main>
+          <EditProfileBtn email={user.email} />
+        </UserData>
+      )}
+    </>
   );
 }

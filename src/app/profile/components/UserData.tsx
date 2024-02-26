@@ -1,10 +1,10 @@
 import React from "react";
-import { fetchUser } from "@/db/users";
 import Link from "next/link";
+import { fetchUser } from "@/db/users";
 import { format } from "date-fns/format";
 import type { User } from "@/types/users";
 
-export default function UserData({ user }: { user: User }) {
+export default function UserData({ user, children }: { user: User; children: React.ReactNode }) {
   const formatDate = (date: Date) => format(date, "H:mm, dd.MM.yyyy");
 
   return (
@@ -12,16 +12,8 @@ export default function UserData({ user }: { user: User }) {
       {user && (
         <>
           <section>
-            <h2>Your profile date</h2>
-            <div>
-              <p>Name: {user.name}</p>
-              <button>Edit</button>
-            </div>
-
-            <div>
-              <p>Email: {user.email}</p>
-              <button>Edit</button>
-            </div>
+            <h2>Your profile informations</h2>
+            {children}
 
             {user.receivedLikes && user.receivedLikes.length > 0 && (
               <div>
