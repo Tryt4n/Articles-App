@@ -1,11 +1,6 @@
 import type { Comment, Follow, Like, Post, SavedPost, User as dbUser } from "@prisma/client";
 
-export type User = {
-  id: string;
-  name: string;
-  email: string;
-  password: string | null;
-  image: string;
+export type User = Omit<dbUser, "role"> & {
   role: UserRole;
   posts?: Post[];
   comments?: Comment[];
