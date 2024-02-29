@@ -6,10 +6,16 @@ import {
   isNewUserUsernameUnique,
   updateUserEmail,
   updateUserName,
+  updateUserPassword,
 } from "@/db/users";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { ChangeEmailSchema, ChangeUsernameSchema, SignupSchema } from "@/zod/userSchema";
+import {
+  ChangeEmailSchema,
+  ChangePasswordSchema,
+  ChangeUsernameSchema,
+  SignupSchema,
+} from "@/zod/userSchema";
 import type { User } from "@/types/users";
 
 export async function signupUserAction(prevState: unknown, formData: FormData) {
@@ -71,39 +77,60 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
 }
 
 export async function updateUserAction(
-  options: { id: string; isName: boolean; oldValue: string },
+  options: { id: string; type: "name" | "email" | "password"; oldValue: string },
   prevState: string[],
   formData: FormData
 ) {
   const value = formData.get("edit-profile") as string;
+  const passwordConfirmation = formData.get("edit-profile-password-confirmation") as string;
 
-  const { id, isName } = options;
+  const { id, type, oldValue } = options;
 
-  if (value === options.oldValue) {
-    return [`${isName ? "Username" : "Email"} is the same.`];
+  if (type === "name" && value === oldValue) {
+    return ["Username is the same."];
   }
 
-  const isValueUnique = isName
-    ? await isNewUserUsernameUnique(value)
-    : await isNewUserEmailUnique(value);
-
-  if (!isValueUnique) {
-    return [`${isName ? "Username" : "Email"} is already taken.`];
+  if (type === "email" && value === oldValue) {
+    return ["Email is the same."];
   }
 
-  const results = isName
-    ? ChangeUsernameSchema.safeParse({ username: value })
-    : ChangeEmailSchema.safeParse({ email: value });
+  if (type === "password" && passwordConfirmation !== value) {
+    return ["Passwords do not match."];
+  }
 
-  if (!results.success) {
+  const isValueUnique =
+    type === "name" ? await isNewUserUsernameUnique(value) : await isNewUserEmailUnique(value);
+
+  if ((type === "name" || type === "email") && !isValueUnique) {
+    return [`${type.charAt(0).toUpperCase() + type.slice(1)} is already taken.`];
+  }
+
+  let results:
+    | ReturnType<typeof ChangeUsernameSchema.safeParse>
+    | ReturnType<typeof ChangeEmailSchema.safeParse>
+    | ReturnType<typeof ChangePasswordSchema.safeParse>
+    | undefined;
+
+  switch (type) {
+    case "name":
+      results = ChangeUsernameSchema.safeParse({ username: value });
+      break;
+    case "email":
+      results = ChangeEmailSchema.safeParse({ email: value });
+      break;
+    case "password":
+      results = ChangePasswordSchema.safeParse({ password: value, passwordConfirmation });
+      break;
+  }
+
+  if (results && !results.success) {
     return results.error.issues.map((issue) => issue.message);
   }
 
-  if (isName) {
-    updateUserName(id, value);
-  } else {
-    updateUserEmail(id, value);
-  }
+  if (type === "name") updateUserName(id, value);
+  if (type === "email") updateUserEmail(id, value);
+  if (type === "password") updateUserPassword(id, value);
+
   revalidatePath(`/profile`);
   revalidatePath(`/authors`);
   redirect(`/profile`);
