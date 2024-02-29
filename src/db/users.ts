@@ -93,3 +93,7 @@ export async function updateUserEmail(id: string, email: string) {
     }
   }
 }
+
+export async function updateUserPassword(id: string, password: string) {
+  return prisma.user.update({ where: { id }, data: { password } });
+}
