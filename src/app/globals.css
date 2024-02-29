@@ -159,3 +159,11 @@ select {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.form-errors-list {
+  color: var(--tx-warning);
+
+  & > li:not(:last-child) {
+    margin-bottom: 0.25em;
+  }
+}
