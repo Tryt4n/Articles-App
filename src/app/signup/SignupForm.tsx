@@ -14,7 +14,7 @@ export default function SignupForm() {
       className="signup-form"
     >
       <div>
-        <label htmlFor="signup-email">Enter email: </label>
+        <label htmlFor="signup-email">Enter email:</label>
         <input
           type="email"
           name="signup-email"
@@ -26,7 +26,7 @@ export default function SignupForm() {
       </div>
 
       <div>
-        <label htmlFor="signup-username">Enter username: </label>
+        <label htmlFor="signup-username">Enter username:</label>
         <input
           type="text"
           name="signup-username"
@@ -39,7 +39,7 @@ export default function SignupForm() {
       </div>
 
       <div>
-        <label htmlFor="signup-password">Enter password: </label>
+        <label htmlFor="signup-password">Enter password:</label>
         <input
           type="password"
           name="signup-password"
@@ -52,7 +52,7 @@ export default function SignupForm() {
       </div>
 
       <div>
-        <label htmlFor="signup-password-confirmation">Confirm your password: </label>
+        <label htmlFor="signup-password-confirmation">Confirm your password:</label>
         <input
           type="password"
           name="signup-password-confirmation"
@@ -65,7 +65,7 @@ export default function SignupForm() {
       </div>
 
       {errors && errors.length > 0 ? (
-        <ul>
+        <ul className="form-errors-list">
           {errors.map((error, index) => (
             <li key={index}>
               <strong>{error}</strong>
