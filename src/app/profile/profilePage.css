@@ -1,0 +1,46 @@
+.profile-page {
+  h1 {
+    text-align: center;
+  }
+
+  .profile-content-wrapper {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+}
+
+.profile-edit-form {
+  & > * {
+    margin-block: 1.5em;
+  }
+
+  .profile-content-wrapper {
+    margin-bottom: 0;
+  }
+
+  label {
+    flex-shrink: 0;
+  }
+
+  input {
+    min-width: 10em;
+    max-width: 15em;
+  }
+
+  .profile-edit-form-inner-wrapper {
+    margin-bottom: 0.5em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+
+  .profile-edit-inputs-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    flex-wrap: wrap;
+  }
+}
