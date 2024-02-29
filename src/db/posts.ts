@@ -8,7 +8,7 @@ import type { Post } from "@/types/posts";
 
 export const fetchPost = unstable_cache(
   cache(async ({ id }: { id: string }) => {
-    // await wait(1000);
+    await wait(1000);
 
     return prisma.post.findUnique({ where: { id } }) as unknown as Post;
   }),
@@ -51,7 +51,7 @@ export const fetchPostsBySearchParams = unstable_cache(
 
 export const fetchAllUserPosts = unstable_cache(
   cache(async ({ authorId }: { authorId: string }) => {
-    await wait(1000);
+    // await wait(1000);
 
     return prisma.post.findMany({
       where: {
@@ -60,4 +60,13 @@ export const fetchAllUserPosts = unstable_cache(
     }) as unknown as Post[];
   }),
   ["posts"]
+);
+
+export const fetchPostTags = unstable_cache(
+  cache(async ({ postId }: { postId: string }) => {
+    // await wait(1000);
+
+    return prisma.tag.findMany({ where: { posts: { some: { postId } } } });
+  }),
+  ["tags"]
 );
