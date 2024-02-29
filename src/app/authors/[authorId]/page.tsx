@@ -25,7 +25,7 @@ export async function generateMetadata({
 
 export default async function AuthorPage({ params }: { params: { authorId: string } }) {
   const author = await fetchUser({ id: params.authorId });
-  const publishedPosts = author?.posts.filter((post) => post.published);
+  const publishedPosts = author.posts && author.posts.filter((post) => post.published);
 
   return (
     <main className="author-page">
