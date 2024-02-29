@@ -1,0 +1,7 @@
+.author-articles-list {
+  display: grid;
+  gap: var(--card-spacing);
+  grid-template-columns: repeat(auto-fit, minmax(22em, 25em));
+  justify-content: center;
+  align-items: stretch;
+}
