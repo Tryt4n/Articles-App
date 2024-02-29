@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import Card from "./Card";
 import CardSkeleton from "./CardSkeleton";
-import type { Post } from "@prisma/client";
 import type { SearchProps } from "../page";
 import { fetchPostsBySearchParams } from "@/db/posts";
 
@@ -21,7 +20,7 @@ export default async function CardsGrid({
       ) : (
         <ul className="cards-list">
           <Suspense fallback={<SkeletonCards />}>
-            {(posts as Post[]).map((post, index) => (
+            {posts.map((post, index) => (
               <Card
                 key={post.id}
                 post={post}
