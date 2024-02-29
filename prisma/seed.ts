@@ -13,7 +13,7 @@ async function createUsers() {
           email: user.email,
           password: user.password,
           image: user.image,
-          role: user.role as "user" | "moderator" | "admin",
+          role: user.role,
         },
       });
     })
