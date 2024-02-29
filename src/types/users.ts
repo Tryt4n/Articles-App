@@ -1,4 +1,5 @@
-import type { Comment, Follow, Like, Post, SavedPost, User as dbUser } from "@prisma/client";
+import type { Comment, Follow, Like, SavedPost, User as dbUser } from "@prisma/client";
+import type { Post } from "./posts";
 
 export type User = Omit<dbUser, "role"> & {
   role: UserRole;
