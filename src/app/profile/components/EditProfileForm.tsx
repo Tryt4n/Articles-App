@@ -45,37 +45,52 @@ export default function EditProfileForm({ userId, name, email, password }: EditP
   const [errors, action] = useFormState(formAction, []);
 
   return (
-    <form action={action}>
-      <label htmlFor="edit-profile">{type.charAt(0).toUpperCase() + type.slice(1)}</label>
-      <input
-        type={type === "password" ? "password" : type === "email" ? "email" : "text"}
-        name="edit-profile"
-        id="edit-profile"
-        defaultValue={oldValue}
-        minLength={type === "password" ? 8 : 3}
-        maxLength={50}
-        placeholder={placeholder}
-      />
-      {type === "password" && (
-        <input
-          type="password"
-          name="edit-profile-password-confirmation"
-          id="edit-profile-password-confirmation"
-          placeholder="Confirm password"
-          minLength={8}
-          maxLength={50}
-        />
-      )}
-      <button
-        type="submit"
-        className="btn"
-      >
-        Save
-      </button>
+    <form
+      action={action}
+      className="profile-edit-form"
+    >
+      <div className="profile-edit-form-inner-wrapper">
+        <div className="profile-edit-inputs-wrapper">
+          <div className="profile-content-wrapper">
+            <label htmlFor="edit-profile">{type.charAt(0).toUpperCase() + type.slice(1)}</label>
+            <input
+              type={type === "password" ? "password" : type === "email" ? "email" : "text"}
+              name="edit-profile"
+              id="edit-profile"
+              defaultValue={oldValue}
+              minLength={type === "password" ? 8 : 3}
+              maxLength={50}
+              placeholder={placeholder}
+              autoFocus
+            />
+          </div>
+          {type === "password" && (
+            <div className="profile-content-wrapper">
+              <label htmlFor="edit-profile-password-confirmation">Password confirmation</label>
+              <input
+                type="password"
+                name="edit-profile-password-confirmation"
+                id="edit-profile-password-confirmation"
+                placeholder="Confirm password"
+                minLength={8}
+                maxLength={50}
+              />
+            </div>
+          )}
+        </div>
+        <button
+          type="submit"
+          className="btn"
+        >
+          Save
+        </button>
+      </div>
 
-      <ul>
+      <ul className="form-errors-list">
         {errors?.map((error) => (
-          <li key={error}>{error}</li>
+          <li key={error}>
+            <strong>{error}</strong>
+          </li>
         ))}
       </ul>
     </form>
