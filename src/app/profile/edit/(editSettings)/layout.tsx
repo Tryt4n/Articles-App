@@ -7,7 +7,6 @@ export default function ProfileEditSettingsLayout({ children }: { children: Reac
       <Link
         href="/profile"
         className="btn"
-        style={{ maxWidth: "fit-content" }}
       >
         Go Back
       </Link>
