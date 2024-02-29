@@ -20,7 +20,13 @@ export default async function ProfilePage() {
         <UserData user={user}>
           <EditProfileBtn name={user.name} />
 
-          <EditProfileBtn email={user.email} />
+          {session.user.name !== null && (
+            <>
+              <EditProfileBtn email={user.email} />
+
+              <EditProfileBtn password />
+            </>
+          )}
         </UserData>
       )}
     </>
