@@ -65,7 +65,6 @@
       "comments": [
         {
           "id": "189d38af-3634-4a82-8535-d0834d8bc5b5",
-          "postId": "1",
           "authorId": "ea843bb2-c0b1-41c1-a13b-a388c79912c0",
           "content": "This is the first comment on the first post.",
           "createdAt": "2024-02-19T12:30:00Z",
@@ -74,7 +73,6 @@
         {
           "id": "29b49ff2-b677-43d0-a793-798cef6a547a",
           "authorId": "abec12a7-9d46-4e05-aee8-6b301c9b71a3",
-          "postId": "1",
           "content": "This is the second comment on the first post.",
           "createdAt": "2024-02-19T13:00:00Z",
           "updatedAt": "2024-02-20T13:06:30Z"
