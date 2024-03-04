@@ -1,8 +1,8 @@
+import SearchingForm from "./components/SearchingForm";
+import CardsGrid from "./components/CardsGrid";
 import type { Metadata } from "next/types";
-import "@/app/homePage.css";
 import type { filteringOptions, postCategories } from "./constants/posts";
-import SearchingForm from "./_components/SearchingForm";
-import CardsGrid from "./_components/CardsGrid";
+import "@/app/homePage.css";
 
 export const metadata: Metadata = {
   title: "Blog Posts",

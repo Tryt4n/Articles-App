@@ -4,18 +4,29 @@ import Image from "next/image";
 import { format } from "date-fns/format";
 import type { Post } from "@/types/posts";
 import "./style.css";
+import { fetchPostTags } from "@/db/posts";
 
 export async function AuthorsArticlesListCard({
   post,
   priority,
+  type,
 }: {
   post: Post;
   priority: boolean;
+  type?: "all" | "published" | "drafts";
 }) {
   const articlePublishedDate = new Date(post.publishedAt!);
 
+  const postTags = await fetchPostTags({ postId: post.id });
+
   return (
     <li className="author-article-card">
+      <Link
+        href={`drafts/${post.id}`}
+        className="btn author-article-card-edit-btn"
+      >
+        Edit
+      </Link>
       <section>
         <Link href={`/posts/${post.id}`}>
           <div className="article-image-wrapper card-image-placeholder">
@@ -30,6 +41,14 @@ export async function AuthorsArticlesListCard({
           </div>
 
           <div className="article-content-wrapper">
+            {postTags && postTags.length > 0 && (
+              <ul>
+                {postTags.map((tag) => (
+                  <li key={tag.id}>{tag.name}</li>
+                ))}
+              </ul>
+            )}
+
             <h3 className="article-header">{post.title}</h3>
             <p className="card-subheader">{post.firstWords}</p>
 

@@ -2,7 +2,7 @@ import prisma from "./db";
 import { Prisma } from "@prisma/client";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { wait } from "@/app/_helpers/helpers";
+import { wait } from "@/app/helpers/helpers";
 import type { User, UserRole } from "@/types/users";
 
 export const fetchUser = unstable_cache(

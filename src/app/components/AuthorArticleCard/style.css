@@ -1,11 +1,12 @@
 .author-article-card {
+  position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--card-border);
   border-radius: 0.5em;
 
-  &:focus-within {
+  &:has(a:focus-within:not(.author-article-card-edit-btn)) {
     outline: 2px solid var(--tx-black);
     outline-offset: 0.25em;
   }
@@ -17,7 +18,7 @@
     height: 100%;
 
     &:hover,
-    &:focus-within {
+    &:focus-within:not(.author-article-card-edit-btn) {
       .card-image {
         scale: 1.1;
       }
@@ -77,5 +78,21 @@
 
   time {
     color: rgb(136, 126, 126);
+  }
+
+  .author-article-card-edit-btn {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    z-index: 1;
+    background-color: white;
+    height: 2.5em;
+    display: grid;
+    place-content: center;
+    &:hover,
+    &:focus-visible {
+      background-color: rgb(83, 83, 124);
+      color: white;
+    }
   }
 }

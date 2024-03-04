@@ -27,6 +27,7 @@ export default function AuthorArticlesList({
           key={post.id}
           post={post}
           priority={index < 3}
+          type={type}
         />
       ))}
     </ul>

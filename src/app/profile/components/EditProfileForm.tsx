@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { updateUserAction } from "@/app/_actions/users";
+import { updateUserAction } from "@/app/actions/users";
 import { useFormState } from "react-dom";
 
 type EditProfileForm = { userId: string } & (
