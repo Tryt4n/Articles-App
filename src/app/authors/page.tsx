@@ -13,7 +13,7 @@ export default async function AuthorsPage() {
 
   return (
     <main className="authors-page">
-      <h2>Our Authors</h2>
+      <h1>Our Authors</h1>
       <ul>
         {authors.map((author) => (
           <AuthorCard
