@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import prisma from "@/db/db";
 import { fetchUser } from "@/db/users";
-import AuthorArticlesList from "@/app/_components/AuthorArticlesList/AuthorArticlesList";
+import AuthorArticlesList from "@/app/components/AuthorArticlesList/AuthorArticlesList";
 import type { Metadata } from "next";
 import "./authorPage.css";
 
@@ -11,14 +10,9 @@ export async function generateMetadata({
 }: {
   params: { authorId: string };
 }): Promise<Metadata> {
-  const authorName = await prisma.user.findUnique({
-    where: { id: params.authorId },
-    select: {
-      name: true,
-    },
-  });
+  const author = await fetchUser({ id: params.authorId });
 
-  return { title: authorName?.name };
+  return { title: author.name };
 }
 
 export default async function AuthorPage({ params }: { params: { authorId: string } }) {

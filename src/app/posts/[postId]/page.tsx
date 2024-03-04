@@ -1,5 +1,5 @@
 import React from "react";
-import prisma from "@/db/db";
+import { fetchPost } from "@/db/posts";
 import type { Metadata } from "next/types";
 
 export async function generateMetadata({
@@ -7,16 +7,12 @@ export async function generateMetadata({
 }: {
   params: { postId: string };
 }): Promise<Metadata> {
-  const postName = await prisma.post.findUnique({
-    where: { id: params.postId },
-    select: {
-      title: true,
-    },
-  });
+  const post = await fetchPost({ id: params.postId });
 
-  return { title: postName?.title };
+  return { title: post.title };
 }
 
-export default function page({ params }: { params: { postId: string } }) {
-  return <div>Post id: {params.postId}</div>;
+export default async function page({ params }: { params: { postId: string } }) {
+  const post = await fetchPost({ id: params.postId });
+  return <h2>Post title: {post.title}</h2>;
 }
