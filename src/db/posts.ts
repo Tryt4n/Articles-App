@@ -1,8 +1,8 @@
 import prisma from "./db";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { wait } from "@/app/_helpers/helpers";
-import type { Prisma } from "@prisma/client";
+import { wait } from "@/app/helpers/helpers";
+import type { Prisma, Tag } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
 
@@ -70,3 +70,32 @@ export const fetchPostTags = unstable_cache(
   }),
   ["tags"]
 );
+
+export const editPost = async (
+  post: Pick<Post, "id" | "title" | "content" | "category">,
+  tags: { oldTags: Tag[]; newTags: (Omit<Tag, "id"> & { id: null })[] }
+) => {
+  const tagIds: string[] = [];
+
+  for (const tag of tags.newTags) {
+    const createdTag = await prisma.tag.upsert({
+      where: { name: tag.name },
+      update: {},
+      create: { name: tag.name },
+    });
+
+    tagIds.push(createdTag.id);
+  }
+
+  await prisma.post.update({
+    where: { id: post.id },
+    data: {
+      title: post.title,
+      content: post.content,
+      category: post.category,
+      tags: {
+        create: tagIds.map((tagId) => ({ tagId })),
+      },
+    },
+  });
+};
