@@ -58,6 +58,117 @@ export const fetchPostTags = unstable_cache(
   ["tags"]
 );
 
+export const createPost = async (
+  post: Omit<Post, "id" | "published" | "publishedAt" | "createdAt" | "updatedAt">,
+  postTags?: (Omit<Tag, "id"> & { id: null })[]
+) => {
+  const tagIds: string[] = [];
+
+  if (postTags && postTags.length > 0) {
+    for (const tag of postTags) {
+      const createdTag = await prisma.tag.upsert({
+        where: { name: tag.name },
+        update: {},
+        create: { name: tag.name },
+      });
+
+      tagIds.push(createdTag.id);
+    }
+  }
+
+  await prisma.post.create({
+    data: {
+      authorId: post.authorId,
+      title: post.title,
+      content: post.content,
+      category: post.category,
+      image: post.image,
+      tags: {
+        create: tagIds.map((tagId) => ({ tagId })),
+      },
+    },
+  });
+};
+
+export const publishPost = async (postId: string) => {
+  await prisma.post.update({
+    where: { id: postId },
+    data: {
+      published: true,
+      publishedAt: new Date(),
+    },
+  });
+};
+
+export const createAndPublishPost = async (
+  post: Omit<Post, "id" | "published" | "publishedAt" | "createdAt" | "updatedAt">,
+  authorId: Post["authorId"],
+  postTags?: (Omit<Tag, "id"> & { id: null })[]
+) => {
+  await createPost(post, postTags);
+
+  const createdPost = await prisma.post.findFirst({
+    where: {
+      authorId,
+      title: post.title,
+      content: post.content,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (createdPost) {
+    await publishPost(createdPost.id);
+  }
+};
+
+export const deletePost = async (postId: string, postTags?: Tag[]) => {
+  const postComments = await prisma.comment.findMany({
+    where: {
+      postId: postId,
+    },
+  });
+
+  // Delete all comments related to the post
+  if (postComments.length > 0) {
+    for (const comment of postComments) {
+      await prisma.comment.delete({
+        where: {
+          id: comment.id,
+        },
+      });
+    }
+  }
+
+  // Delete all relationships with tags related to the post
+  if (postTags && postTags.length > 0) {
+    for (const tag of postTags) {
+      const postTag = await prisma.postTag.findUnique({
+        where: {
+          postId_tagId: {
+            postId: postId,
+            tagId: tag.id,
+          },
+        },
+      });
+
+      if (postTag) {
+        await prisma.postTag.delete({
+          where: {
+            postId_tagId: {
+              postId: postId,
+              tagId: tag.id,
+            },
+          },
+        });
+      }
+    }
+  }
+
+  await prisma.post.delete({ where: { id: postId } });
+};
+
 /**
  * Edits a post and updates its relationships with tags.
  *
@@ -110,60 +221,4 @@ export const editPost = async (
       },
     },
   });
-};
-
-export const publishPost = async (postId: string) => {
-  await prisma.post.update({
-    where: { id: postId },
-    data: {
-      published: true,
-      publishedAt: new Date(),
-    },
-  });
-};
-
-export const deletePost = async (postId: string, postTags?: Tag[]) => {
-  const postComments = await prisma.comment.findMany({
-    where: {
-      postId: postId,
-    },
-  });
-
-  // Delete all comments related to the post
-  if (postComments.length > 0) {
-    for (const comment of postComments) {
-      await prisma.comment.delete({
-        where: {
-          id: comment.id,
-        },
-      });
-    }
-  }
-
-  // Delete all relationships with tags related to the post
-  if (postTags && postTags.length > 0) {
-    for (const tag of postTags) {
-      const postTag = await prisma.postTag.findUnique({
-        where: {
-          postId_tagId: {
-            postId: postId,
-            tagId: tag.id,
-          },
-        },
-      });
-
-      if (postTag) {
-        await prisma.postTag.delete({
-          where: {
-            postId_tagId: {
-              postId: postId,
-              tagId: tag.id,
-            },
-          },
-        });
-      }
-    }
-  }
-
-  await prisma.post.delete({ where: { id: postId } });
 };
