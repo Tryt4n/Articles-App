@@ -3,13 +3,13 @@
 import React, { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { editPostAction } from "@/app/actions/posts";
-import { ContentTextArea } from "./ContentTextArea";
-import PostTags from "./PostTags";
-import SelectedCategoryInput from "./SelectedCategoryInput";
-import MarkdownPreview from "./MarkdownPreview";
-import TitleInput from "./TitleInput";
-import SavePostBtn from "./SavePostBtn";
-import PublishDraftBtn from "./PublishDraftBtn";
+import { ContentTextArea } from "./components/ContentTextArea";
+import PostTags from "./components/PostTags";
+import SelectedCategoryInput from "./components/SelectedCategoryInput";
+import MarkdownPreview from "../MarkdownPreview/MarkdownPreview";
+import TitleInput from "./components/TitleInput";
+import SavePostBtn from "./components/SavePostBtn";
+import PublishDraftBtn from "./components/PublishDraftBtn";
 import type { Post } from "@/types/posts";
 
 export type PostFormProps = {

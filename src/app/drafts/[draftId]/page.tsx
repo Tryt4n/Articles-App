@@ -1,7 +1,7 @@
 import React from "react";
 import { fetchPost, fetchPostTags } from "@/db/posts";
 import { format } from "date-fns/format";
-import PostForm from "../components/PostForm";
+import PostForm from "../components/PostForm/PostForm";
 import type { Metadata } from "next/types";
 
 export async function generateMetadata({
