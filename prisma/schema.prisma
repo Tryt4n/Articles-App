@@ -31,7 +31,6 @@ model Post {
   author      User        @relation(fields: [authorId], references: [id])
   category    String      @default("general")
   title       String
-  firstWords  String
   content     String
   image       String
   published   Boolean     @default(false)
