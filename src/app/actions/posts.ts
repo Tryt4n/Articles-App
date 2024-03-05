@@ -1,6 +1,6 @@
 "use server";
 
-import { editPost } from "@/db/posts";
+import { deletePost, editPost, publishPost } from "@/db/posts";
 import { PostSchema } from "@/zod/postSchema";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -68,4 +68,34 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
     revalidatePath(`/posts/${postId}`);
     redirect("/drafts");
   }
+}
+
+export async function publishPostAction(formData: FormData) {
+  const postId = formData.get("post-id") as string;
+
+  await publishPost(postId);
+  revalidatePath("/");
+  revalidatePath("/drafts");
+  revalidatePath(`/drafts/${postId}`);
+  revalidatePath("posts");
+  revalidatePath(`/posts/${postId}`);
+  revalidatePath("/posts/published");
+  redirect("/drafts");
+}
+
+export async function deletePostAction(formData: FormData) {
+  const postId = formData.get("post-id") as string;
+  // const existingTags = JSON.parse(formData.get("existing-post-tags") as string) as Tag[];
+  const existingTagsString = formData.get("existing-post-tags") as string;
+  const existingTags = existingTagsString ? (JSON.parse(existingTagsString) as Tag[]) : [];
+  console.log(postId);
+  console.log(existingTags);
+
+  await deletePost(postId, existingTags);
+  revalidatePath("/");
+  revalidatePath("/drafts");
+  revalidatePath("posts");
+  revalidatePath(`/posts/${postId}`);
+  revalidatePath("/posts/published");
+  redirect("/drafts");
 }
