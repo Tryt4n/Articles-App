@@ -2,6 +2,8 @@ import React from "react";
 import { fetchPost, fetchPostTags } from "@/db/posts";
 import { format } from "date-fns/format";
 import PostForm from "../components/PostForm/PostForm";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import type { Metadata } from "next/types";
 
 export async function generateMetadata({
@@ -17,6 +19,7 @@ export async function generateMetadata({
 export default async function DraftPage({ params }: { params: { draftId: string } }) {
   const post = await fetchPost({ id: params.draftId });
   const postTags = await fetchPostTags({ postId: post.id });
+  const session = await getServerSession(authOptions);
 
   return (
     <>
@@ -28,11 +31,14 @@ export default async function DraftPage({ params }: { params: { draftId: string 
             Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
           </time>
 
-          <PostForm
-            key={params.draftId}
-            post={post}
-            postTags={postTags}
-          />
+          {session?.user && (
+            <PostForm
+              key={params.draftId}
+              post={post}
+              postTags={postTags}
+              authorId={session.user.id}
+            />
+          )}
         </main>
       )}
     </>
