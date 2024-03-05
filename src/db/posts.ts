@@ -49,19 +49,6 @@ export const fetchPostsBySearchParams = unstable_cache(
   ["post", "posts"]
 );
 
-export const fetchAllUserPosts = unstable_cache(
-  cache(async ({ authorId }: { authorId: string }) => {
-    // await wait(1000);
-
-    return prisma.post.findMany({
-      where: {
-        authorId,
-      },
-    }) as unknown as Post[];
-  }),
-  ["posts"]
-);
-
 export const fetchPostTags = unstable_cache(
   cache(async ({ postId }: { postId: string }) => {
     // await wait(1000);
@@ -71,12 +58,24 @@ export const fetchPostTags = unstable_cache(
   ["tags"]
 );
 
+/**
+ * Edits a post and updates its relationships with tags.
+ *
+ * @param post - The post to be edited. It should include the ID, title, content, and category of the post.
+ * @param tags - The tags related to the post. It should include the old tags, new tags to be added, and tags to be removed (optional).
+ *
+ * @returns A promise that resolves when the post has been edited and its relationships with tags have been updated.
+ *
+ * @async
+ * @function
+ */
 export const editPost = async (
   post: Pick<Post, "id" | "title" | "content" | "category">,
-  tags: { oldTags: Tag[]; newTags: (Omit<Tag, "id"> & { id: null })[] }
+  tags: { oldTags: Tag[]; newTags: (Omit<Tag, "id"> & { id: null })[]; tagsToRemove?: Tag[] }
 ) => {
   const tagIds: string[] = [];
 
+  // Create new tags
   for (const tag of tags.newTags) {
     const createdTag = await prisma.tag.upsert({
       where: { name: tag.name },
@@ -87,6 +86,19 @@ export const editPost = async (
     tagIds.push(createdTag.id);
   }
 
+  // Delete relationships with tags to remove if it exists
+  if (tags.tagsToRemove && tags.tagsToRemove.length > 0) {
+    for (const tag of tags.tagsToRemove) {
+      await prisma.postTag.deleteMany({
+        where: {
+          postId: post.id,
+          tagId: tag.id,
+        },
+      });
+    }
+  }
+
+  // Create relationships with new tags
   await prisma.post.update({
     where: { id: post.id },
     data: {
@@ -96,6 +108,29 @@ export const editPost = async (
       tags: {
         create: tagIds.map((tagId) => ({ tagId })),
       },
+    },
+  });
+};
+
+// export const publishPost = unstable_cache(
+//   cache(async (postId: string) => {
+//     await prisma.post.update({
+//       where: { id: postId },
+//       data: {
+//         published: true,
+//         publishedAt: new Date(),
+//       },
+//     });
+//   }),
+//   ["post", "posts"]
+// );
+
+export const publishPost = async (postId: string) => {
+  await prisma.post.update({
+    where: { id: postId },
+    data: {
+      published: true,
+      publishedAt: new Date(),
     },
   });
 };
