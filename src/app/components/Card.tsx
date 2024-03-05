@@ -52,7 +52,7 @@ export default async function Card({
                 ? markSearchedPhrase(post.title)
                 : post.title}
             </h2>
-            <p className="card-subheader">{post.firstWords}</p>
+            <p className="card-subheader">{post.content.substring(0, 50)}</p>
 
             <div className="card-content-inner-wrapper">
               <div className="card-details">

@@ -50,7 +50,7 @@ export async function AuthorsArticlesListCard({
             )}
 
             <h3 className="article-header">{post.title}</h3>
-            <p className="card-subheader">{post.firstWords}</p>
+            <p className="card-subheader">{post.content.substring(0, 50)}</p>
 
             <div className="article-inner-content-wrapper">
               <time
