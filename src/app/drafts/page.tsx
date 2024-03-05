@@ -7,7 +7,7 @@ import AuthorArticlesList from "../components/AuthorArticlesList/AuthorArticlesL
 import type { Metadata } from "next/types";
 
 export const metadata: Metadata = {
-  title: "Drafts",
+  title: "Your Posts",
 };
 
 export default async function DraftsPage() {
@@ -16,21 +16,30 @@ export default async function DraftsPage() {
 
   return (
     <main>
-      <h1>Your Drafts</h1>
+      <h1>Your Posts</h1>
 
       <Link
         href="/drafts/new"
         className="btn"
       >
-        Add new article
+        Create new post
       </Link>
 
-      {user?.posts && (
+      {user && user.posts && user.posts.length > 0 && (
         <>
-          <AuthorArticlesList
-            posts={user.posts}
-            type="drafts"
-          />
+          {user.posts.some((post) => !post.published) && (
+            <article>
+              <h2>Your Drafts</h2>
+              <AuthorArticlesList posts={user.posts.filter((post) => !post.published)} />
+            </article>
+          )}
+
+          {user.posts.some((post) => post.published) && (
+            <article>
+              <h2>Your Published Posts</h2>
+              <AuthorArticlesList posts={user.posts.filter((post) => post.published)} />
+            </article>
+          )}
         </>
       )}
     </main>
