@@ -6,10 +6,11 @@ export const ContentTextArea = forwardRef(InnerComponent);
 type ContentTextAreaProps = {
   value: string;
   setValue: (value: string) => void;
+  error?: string;
 };
 
 function InnerComponent(
-  { value, setValue }: ContentTextAreaProps,
+  { value, setValue, error }: ContentTextAreaProps,
   ref: ForwardedRef<HTMLTextAreaElement>
 ) {
   return (
@@ -25,7 +26,17 @@ function InnerComponent(
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        aria-errormessage={error ? "content-error" : undefined}
+        aria-invalid={!!error}
       />
+      {error && (
+        <strong
+          id="content-error"
+          aria-live="polite"
+        >
+          {error}
+        </strong>
+      )}
     </div>
   );
 }
