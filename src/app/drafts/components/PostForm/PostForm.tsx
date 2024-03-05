@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { useFormState } from "react-dom";
-import { editPostAction } from "@/app/actions/posts";
+import { deletePostAction, editPostAction, publishPostAction } from "@/app/actions/posts";
 import { ContentTextArea } from "./components/ContentTextArea";
 import PostTags from "./components/PostTags";
 import SelectedCategoryInput from "./components/SelectedCategoryInput";
@@ -10,6 +10,7 @@ import MarkdownPreview from "../MarkdownPreview/MarkdownPreview";
 import TitleInput from "./components/TitleInput";
 import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
+import DeletePostBtn from "./components/DeletePostBtn";
 import type { Post } from "@/types/posts";
 
 export type PostFormProps = {
@@ -21,7 +22,7 @@ export type PostFormProps = {
 };
 
 export default function PostForm({ post, postTags }: PostFormProps) {
-  const [errors, action] = useFormState(editPostAction, {
+  const [errors, mainAction] = useFormState(editPostAction, {
     title: undefined,
     content: undefined,
     tags: undefined,
@@ -31,7 +32,7 @@ export default function PostForm({ post, postTags }: PostFormProps) {
 
   return (
     <>
-      <form action={action}>
+      <form action={mainAction}>
         <input
           type="hidden"
           name="post-id"
@@ -66,9 +67,9 @@ export default function PostForm({ post, postTags }: PostFormProps) {
         <SelectedCategoryInput post={post} />
 
         <div>
-          <SavePostBtn />
-          {!post.published && <PublishDraftBtn />}
-          {/*// TODO: Add delete button */}
+          <SavePostBtn formAction={mainAction} />
+          {!post.published && <PublishDraftBtn formAction={publishPostAction} />}
+          <DeletePostBtn formAction={deletePostAction} />
         </div>
       </form>
 
