@@ -24,6 +24,7 @@ export default function PostForm({ post, postTags }: PostFormProps) {
   const [errors, action] = useFormState(editPostAction, {
     title: undefined,
     content: undefined,
+    tags: undefined,
   });
   const [textAreaValue, setTextAreaValue] = useState(post.content);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -45,23 +46,29 @@ export default function PostForm({ post, postTags }: PostFormProps) {
           })}]`}
         />
 
-        <TitleInput title={post.title} />
-        {errors.title && <strong>{errors.title}</strong>}
+        <TitleInput
+          title={post.title}
+          error={errors.title}
+        />
 
-        <PostTags tags={postTags} />
+        <PostTags
+          tags={postTags}
+          error={errors.tags}
+        />
 
         <ContentTextArea
           ref={textAreaRef}
           value={textAreaValue}
           setValue={setTextAreaValue}
+          error={errors.content}
         />
-        {errors.content && <strong>{errors.content}</strong>}
 
         <SelectedCategoryInput post={post} />
 
         <div>
           <SavePostBtn />
           {!post.published && <PublishDraftBtn />}
+          {/*// TODO: Add delete button */}
         </div>
       </form>
 
