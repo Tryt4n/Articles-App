@@ -1,16 +1,18 @@
-import React from "react";
+import React, { type ComponentPropsWithoutRef } from "react";
 import { useFormStatus } from "react-dom";
 
-export default function SavePostBtn() {
-  const { pending } = useFormStatus();
+export default function SavePostBtn({ ...props }: ComponentPropsWithoutRef<"button">) {
+  const { pending, action } = useFormStatus();
+  const isCurrentAction = action === props.formAction;
 
   return (
     <button
       type="submit"
       className="btn"
       disabled={pending}
+      {...props}
     >
-      {pending ? "Saving..." : "Save"}
+      {pending && isCurrentAction ? "Saving..." : "Save"}
     </button>
   );
 }
