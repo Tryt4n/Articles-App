@@ -11,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await fetchPost({ id: params.draftId });
 
-  return { title: post.title };
+  return { title: `Edit - ${post.title}` };
 }
 
 export default async function DraftPage({ params }: { params: { draftId: string } }) {
@@ -29,6 +29,7 @@ export default async function DraftPage({ params }: { params: { draftId: string 
           </time>
 
           <PostForm
+            key={params.draftId}
             post={post}
             postTags={postTags}
           />
