@@ -2,7 +2,7 @@ import React from "react";
 import { postCategories } from "@/app/constants/posts";
 import type { Post } from "@/types/posts";
 
-export default function SelectedCategoryInput({ post }: { post: Post }) {
+export default function SelectedCategoryInput({ category }: { category: Post["category"] }) {
   return (
     <div>
       <label htmlFor="post-category">Selected category:</label>
@@ -10,7 +10,7 @@ export default function SelectedCategoryInput({ post }: { post: Post }) {
         name="post-category"
         id="post-category"
         required
-        defaultValue={post.category}
+        defaultValue={category}
       >
         {postCategories.map((postCategory) => (
           <option
