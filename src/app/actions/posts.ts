@@ -25,7 +25,7 @@ export async function createPostAction(prevState: unknown, formData: FormData) {
     tags,
   };
 
-  const errorMessages = validatePostForm(post);
+  const errorMessages = await validatePostForm(post);
 
   if (errorMessages) {
     return errorMessages;
@@ -113,7 +113,7 @@ export async function createAndPublishPostAction(formData: FormData) {
     tags,
   };
 
-  const errorMessages = validatePostForm(post);
+  const errorMessages = await validatePostForm(post);
 
   if (errorMessages) {
     return errorMessages;

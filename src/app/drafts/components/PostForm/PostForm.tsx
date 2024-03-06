@@ -72,19 +72,19 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
 
         <TitleInput
           title={post?.title || ""}
-          error={errors.title}
+          error={errors?.title}
         />
 
         <PostTags
           tags={postTags}
-          error={errors.tags}
+          error={errors?.tags}
         />
 
         <ContentTextArea
           ref={textAreaRef}
           value={textAreaValue}
           setValue={setTextAreaValue}
-          error={errors.content}
+          error={errors?.content}
         />
 
         <SelectedCategoryInput category={post?.category || "general"} />
