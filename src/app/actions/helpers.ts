@@ -1,5 +1,6 @@
 import { PostSchema } from "@/zod/postSchema";
 import type { Post } from "@/types/posts";
+import { checkIsTitleUnique } from "@/db/posts";
 
 type EdiPostState = Record<"title" | "content" | "tags", string | undefined>;
 
@@ -22,16 +23,23 @@ export function createUniqueTagsArray(tags: string) {
   ];
 }
 
-export function validatePostForm(post: PartialWithRequiredFields) {
+export async function validatePostForm(post: PartialWithRequiredFields) {
+  let errorMessages: EdiPostState = {
+    title: undefined,
+    content: undefined,
+    tags: undefined,
+  };
+
+  const isTitleUnique = await checkIsTitleUnique(post.title);
+
+  if (!isTitleUnique) {
+    errorMessages.title = "The title is already exists. Please choose another title.";
+    return errorMessages;
+  }
+
   const results = PostSchema.safeParse(post);
 
   if (!results.success) {
-    let errorMessages: EdiPostState = {
-      title: undefined,
-      content: undefined,
-      tags: undefined,
-    };
-
     results.error.issues.forEach((issue) => {
       const path = issue.path[0] as keyof EdiPostState;
       errorMessages[path] = issue.message;
