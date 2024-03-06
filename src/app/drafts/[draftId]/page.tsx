@@ -31,6 +31,7 @@ export default async function DraftPage({ params }: { params: { draftId: string 
             Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
           </time>
 
+
           {session?.user && (
             <PostForm
               key={params.draftId}
@@ -39,6 +40,18 @@ export default async function DraftPage({ params }: { params: { draftId: string 
               authorId={session.user.id}
             />
           )}
+
+          {post.publishedAt && (
+            <time dateTime={post.publishedAt.toString()}>
+              Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
+            </time>
+          )}
+
+          <PostForm
+            key={params.draftId}
+            post={post}
+            postTags={postTags}
+          />
         </main>
       )}
     </>
