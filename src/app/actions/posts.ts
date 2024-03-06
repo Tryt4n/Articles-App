@@ -115,7 +115,6 @@ export async function createAndPublishPostAction(formData: FormData) {
     content,
     category,
     image,
-    // image: "https://source.unsplash.com/random/400x200",
     tags,
   };
 
