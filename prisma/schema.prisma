@@ -30,7 +30,7 @@ model Post {
   authorId    String
   author      User        @relation(fields: [authorId], references: [id])
   category    String      @default("general")
-  title       String
+  title       String      @unique
   content     String
   image       String
   published   Boolean     @default(false)
