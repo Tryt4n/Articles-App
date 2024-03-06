@@ -222,3 +222,9 @@ export const editPost = async (
     },
   });
 };
+
+export const checkIsTitleUnique = async (title: string) => {
+  const post = await prisma.post.findUnique({ where: { title } });
+
+  return post === null;
+};
