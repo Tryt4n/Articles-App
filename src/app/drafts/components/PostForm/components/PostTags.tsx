@@ -2,10 +2,10 @@ import React from "react";
 import type { PostFormProps } from "../PostForm";
 
 export default function PostTags({
-  tags,
+  tags = [],
   error,
 }: {
-  tags: PostFormProps["postTags"];
+  tags?: PostFormProps["postTags"];
   error?: string;
 }) {
   return (
