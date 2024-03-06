@@ -181,7 +181,7 @@ export const deletePost = async (postId: string, postTags?: Tag[]) => {
  * @function
  */
 export const editPost = async (
-  post: Pick<Post, "id" | "title" | "content" | "category">,
+  post: Pick<Post, "id" | "title" | "content" | "category" | "image">,
   tags: { oldTags: Tag[]; newTags: (Omit<Tag, "id"> & { id: null })[]; tagsToRemove?: Tag[] }
 ) => {
   const tagIds: string[] = [];
@@ -216,6 +216,7 @@ export const editPost = async (
       title: post.title,
       content: post.content,
       category: post.category,
+      image: post.image,
       tags: {
         create: tagIds.map((tagId) => ({ tagId })),
       },
