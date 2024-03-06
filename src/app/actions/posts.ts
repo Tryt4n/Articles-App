@@ -10,6 +10,7 @@ import type { Tag } from "@prisma/client";
 export async function createPostAction(prevState: unknown, formData: FormData) {
   const authorId = formData.get("author-id") as string;
   const title = formData.get("post-title") as string;
+  const image = formData.get("post-image") as string;
   const content = formData.get("post-content") as string;
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
@@ -21,7 +22,7 @@ export async function createPostAction(prevState: unknown, formData: FormData) {
     title,
     content,
     category,
-    image: "https://source.unsplash.com/random/400x200",
+    image,
     tags,
   };
 
@@ -42,6 +43,8 @@ export async function createPostAction(prevState: unknown, formData: FormData) {
 export async function editPostAction(prevState: unknown, formData: FormData) {
   const postId = formData.get("post-id") as string;
   const title = formData.get("post-title") as string;
+  const originalTitle = formData.get("original-post-title") as string;
+  const image = formData.get("post-image") as string;
   const content = formData.get("post-content") as string;
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
@@ -59,12 +62,13 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
   const post = {
     id: postId,
     title,
+    image,
     content,
     category,
     tags,
   };
 
-  const errorMessages = validatePostForm(post);
+  const errorMessages = await validatePostForm(post, originalTitle);
 
   if (errorMessages) {
     return errorMessages;
@@ -98,6 +102,7 @@ export async function publishPostAction(formData: FormData) {
 export async function createAndPublishPostAction(formData: FormData) {
   const authorId = formData.get("author-id") as string;
   const title = formData.get("post-title") as string;
+  const image = formData.get("post-image") as string;
   const content = formData.get("post-content") as string;
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
@@ -109,7 +114,8 @@ export async function createAndPublishPostAction(formData: FormData) {
     title,
     content,
     category,
-    image: "https://source.unsplash.com/random/400x200",
+    image,
+    // image: "https://source.unsplash.com/random/400x200",
     tags,
   };
 

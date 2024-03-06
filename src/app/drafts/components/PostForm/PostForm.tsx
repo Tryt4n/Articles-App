@@ -14,6 +14,7 @@ import PostTags from "./components/PostTags";
 import SelectedCategoryInput from "./components/SelectedCategoryInput";
 import MarkdownPreview from "../MarkdownPreview/MarkdownPreview";
 import TitleInput from "./components/TitleInput";
+import ImageLinkInput from "./components/ImageLinkInput";
 import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
@@ -61,6 +62,12 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
                 return JSON.stringify(tag);
               })}]`}
             />
+
+            <input
+              type="hidden"
+              name="original-post-title"
+              value={post.title}
+            />
           </>
         )}
 
@@ -74,6 +81,8 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           title={post?.title || ""}
           error={errors?.title}
         />
+
+        <ImageLinkInput link={post?.image || ""} />
 
         <PostTags
           tags={postTags}

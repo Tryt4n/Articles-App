@@ -23,18 +23,20 @@ export function createUniqueTagsArray(tags: string) {
   ];
 }
 
-export async function validatePostForm(post: PartialWithRequiredFields) {
+export async function validatePostForm(post: PartialWithRequiredFields, originalTitle?: string) {
   let errorMessages: EdiPostState = {
     title: undefined,
     content: undefined,
     tags: undefined,
   };
 
-  const isTitleUnique = await checkIsTitleUnique(post.title);
+  if (post.title !== originalTitle) {
+    const isTitleUnique = await checkIsTitleUnique(post.title);
 
-  if (!isTitleUnique) {
-    errorMessages.title = "The title is already exists. Please choose another title.";
-    return errorMessages;
+    if (!isTitleUnique) {
+      errorMessages.title = "The title is already exists. Please choose another title.";
+      return errorMessages;
+    }
   }
 
   const results = PostSchema.safeParse(post);
