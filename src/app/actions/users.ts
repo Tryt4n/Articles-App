@@ -18,18 +18,26 @@ import {
 } from "@/zod/userSchema";
 import type { User } from "@/types/users";
 
+type ErrorKeys = "email" | "username" | "password" | "passwordConfirmation";
+
 export async function signupUserAction(prevState: unknown, formData: FormData) {
   const email = formData.get("signup-email") as string;
   const username = formData.get("signup-username") as string;
   const password = formData.get("signup-password") as string;
   const passwordConfirmation = formData.get("signup-password-confirmation") as string;
 
-  let customErrors: string[] = [];
+  let customErrors: Record<ErrorKeys, string[]> = {
+    email: [],
+    username: [],
+    password: [],
+    passwordConfirmation: [],
+  };
+
   const isEmailUnique = await isNewUserEmailUnique(email);
   const isUsernameUnique = await isNewUserUsernameUnique(username);
 
-  if (!isEmailUnique) customErrors.push("Email is already taken.");
-  if (!isUsernameUnique) customErrors.push("Username is already taken.");
+  if (!isEmailUnique) customErrors.email.push("Email is already taken.");
+  if (!isUsernameUnique) customErrors.username.push("Username is already taken.");
 
   const validationData = {
     email,
@@ -50,12 +58,14 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
     password !== passwordConfirmation
   ) {
     if (!results.success) {
-      const errorMessages = [
-        ...customErrors,
-        ...results.error.issues.map((issue) => issue.message),
-      ];
+      results.error.issues.forEach((issue) => {
+        const field = issue.path[0] as ErrorKeys;
+        if (field in customErrors) {
+          customErrors[field].push(issue.message);
+        }
+      });
 
-      return errorMessages;
+      return customErrors;
     }
   } else {
     // Database will generate the id
