@@ -1,0 +1,66 @@
+.navbar {
+  --gap: 1em;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & ul {
+    display: flex;
+    gap: var(--gap);
+    font-size: var(--fs-header);
+
+    & a {
+      transition: 300ms ease-in-out;
+    }
+
+    & a:hover,
+    & a.active {
+      text-decoration: underline;
+      color: rgb(38, 38, 149);
+    }
+  }
+
+  .auth-container {
+    display: flex;
+    gap: var(--gap);
+    font-size: clamp(1em, 5vw, 1.2em);
+
+    .profile-icon-link {
+      overflow: hidden;
+      border-radius: 50vw;
+      max-width: 50px;
+
+      &:hover {
+        scale: 1.1;
+      }
+      &:hover,
+      &:focus {
+        filter: grayscale(1) drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.5));
+      }
+
+      & img {
+        aspect-ratio: 1;
+        object-fit: cover;
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+}
+
+@media (width < 48em) {
+  .container {
+    padding-block: 1rem;
+  }
+
+  .navbar {
+    align-items: flex-start;
+
+    .auth-container {
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 1em;
+    }
+  }
+}
