@@ -1,0 +1,148 @@
+.post-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--card-border);
+  border-radius: 0.5em;
+
+  & > section {
+    height: 100%;
+  }
+
+  &:has(a:focus-within:not(.post-card-edit-btn)) {
+    outline: 2px solid var(--tx-black);
+    outline-offset: 0.25em;
+  }
+
+  a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+
+    &:hover,
+    &:focus-within:not(.post-card-edit-btn) {
+      .post-card-image {
+        scale: 1.1;
+      }
+
+      .post-card-header {
+        color: rgb(67, 67, 191);
+      }
+    }
+  }
+
+  .post-card-edit-btn {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    z-index: 1;
+    background-color: white;
+    height: 2.5em;
+    display: grid;
+    place-content: center;
+    &:hover,
+    &:focus-visible {
+      background-color: rgb(83, 83, 124);
+      color: white;
+    }
+  }
+
+  .post-card-image-wrapper {
+    overflow: hidden;
+    position: relative;
+    height: 7em;
+
+    @media (width >= 48em) {
+      height: 12em;
+    }
+
+    img {
+      transition: 300ms ease-in-out;
+    }
+  }
+
+  .post-card-content-wrapper {
+    flex-grow: 1;
+    padding: var(--card-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: var(--tx-gray);
+  }
+
+  .post-card-header {
+    margin: 0;
+    margin-bottom: 0.25em;
+    font-size: 1.15em;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    transition: 300ms ease-in-out;
+  }
+
+  .post-card-subheader {
+    font-size: var(--fs-primary);
+    color: var(--tx-card);
+  }
+
+  .post-card-inner-content-wrapper {
+    height: 100%;
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .post-card-details {
+    display: flex;
+    gap: 1rem;
+    font-size: var(--fs-primary);
+  }
+
+  .post-card-avatar-image {
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50vw;
+    aspect-ratio: 1;
+    border: 1ps solid var(--card-border);
+  }
+
+  .post-card-details-inner-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & [title="Author"] {
+      color: rgb(38, 38, 149);
+    }
+  }
+
+  .post-card-details-time {
+    color: rgb(136, 126, 126);
+  }
+
+  .post-card-category-badge {
+    padding: 0.25em 0.5em;
+    border: 1px solid rgb(76, 71, 71);
+    border-radius: 0.25em;
+    font-size: 0.8em;
+    line-height: 1.3;
+    color: gray;
+    text-transform: capitalize;
+  }
+
+  mark {
+    background-color: var(--bg-highlight);
+  }
+}
