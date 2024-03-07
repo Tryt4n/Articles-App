@@ -1,8 +1,8 @@
-import SearchingForm from "./components/SearchingForm";
-import CardsGrid from "./components/CardsGrid";
+import SearchingForm from "./components/SearchingForm/SearchingForm";
+import CardsList from "./components/CardsList/CardsList";
 import type { Metadata } from "next/types";
 import type { filteringOptions, postCategories } from "./constants/posts";
-import "@/app/homePage.css";
+import "@/app/style.css";
 
 export const metadata: Metadata = {
   title: "Blog Posts",
@@ -29,9 +29,11 @@ export default async function HomePage({ searchParams }: SearchProps) {
       </header>
 
       <main className="home-page-main">
+        <h2 className="visually-hidden">Articles</h2>
+
         <SearchingForm searchParams={searchParams} />
 
-        <CardsGrid searchParams={searchParams} />
+        <CardsList searchParams={searchParams} />
       </main>
     </>
   );

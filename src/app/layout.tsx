@@ -1,5 +1,5 @@
 import AuthProvider from "./context/AuthProvider";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./layout.css";
