@@ -26,10 +26,7 @@ export default async function ProfileEditNamePage() {
 
           <EditProfileBtn email={user.email} />
 
-          <EditProfileForm
-            userId={user.id}
-            password={true}
-          />
+          <EditProfileForm userId={user.id} />
         </UserData>
       )}
     </>

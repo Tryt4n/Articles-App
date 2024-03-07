@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, type ComponentProps } from "react";
 
-export default function FilterButton() {
+export default function FilterButton({ ...props }: ComponentProps<"button">) {
   const [buttonText, setButtonText] = useState("Filter");
 
   return (
@@ -10,6 +10,7 @@ export default function FilterButton() {
       type="submit"
       className="btn"
       onClick={() => setButtonText("Filtering...")}
+      {...props}
     >
       {buttonText}
     </button>

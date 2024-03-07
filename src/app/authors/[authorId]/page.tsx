@@ -1,7 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { fetchUser } from "@/db/users";
-import AuthorArticlesList from "@/app/components/AuthorArticlesList/AuthorArticlesList";
+import AuthorCardsList from "@/app/components/AuthorCardsList/AuthorCardsList";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import type { Metadata } from "next";
 import "./authorPage.css";
 
@@ -17,6 +19,7 @@ export async function generateMetadata({
 
 export default async function AuthorPage({ params }: { params: { authorId: string } }) {
   const author = await fetchUser({ id: params.authorId });
+  const session = await getServerSession(authOptions);
 
   return (
     <main className="author-page">
@@ -40,7 +43,10 @@ export default async function AuthorPage({ params }: { params: { authorId: strin
         <article>
           <h2 className="articles-header">Articles written:</h2>
 
-          <AuthorArticlesList posts={author.posts} />
+          <AuthorCardsList
+            posts={author.posts}
+            isAuthor={author.id === session?.user.id}
+          />
         </article>
       )}
     </main>

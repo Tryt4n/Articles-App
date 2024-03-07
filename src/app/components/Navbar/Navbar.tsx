@@ -1,16 +1,19 @@
 import React from "react";
 import Link from "next/link";
-import NavLink from "./NavLink";
-import SignupLink from "./SignupLink";
+import NavLink from "./components/NavLink";
+import SignupLink from "./components/SignupLink";
 import Image from "next/image";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import { authOptions } from "../../api/auth/[...nextauth]/authOptions";
+import "./style.css";
 
 export default async function Navbar() {
   const session = await getServerSession(authOptions);
 
   return (
     <nav className="navbar">
+      <h2 className="visually-hidden">Page Navigation</h2>
+
       <ul>
         <li>
           <NavLink href="/">Home</NavLink>

@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
-import SignupForm from "./SignupForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import "./signupPage.css";
+import SignupForm from "./components/SignupForm";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import "./style.css";
+
 
 export default function SignupPage() {
   const { status } = useSession();
@@ -21,7 +23,8 @@ export default function SignupPage() {
     <>
       {status === "loading" && (
         <main className="container">
-          <h1>Loading...</h1>
+          <h1 className="visually-hidden">Loading page</h1>
+          <LoadingSpinner />
         </main>
       )}
       {status !== "loading" && status !== "authenticated" ? (

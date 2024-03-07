@@ -3,7 +3,7 @@ import Link from "next/link";
 import { fetchUser } from "@/db/users";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import AuthorArticlesList from "../components/AuthorArticlesList/AuthorArticlesList";
+import AuthorCardsList from "../components/AuthorCardsList/AuthorCardsList";
 import type { Metadata } from "next/types";
 
 export const metadata: Metadata = {
@@ -30,14 +30,20 @@ export default async function DraftsPage() {
           {user.posts.some((post) => !post.published) && (
             <article>
               <h2>Your Drafts</h2>
-              <AuthorArticlesList posts={user.posts.filter((post) => !post.published)} />
+              <AuthorCardsList
+                posts={user.posts.filter((post) => !post.published)}
+                isAuthor
+              />
             </article>
           )}
 
           {user.posts.some((post) => post.published) && (
             <article>
               <h2>Your Published Posts</h2>
-              <AuthorArticlesList posts={user.posts.filter((post) => post.published)} />
+              <AuthorCardsList
+                posts={user.posts.filter((post) => post.published)}
+                isAuthor
+              />
             </article>
           )}
         </>

@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
-import Card from "./Card";
-import CardSkeleton from "./CardSkeleton";
-import type { SearchProps } from "../page";
 import { fetchPostsBySearchParams } from "@/db/posts";
+import Card from "../Card/Card";
+import CardSkeleton from "../Card/components/CardSkeleton";
+import type { SearchProps } from "../../page";
+import "./style.css";
 
-export default async function CardsGrid({
+export default async function CardsList({
   searchParams,
 }: {
   searchParams: SearchProps["searchParams"];
@@ -14,11 +15,11 @@ export default async function CardsGrid({
   return (
     <>
       {posts && posts.length === 0 ? (
-        <div className="not-found-text">
+        <div className="cards-grid-not-found-text">
           <strong>No posts found</strong>
         </div>
       ) : (
-        <ul className="cards-list">
+        <ul className="cards-grid">
           <Suspense fallback={<SkeletonCards />}>
             {posts.map((post, index) => (
               <Card

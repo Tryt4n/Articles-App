@@ -3,26 +3,24 @@
 import React from "react";
 import { updateUserAction } from "@/app/actions/users";
 import { useFormState } from "react-dom";
+import FormInput from "@/app/components/FormInput/FormInput";
 
 type EditProfileForm = { userId: string } & (
   | {
       name: string;
       email?: undefined;
-      password?: undefined;
     }
   | {
       name?: undefined;
       email: string;
-      password?: undefined;
     }
   | {
       name?: undefined;
       email?: undefined;
-      password: true | null;
     }
 );
 
-export default function EditProfileForm({ userId, name, email, password }: EditProfileForm) {
+export default function EditProfileForm({ userId, name, email }: EditProfileForm) {
   let type: "name" | "email" | "password";
   let oldValue: string;
   let placeholder: string;
@@ -51,31 +49,34 @@ export default function EditProfileForm({ userId, name, email, password }: EditP
     >
       <div className="profile-edit-form-inner-wrapper">
         <div className="profile-edit-inputs-wrapper">
-          <div className="profile-content-wrapper">
-            <label htmlFor="edit-profile">{type.charAt(0).toUpperCase() + type.slice(1)}</label>
-            <input
-              type={type === "password" ? "password" : type === "email" ? "email" : "text"}
-              name="edit-profile"
-              id="edit-profile"
-              defaultValue={oldValue}
-              minLength={type === "password" ? 8 : 3}
-              maxLength={50}
-              placeholder={placeholder}
-              autoFocus
-            />
-          </div>
+          <FormInput
+            className="profile-content-wrapper"
+            type={type === "name" ? "text" : type}
+            label={`${type.charAt(0).toUpperCase() + type.slice(1)}:`}
+            id="edit-profile"
+            defaultValue={oldValue === "" ? undefined : oldValue}
+            required
+            minLength={type === "password" ? 8 : 3}
+            maxLength={50}
+            placeholder={placeholder}
+            autoFocus
+            aria-invalid={errors && errors.length > 0 ? true : false}
+            aria-errormessage={errors && errors.length > 0 ? `${type}-errors` : undefined}
+          />
+
           {type === "password" && (
-            <div className="profile-content-wrapper">
-              <label htmlFor="edit-profile-password-confirmation">Password confirmation</label>
-              <input
-                type="password"
-                name="edit-profile-password-confirmation"
-                id="edit-profile-password-confirmation"
-                placeholder="Confirm password"
-                minLength={8}
-                maxLength={50}
-              />
-            </div>
+            <FormInput
+              className="profile-content-wrapper"
+              type="password"
+              label="Password confirmation:"
+              id="edit-profile-password-confirmation"
+              placeholder="Confirm password"
+              required
+              minLength={8}
+              maxLength={50}
+              aria-invalid={errors && errors.length > 0 ? true : false}
+              aria-errormessage={errors && errors.length > 0 ? "password-errors" : undefined}
+            />
           )}
         </div>
         <button
@@ -86,7 +87,10 @@ export default function EditProfileForm({ userId, name, email, password }: EditP
         </button>
       </div>
 
-      <ul className="form-errors-list">
+      <ul
+        className="form-errors-list"
+        id={`${type}-errors`}
+      >
         {errors?.map((error) => (
           <li key={error}>
             <strong>{error}</strong>

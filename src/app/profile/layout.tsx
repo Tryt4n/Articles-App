@@ -1,5 +1,5 @@
 import React from "react";
-import "./profilePage.css";
+import "./style.css";
 
 export default function ProfilePageLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -1,0 +1,12 @@
+.cards-grid {
+  display: grid;
+  gap: var(--card-spacing);
+  grid-template-columns: repeat(auto-fit, minmax(22em, 25em));
+  justify-content: center;
+}
+
+.cards-grid-not-found-text {
+  text-align: center;
+  font-size: 1.5em;
+  margin-block: 1em;
+}
