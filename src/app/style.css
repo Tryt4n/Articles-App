@@ -1,0 +1,25 @@
+.home-page-header {
+  text-align: center;
+  margin-inline: auto;
+
+  .home-page-heading {
+    font-size: var(--fs-header);
+    text-wrap: balance;
+  }
+
+  p {
+    max-width: 60ch;
+    margin-inline: inherit;
+    font-size: var(--fs-primary);
+    line-height: 1.6;
+    color: var(--tx-gray);
+  }
+}
+
+.home-page-main {
+  margin-block: 2rem;
+
+  & > * {
+    margin-bottom: 2em;
+  }
+}
