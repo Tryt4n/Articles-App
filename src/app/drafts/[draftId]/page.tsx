@@ -5,6 +5,7 @@ import PostForm from "../components/PostForm/PostForm";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import type { Metadata } from "next/types";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -20,6 +21,10 @@ export default async function DraftPage({ params }: { params: { draftId: string 
   const post = await fetchPost({ id: params.draftId });
   const postTags = await fetchPostTags({ postId: post.id });
   const session = await getServerSession(authOptions);
+
+  if (session?.user.id !== post.authorId) {
+    redirect("/drafts");
+  }
 
   return (
     <>
