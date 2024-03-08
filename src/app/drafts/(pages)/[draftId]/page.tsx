@@ -1,11 +1,11 @@
 import React from "react";
-import { fetchPost, fetchPostTags } from "@/db/posts";
-import { format } from "date-fns/format";
-import PostForm from "../components/PostForm/PostForm";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { fetchPost, fetchPostTags } from "@/db/posts";
+import { format } from "date-fns/format";
+import PostForm from "../../components/PostForm/PostForm";
 import type { Metadata } from "next/types";
-import { redirect } from "next/navigation";
 
 export async function generateMetadata({
   params,

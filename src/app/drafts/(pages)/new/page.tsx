@@ -1,5 +1,5 @@
 import React from "react";
-import PostForm from "../components/PostForm/PostForm";
+import PostForm from "../../components/PostForm/PostForm";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import type { Metadata } from "next/types";
