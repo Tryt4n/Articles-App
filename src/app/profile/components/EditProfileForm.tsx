@@ -3,7 +3,7 @@
 import React from "react";
 import { updateUserAction } from "@/app/actions/users";
 import { useFormState } from "react-dom";
-import FormInput from "@/app/components/FormInput/FormInput";
+import { FormInput } from "@/app/components/FormInput/FormInput";
 
 type EditProfileForm = { userId: string } & (
   | {
