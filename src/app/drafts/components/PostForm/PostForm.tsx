@@ -9,25 +9,35 @@ import {
   editPostAction,
   publishPostAction,
 } from "@/app/actions/posts";
+import { PostFormInput } from "./components/PostFormInput";
 import { ContentTextArea } from "./components/ContentTextArea";
-import PostTags from "./components/PostTags";
-import SelectedCategoryInput from "./components/SelectedCategoryInput";
-import MarkdownPreview from "../MarkdownPreview/MarkdownPreview";
-import TitleInput from "./components/TitleInput";
-import ImageLinkInput from "./components/ImageLinkInput";
+import { SelectedCategoryInput } from "./components/SelectedCategoryInput";
 import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
+import PostPreview from "../PostPreview/PostPreview";
 import type { PostFormProps } from "./types";
+import type { Post } from "@/types/posts";
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, {
     title: undefined,
     content: undefined,
     tags: undefined,
+    image: undefined,
   });
+
+  const [titleValue, setTitleValue] = useState(post?.title || "");
+  const [imageValue, setImageValue] = useState(post?.image || "");
+  const [tagsValue, setTagsValue] = useState(postTags || []);
   const [textAreaValue, setTextAreaValue] = useState(post?.content || "");
+  const [selectedCategoryValue, setSelectedCategoryValue] = useState(post?.category || "general");
+
+  const titleRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const tagsRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const selectedCategoryRef = useRef<HTMLSelectElement>(null);
 
   return (
     <>
@@ -62,16 +72,50 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           value={authorId}
         />
 
-        <TitleInput
-          title={post?.title || ""}
-          error={errors?.title}
+        <PostFormInput
+          type="text"
+          label="Title:"
+          id="title"
+          defaultValue={titleValue}
+          error={errors.title}
+          ref={titleRef}
+          onChange={() => {
+            if (!titleRef.current) return;
+            setTitleValue(titleRef.current.value);
+          }}
         />
 
-        <ImageLinkInput link={post?.image || ""} />
+        <PostFormInput
+          type="text"
+          label="Image Link:"
+          id="image"
+          defaultValue={imageValue}
+          error={errors.image}
+          ref={imageRef}
+          onChange={() => {
+            if (!imageRef.current) return;
+            setImageValue(imageRef.current.value);
+          }}
+        />
 
-        <PostTags
-          tags={postTags}
-          error={errors?.tags}
+        <PostFormInput
+          type="text"
+          label="Add Tags (optional):"
+          id="tags"
+          defaultValue={`${tagsValue
+            .map((tag) => {
+              return tag.name;
+            })
+            .join(" ")} `}
+          error={errors.tags}
+          ref={tagsRef}
+          onChange={() => {
+            if (!tagsRef.current) return;
+            const newTagsValue = tagsRef.current.value
+              .split(" ")
+              .map((tag) => ({ id: tag, name: tag }));
+            setTagsValue(newTagsValue);
+          }}
         />
 
         <ContentTextArea
@@ -81,7 +125,14 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           error={errors?.content}
         />
 
-        <SelectedCategoryInput category={post?.category || "general"} />
+        <SelectedCategoryInput
+          category={selectedCategoryValue}
+          ref={selectedCategoryRef}
+          onChange={() => {
+            if (!selectedCategoryRef.current) return;
+            setSelectedCategoryValue(selectedCategoryRef.current.value as Post["category"]);
+          }}
+        />
 
         <div>
           <SavePostBtn formAction={mainAction} />
@@ -94,7 +145,13 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
         </div>
       </form>
 
-      <MarkdownPreview markdownText={textAreaValue} />
+      <PostPreview
+        title={titleValue}
+        imageSrc={imageValue}
+        tags={tagsValue}
+        category={selectedCategoryValue}
+        markdownText={textAreaValue}
+      />
     </>
   );
 }
