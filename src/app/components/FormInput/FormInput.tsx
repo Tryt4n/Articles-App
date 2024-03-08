@@ -1,20 +1,28 @@
-import React, { type ComponentPropsWithoutRef } from "react";
+import React, { type ComponentProps } from "react";
 
 type FormInputProps = {
   label: string;
   id: string;
   className?: string;
-} & ComponentPropsWithoutRef<"input">;
+  children?: React.ReactNode;
+} & ComponentProps<"input">;
 
-export default function FormInput({ label, id, className, ...props }: FormInputProps) {
+export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>((props, ref) => {
+  const { label, id, className, children, ...inputProps } = props;
+
   return (
     <div className={className}>
       <label htmlFor={id}>{label}</label>
       <input
+        {...inputProps}
         name={id}
         id={id}
-        {...props}
+        ref={ref}
       />
+
+      {children}
     </div>
   );
-}
+});
+
+FormInput.displayName = "FormInput with forwarded ref";
