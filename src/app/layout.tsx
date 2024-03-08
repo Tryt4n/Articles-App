@@ -5,7 +5,7 @@ import "./globals.css";
 import "./layout.css";
 
 export const metadata: Metadata = {
-  title: "Home page",
+  title: "Blog Posts",
   description: "Blog posts project",
 };
 

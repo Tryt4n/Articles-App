@@ -1,12 +1,7 @@
 import SearchingForm from "./components/SearchingForm/SearchingForm";
 import CardsList from "./components/CardsList/CardsList";
-import type { Metadata } from "next/types";
 import type { filteringOptions, postCategories } from "./constants/posts";
 import "@/app/style.css";
-
-export const metadata: Metadata = {
-  title: "Blog Posts",
-};
 
 export type SearchProps = {
   searchParams: {
