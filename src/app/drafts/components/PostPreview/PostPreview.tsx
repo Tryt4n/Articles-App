@@ -1,6 +1,6 @@
 import React from "react";
-import MarkdownPreview from "../MarkdownPreview/MarkdownPreview";
 import Image from "next/image";
+import MarkdownPreview from "./components/MarkdownPreview/MarkdownPreview";
 import type { Post } from "@/types/posts";
 import type { PostTags } from "@/types/tags";
 import "./style.css";
@@ -30,33 +30,42 @@ export default function PostPreview({
   }
 
   return (
-    <section className="markdown-preview">
-      <h2 className="markdown-preview-heading">Post Preview:</h2>
+    <article className="post-preview">
+      <h2 className="post-preview-heading">Post Preview:</h2>
 
-      <h3>{title}</h3>
+      <pre className="post-preview-container">
+        <h1 className="post-preview-inner-heading">{title}</h1>
 
-      <div className="card-image-placeholder">
-        <Image
-          src={isValidUrl(imageSrc) ? imageSrc : "/placeholder-image.png"}
-          alt="Post Image"
-          width={400}
-          height={200}
-          priority
-        />
-      </div>
+        <div className="post-preview-description">
+          {tags.length > 0 && (
+            <ul className="post-preview-tags-list">
+              {tags.map((tag) => {
+                const cleanedTag = tag.name[0] === "#" ? tag.name.slice(1) : tag.name;
+                return <li key={tag.id}>{`#${cleanedTag.replace(/#/g, "")}`}</li>;
+              })}
+            </ul>
+          )}
+          <span
+            title="Category"
+            className="post-preview-category"
+          >
+            Category: {category}
+          </span>
+        </div>
 
-      {tags.length > 0 && (
-        <ul>
-          {tags.map((tag) => {
-            const cleanedTag = tag.name[0] === "#" ? tag.name.slice(1) : tag.name;
-            return <li key={tag.id}>{`#${cleanedTag.replace(/#/g, "")}`}</li>;
-          })}
-        </ul>
-      )}
+        <div className="post-preview-image-wrapper card-image-placeholder">
+          <Image
+            className="post-preview-image"
+            src={isValidUrl(imageSrc) ? imageSrc : "/placeholder-image.png"}
+            alt="Post Image"
+            width={1168}
+            height={400}
+            priority
+          />
+        </div>
 
-      <strong>Category: {category}</strong>
-
-      <MarkdownPreview markdownText={markdownText} />
-    </section>
+        <MarkdownPreview markdownText={markdownText} />
+      </pre>
+    </article>
   );
 }
