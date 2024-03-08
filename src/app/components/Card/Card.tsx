@@ -7,6 +7,7 @@ import FirstWords from "./components/FirstWords";
 import Time from "./components/Time";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
+import type { CardAppearance } from "./types";
 import "./style.css";
 
 export default async function Card({
@@ -19,7 +20,7 @@ export default async function Card({
   post: Post;
   priority: boolean;
   searchParams?: SearchProps["searchParams"];
-  appearance?: "with-author-info" | "without-author-info";
+  appearance?: CardAppearance;
   editAccess?: boolean;
 }) {
   const author = await fetchUser({ id: post.authorId });
@@ -81,13 +82,10 @@ export default async function Card({
                     alt={`${author.name} avatar`}
                     width={40}
                     height={40}
-                    className="post-card-avatar-image card-image-placeholder "
+                    className="post-card-avatar-image card-image-placeholder"
                   />
                   <div className="post-card-details-inner-wrapper">
-                    <span
-                      title="Author"
-                      itemProp="author"
-                    >
+                    <span title="Author">
                       {searchParams &&
                       searchParams.filterBy === "author" &&
                       searchParams.query !== ""
