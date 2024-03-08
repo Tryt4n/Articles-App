@@ -1,5 +1,5 @@
 import React from "react";
-import type { PostFormProps } from "../PostForm";
+import type { PostFormProps } from "../types";
 
 export default function PostTags({
   tags = [],
