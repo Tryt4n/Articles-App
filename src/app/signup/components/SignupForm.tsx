@@ -3,7 +3,7 @@
 import React from "react";
 import { useFormState } from "react-dom";
 import { signupUserAction } from "../../actions/users";
-import FormInput from "../../components/FormInput/FormInput";
+import { FormInput } from "../../components/FormInput/FormInput";
 import CreateButton from "./CreateButton";
 import ErrorsLists from "./ErrorsLists";
 
