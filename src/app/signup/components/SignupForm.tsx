@@ -5,6 +5,7 @@ import { useFormState } from "react-dom";
 import { signupUserAction } from "../../actions/users";
 import FormInput from "../../components/FormInput/FormInput";
 import CreateButton from "./CreateButton";
+import ErrorsLists from "./ErrorsLists";
 
 export default function SignupForm() {
   const [errors, action] = useFormState(signupUserAction, {
@@ -70,30 +71,7 @@ export default function SignupForm() {
         }
       />
 
-      {errors && (
-        <div
-          className="form-errors-list"
-          role="alert"
-          aria-live="polite"
-        >
-          {Object.entries(errors).map(([field, fieldErrors]) => {
-            if (fieldErrors.length > 0) {
-              return (
-                <ul
-                  key={field}
-                  id={`${field}-error`}
-                >
-                  {fieldErrors.map((error, index) => (
-                    <li key={`${field}-${index}`}>
-                      <strong>{error}</strong>
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-          })}
-        </div>
-      )}
+      {errors && <ErrorsLists errors={errors} />}
 
       <CreateButton />
     </form>
