@@ -18,22 +18,7 @@ import ImageLinkInput from "./components/ImageLinkInput";
 import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
-import type { Post } from "@/types/posts";
-
-export type PostFormProps =
-  | {
-      post: Post;
-      postTags: {
-        id: string;
-        name: string;
-      }[];
-      authorId: string;
-    }
-  | {
-      post?: undefined;
-      postTags?: undefined;
-      authorId: string;
-    };
+import type { PostFormProps } from "./types";
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, {
