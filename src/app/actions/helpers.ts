@@ -1,13 +1,14 @@
 import { PostSchema } from "@/zod/postSchema";
-import type { Post } from "@/types/posts";
 import { checkIsTitleUnique } from "@/db/posts";
+import type { Post } from "@/types/posts";
 
-type EdiPostState = Record<"title" | "content" | "tags", string | undefined>;
+type EdiPostState = Record<"title" | "content" | "tags" | "image", string | undefined>;
 
 type RequiredPostProperties = {
   title: Post["title"];
   content: Post["content"];
   tags: string;
+  image: Post["image"];
 };
 
 type PartialWithRequiredFields = RequiredPostProperties & Partial<Post>;
@@ -28,6 +29,7 @@ export async function validatePostForm(post: PartialWithRequiredFields, original
     title: undefined,
     content: undefined,
     tags: undefined,
+    image: undefined,
   };
 
   if (post.title !== originalTitle) {
