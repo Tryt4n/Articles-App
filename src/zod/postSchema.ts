@@ -11,10 +11,12 @@ const max_tag_error = "Tags value cannot be longer than 100 characters.";
 const max_single_tag_error = "Single tag cannot be longer than 30 characters.";
 const special_char_tag_error = "Tags can only contain alphanumeric characters, spaces, and #.";
 
+const image_link_error = "Image link cannot be empty.";
+const image_link_not_url_error = "Image link has to be a valid URL.";
+
 const onlyLettersAndNumbersWithWhiteSpaces = new RegExp(/^[\p{L}\p{N}\s]*$/u);
 const onlyBasicLettersNumbersWhiteSpacesAndHash = new RegExp(/^[\w\s#]*$/);
 
-// Schemas
 export const PostSchema = z.object({
   title: z
     .string()
@@ -28,4 +30,15 @@ export const PostSchema = z.object({
     .max(100, max_tag_error)
     .refine((tags) => tags.split(" ").every((tag) => tag.length <= 30), max_single_tag_error)
     .refine((tags) => onlyBasicLettersNumbersWhiteSpacesAndHash.test(tags), special_char_tag_error),
+  image: z
+    .string()
+    .min(1, image_link_error)
+    .refine((image) => {
+      try {
+        new URL(image);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }, image_link_not_url_error),
 });
