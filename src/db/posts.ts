@@ -1,22 +1,22 @@
 import prisma from "./db";
-import { cache } from "react";
-import { unstable_cache } from "next/cache";
+import { cache as ReactCache } from "react";
+import { unstable_cache as NextCache } from "next/cache";
 import { wait } from "@/app/helpers/helpers";
 import type { Prisma, Tag } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
 
-export const fetchPost = unstable_cache(
-  cache(async ({ id }: { id: string }) => {
-    await wait(1000);
+export const fetchPost = NextCache(
+  ReactCache(async ({ id }: { id: string }) => {
+    // await wait(1000);
 
     return prisma.post.findUnique({ where: { id } }) as unknown as Post;
   }),
   ["post"]
 );
 
-export const fetchPostsBySearchParams = unstable_cache(
-  cache(async ({ searchParams }: SearchProps) => {
+export const fetchPostsBySearchParams = NextCache(
+  ReactCache(async ({ searchParams }: SearchProps) => {
     // await wait(1000);
 
     const { query, filterBy, category } = searchParams;
@@ -49,8 +49,8 @@ export const fetchPostsBySearchParams = unstable_cache(
   ["post", "posts"]
 );
 
-export const fetchPostTags = unstable_cache(
-  cache(async ({ postId }: { postId: string }) => {
+export const fetchPostTags = NextCache(
+  ReactCache(async ({ postId }: { postId: string }) => {
     // await wait(1000);
 
     return prisma.tag.findMany({ where: { posts: { some: { postId } } } });

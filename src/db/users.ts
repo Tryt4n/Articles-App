@@ -1,12 +1,12 @@
 import prisma from "./db";
 import { Prisma } from "@prisma/client";
-import { cache } from "react";
-import { unstable_cache } from "next/cache";
+import { cache as ReactCache } from "react";
+import { unstable_cache as NextCache } from "next/cache";
 import { wait } from "@/app/helpers/helpers";
 import type { User, UserRole } from "@/types/users";
 
-export const fetchUser = unstable_cache(
-  cache(async ({ id }: { id: string }) => {
+export const fetchUser = NextCache(
+  ReactCache(async ({ id }: { id: string }) => {
     // await wait(1000);
 
     const user = prisma.user.findUnique({
@@ -31,8 +31,8 @@ export const fetchUser = unstable_cache(
   ["user"]
 );
 
-export const fetchAllAuthors = unstable_cache(
-  cache(async () => {
+export const fetchAllAuthors = NextCache(
+  ReactCache(async () => {
     // await wait(1000);
 
     const authors = await prisma.user.findMany({
