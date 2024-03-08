@@ -28,29 +28,25 @@ export default async function DraftPage({ params }: { params: { draftId: string 
 
   return (
     <>
-      {post && (
-        <main>
-          <h1>{post.title}</h1>
+      <h1 aria-label="Post title">{post.title}</h1>
 
-          <time dateTime={post.createdAt.toString()}>
-            Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
-          </time>
+      <time dateTime={post.createdAt.toString()}>
+        Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
+      </time>
 
-          {session?.user && (
-            <PostForm
-              key={params.draftId}
-              post={post}
-              postTags={postTags}
-              authorId={session.user.id}
-            />
-          )}
+      {session?.user && (
+        <PostForm
+          key={params.draftId}
+          post={post}
+          postTags={postTags}
+          authorId={session.user.id}
+        />
+      )}
 
-          {post.publishedAt && (
-            <time dateTime={post.publishedAt.toString()}>
-              Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
-            </time>
-          )}
-        </main>
+      {post.publishedAt && (
+        <time dateTime={post.publishedAt.toString()}>
+          Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
+        </time>
       )}
     </>
   );

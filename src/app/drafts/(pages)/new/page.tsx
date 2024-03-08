@@ -12,10 +12,10 @@ export default async function NewPostPage() {
   const session = await getServerSession(authOptions);
 
   return (
-    <main>
+    <>
       <h1>New Post</h1>
 
       {session?.user && <PostForm authorId={session.user.id} />}
-    </main>
+    </>
   );
 }
