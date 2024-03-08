@@ -7,6 +7,16 @@ export default function MarkdownPreview({ markdownText }: { markdownText: string
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       disallowedElements={["h1"]}
+      className="markdown-preview"
+      components={{
+        a: ({ node, ...props }) => (
+          <a
+            {...props}
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+        ),
+      }}
     >
       {markdownText}
     </ReactMarkdown>
