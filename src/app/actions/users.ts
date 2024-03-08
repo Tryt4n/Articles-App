@@ -17,8 +17,7 @@ import {
   SignupSchema,
 } from "@/zod/userSchema";
 import type { User } from "@/types/users";
-
-type ErrorKeys = "email" | "username" | "password" | "passwordConfirmation";
+import type { ErrorKeys } from "./types";
 
 export async function signupUserAction(prevState: unknown, formData: FormData) {
   const email = formData.get("signup-email") as string;
