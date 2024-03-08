@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { type ComponentPropsWithoutRef } from "react";
 import { useFormStatus } from "react-dom";
 
-export default function CreateButton() {
+export default function CreateButton({ ...props }: ComponentPropsWithoutRef<"button">) {
   const { pending } = useFormStatus();
 
   return (
     <button
+      {...props}
       type="submit"
       className="btn"
       disabled={pending}
