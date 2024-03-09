@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import {
   createAndPublishPostAction,
@@ -9,6 +9,7 @@ import {
   editPostAction,
   publishPostAction,
 } from "@/app/actions/posts";
+import Link from "next/link";
 import { PostFormInput } from "./components/PostFormInput";
 import { ContentTextArea } from "./components/ContentTextArea";
 import { SelectedCategoryInput } from "./components/SelectedCategoryInput";
@@ -18,6 +19,7 @@ import DeletePostBtn from "./components/DeletePostBtn";
 import PostPreview from "../PostPreview/PostPreview";
 import type { PostFormProps } from "./types";
 import type { Post } from "@/types/posts";
+import "./style.css";
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, {
@@ -38,6 +40,18 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const tagsRef = useRef<HTMLInputElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const selectedCategoryRef = useRef<HTMLSelectElement>(null);
+
+  useEffect(() => {
+    const data = {
+      title: titleValue,
+      imageSrc: imageValue,
+      tags: tagsValue,
+      category: selectedCategoryValue,
+      markdownText: textAreaValue,
+    };
+
+    localStorage.setItem("live-preview-data", JSON.stringify(data));
+  }, [imageValue, selectedCategoryValue, tagsValue, textAreaValue, titleValue]);
 
   return (
     <>
@@ -77,6 +91,7 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           label="Title:"
           id="title"
           defaultValue={titleValue}
+          required
           error={errors.title}
           ref={titleRef}
           onChange={() => {
@@ -90,6 +105,7 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           label="Image Link:"
           id="image"
           defaultValue={imageValue}
+          required
           error={errors.image}
           ref={imageRef}
           onChange={() => {
@@ -106,13 +122,14 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
             .map((tag) => {
               return tag.name;
             })
-            .join(" ")} `}
+            .join(" ")}${tagsValue.length > 0 ? " " : ""}`} // Add space if there are tags
           error={errors.tags}
           ref={tagsRef}
           onChange={() => {
             if (!tagsRef.current) return;
             const newTagsValue = tagsRef.current.value
               .split(" ")
+              .filter((tag) => tag.trim() !== "") // Ignore empty tags
               .map((tag) => ({ id: tag, name: tag }));
             setTagsValue(newTagsValue);
           }}
@@ -142,16 +159,31 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           )}
 
           {post && <DeletePostBtn formAction={deletePostAction} />}
+
+          <Link
+            className="btn"
+            href={"/post-preview"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See Live Preview
+          </Link>
         </div>
       </form>
 
-      <PostPreview
-        title={titleValue}
-        imageSrc={imageValue}
-        tags={tagsValue}
-        category={selectedCategoryValue}
-        markdownText={textAreaValue}
-      />
+      <article>
+        <h2>Post Preview:</h2>
+
+        <div className="form-post-preview">
+          <PostPreview
+            title={titleValue}
+            imageSrc={imageValue}
+            tags={tagsValue}
+            category={selectedCategoryValue}
+            markdownText={textAreaValue}
+          />
+        </div>
+      </article>
     </>
   );
 }
