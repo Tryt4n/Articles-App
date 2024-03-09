@@ -55,7 +55,10 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
 
   return (
     <>
-      <form action={mainAction}>
+      <form
+        action={mainAction}
+        className="post-form"
+      >
         {post && (
           <>
             <input
@@ -135,13 +138,6 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           }}
         />
 
-        <ContentTextArea
-          ref={textAreaRef}
-          value={textAreaValue}
-          setValue={setTextAreaValue}
-          error={errors?.content}
-        />
-
         <SelectedCategoryInput
           category={selectedCategoryValue}
           ref={selectedCategoryRef}
@@ -151,7 +147,14 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           }}
         />
 
-        <div>
+        <ContentTextArea
+          ref={textAreaRef}
+          value={textAreaValue}
+          setValue={setTextAreaValue}
+          error={errors?.content}
+        />
+
+        <div className="post-form-btns-container">
           <SavePostBtn formAction={mainAction} />
 
           {!post?.published && (
@@ -171,10 +174,10 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
         </div>
       </form>
 
-      <article>
+      <article className="post-form-preview-container">
         <h2>Post Preview:</h2>
 
-        <div className="form-post-preview">
+        <div className="post-form-preview">
           <PostPreview
             title={titleValue}
             imageSrc={imageValue}
