@@ -1,5 +1,5 @@
 import { PostSchema } from "@/zod/postSchema";
-import { checkIsTitleUnique } from "@/db/posts";
+import { checkIsTitleUnique, fetchPost, fetchPostTags } from "@/db/posts";
 import type { Post } from "@/types/posts";
 
 type EdiPostState = Record<"title" | "content" | "tags" | "image", string | undefined>;
@@ -53,4 +53,30 @@ export async function validatePostForm(post: PartialWithRequiredFields, original
   }
 
   return null;
+}
+
+export async function checkIfPostHasChanged(
+  checkedPost: PartialWithRequiredFields,
+  checkedTags: string[]
+) {
+  const originalPost = checkedPost.id && (await fetchPost({ id: checkedPost.id }));
+  const originalPostTags = checkedPost.id && (await fetchPostTags({ postId: checkedPost.id }));
+
+  if (!originalPost || !originalPostTags) return false;
+
+  const tagsAreDifferent =
+    originalPostTags.length !== checkedTags.length ||
+    originalPostTags.some((post, index) => post.name !== checkedTags[index]);
+
+  if (
+    originalPost.title !== checkedPost.title ||
+    originalPost.image !== checkedPost.image ||
+    originalPost.content !== checkedPost.content ||
+    originalPost.category !== checkedPost.category ||
+    (originalPostTags && tagsAreDifferent)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 }
