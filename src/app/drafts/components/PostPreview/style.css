@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10%;
+    gap: 1.5em;
     flex-wrap: wrap-reverse;
   }
 
@@ -92,8 +92,14 @@
   }
 
   pre:has(code:not([class^="language"])) {
+    --pre-margin: 1em;
+
+    overflow-x: auto;
+    width: calc(100% - (2 * var(--pre-margin)));
+    margin: var(--pre-margin);
     background-color: hsla(0, 0%, 50%, 0.25);
-    margin: 1em;
+    white-space: pre;
+    line-height: 1.5;
   }
 
   code:not(pre > code:not([class^="language"])):not([class^="language"]) {
