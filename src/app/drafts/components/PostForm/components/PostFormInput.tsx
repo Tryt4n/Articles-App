@@ -25,6 +25,7 @@ export const PostFormInput = React.forwardRef<HTMLInputElement, PostFormInputPro
         {error && (
           <strong
             id={`${id}-error`}
+            className="form-input-error"
             aria-live="polite"
           >
             {error}
