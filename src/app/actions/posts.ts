@@ -1,9 +1,17 @@
 "use server";
 
-import { createAndPublishPost, createPost, deletePost, editPost, publishPost } from "@/db/posts";
+import {
+  createAndPublishPost,
+  createPost,
+  deletePost,
+  editPost,
+  fetchPost,
+  fetchPostTags,
+  publishPost,
+} from "@/db/posts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createUniqueTagsArray, validatePostForm } from "./helpers";
+import { checkIfPostHasChanged, createUniqueTagsArray, validatePostForm } from "./helpers";
 import type { PostCategories } from "@/types/posts";
 import type { Tag } from "@prisma/client";
 
@@ -73,14 +81,19 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
   if (errorMessages) {
     return errorMessages;
   } else {
-    editPost(post, {
-      oldTags: existingTags,
-      newTags: uniqueTags,
-      tagsToRemove: tagsToRemove.length > 0 ? tagsToRemove : undefined,
-    });
-    revalidatePath("/drafts");
-    revalidatePath(`/drafts/${postId}`);
-    revalidatePath(`/posts/${postId}`);
+    const hasChanged = await checkIfPostHasChanged(post, tagsArray);
+
+    if (hasChanged) {
+      editPost(post, {
+        oldTags: existingTags,
+        newTags: uniqueTags,
+        tagsToRemove: tagsToRemove.length > 0 ? tagsToRemove : undefined,
+      });
+      revalidatePath("/drafts");
+      revalidatePath(`/drafts/${postId}`);
+      revalidatePath(`/posts/${postId}`);
+    }
+
     redirect("/drafts");
   }
 }
