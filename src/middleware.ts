@@ -7,7 +7,7 @@ export default withAuth(
       return NextResponse.rewrite(new URL("/", req.url));
     }
     if (
-      req.nextUrl.pathname.startsWith("/drafts") &&
+      req.nextUrl.pathname.startsWith("/drafts" || "/post-preview") &&
       req.nextauth.token?.role !== "moderator" &&
       req.nextauth.token?.role !== "admin"
     ) {
@@ -33,5 +33,6 @@ export const config = {
     "/profile/edit/email",
     "/profile/edit/password",
     "/dashboard",
+    "/post-preview",
   ],
 };
