@@ -15,7 +15,6 @@ export const PostFormInput = React.forwardRef<HTMLInputElement, PostFormInputPro
         label={label}
         id={`post-${id}`}
         type={type}
-        required
         minLength={1}
         maxLength={100}
         defaultValue={defaultValue}
