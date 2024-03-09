@@ -30,9 +30,17 @@ export default async function DraftPage({ params }: { params: { draftId: string 
     <>
       <h1 aria-label="Post title">{post.title}</h1>
 
-      <time dateTime={post.createdAt.toString()}>
-        Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
-      </time>
+      <div>
+        <time dateTime={post.createdAt.toString()}>
+          Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
+        </time>
+
+        {post.publishedAt && (
+          <time dateTime={post.publishedAt.toString()}>
+            Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
+          </time>
+        )}
+      </div>
 
       {session?.user && (
         <PostForm
@@ -41,12 +49,6 @@ export default async function DraftPage({ params }: { params: { draftId: string 
           postTags={postTags}
           authorId={session.user.id}
         />
-      )}
-
-      {post.publishedAt && (
-        <time dateTime={post.publishedAt.toString()}>
-          Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
-        </time>
       )}
     </>
   );
