@@ -5,7 +5,7 @@ import type { Post } from "@/types/posts";
 import type { PostTags } from "@/types/tags";
 import "./style.css";
 
-type PostPreviewProps = {
+export type PostPreviewProps = {
   title: Post["title"];
   imageSrc: Post["image"];
   tags: PostTags;
@@ -29,43 +29,54 @@ export default function PostPreview({
     }
   }
 
+  const checkedImgSrc = isValidUrl(imageSrc);
+
   return (
-    <article className="post-preview">
-      <h2 className="post-preview-heading">Post Preview:</h2>
+    <pre className="post-preview">
+      <h1 className="post-preview-inner-heading">{title}</h1>
 
-      <pre className="post-preview-container">
-        <h1 className="post-preview-inner-heading">{title}</h1>
+      <div className="post-preview-description">
+        {tags.length > 0 && (
+          <ul className="post-preview-tags-list">
+            {tags.map((tag) => {
+              if (tag.name[0] !== "#" && tag.name.replace(/#/g, "") === "") return; // Skip empty tags
 
-        <div className="post-preview-description">
-          {tags.length > 0 && (
-            <ul className="post-preview-tags-list">
-              {tags.map((tag) => {
-                const cleanedTag = tag.name[0] === "#" ? tag.name.slice(1) : tag.name;
-                return <li key={tag.id}>{`#${cleanedTag.replace(/#/g, "")}`}</li>;
-              })}
-            </ul>
+              const cleanedTag = tag.name[0] === "#" ? tag.name.slice(1) : tag.name;
+              return <li key={tag.id}>{`#${cleanedTag.replace(/#/g, "")}`}</li>; // Remove any extra # characters
+            })}
+          </ul>
+        )}
+        <span
+          title="Category"
+          className="post-preview-category"
+        >
+          Category: {category}
+        </span>
+      </div>
+
+      <div
+        className="post-preview-image-wrapper card-image-placeholder"
+        data-placeholder-text={
+          checkedImgSrc
+            ? undefined
+            : "If the image path passed is correct, your image will be located here."
+        }
+      >
+        <>
+          {imageSrc && checkedImgSrc && (
+            <Image
+              className="post-preview-image"
+              src={imageSrc}
+              alt="Post Image"
+              width={1168}
+              height={400}
+              priority
+            />
           )}
-          <span
-            title="Category"
-            className="post-preview-category"
-          >
-            Category: {category}
-          </span>
-        </div>
+        </>
+      </div>
 
-        <div className="post-preview-image-wrapper card-image-placeholder">
-          <Image
-            className="post-preview-image"
-            src={isValidUrl(imageSrc) ? imageSrc : "/placeholder-image.png"}
-            alt="Post Image"
-            width={1168}
-            height={400}
-            priority
-          />
-        </div>
-
-        <MarkdownPreview markdownText={markdownText} />
-      </pre>
-    </article>
+      <MarkdownPreview markdownText={markdownText} />
+    </pre>
   );
 }
