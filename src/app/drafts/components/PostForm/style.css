@@ -1,0 +1,5 @@
+.form-post-preview {
+  padding: 1em;
+  border: 1px solid var(--card-border);
+  border-radius: 1em;
+}
