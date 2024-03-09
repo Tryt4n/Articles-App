@@ -1,5 +1,39 @@
-.form-post-preview {
-  padding: 1em;
-  border: 1px solid var(--card-border);
-  border-radius: 1em;
+.post-form {
+  margin-block: 1em;
+
+  & > * {
+    margin-bottom: 1em;
+  }
+
+  label {
+    display: block;
+    max-width: max-content;
+    margin-bottom: 0.15em;
+    font-weight: bold;
+  }
+
+  .form-input-error {
+    display: block;
+    max-width: max-content;
+    margin-top: 0.25em;
+    font-size: 0.875em;
+    color: var(--tx-warning);
+  }
+}
+
+.post-form-btns-container {
+  margin-block: 1em;
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+}
+
+.post-form-preview-container {
+  margin-block: 3em;
+
+  .post-form-preview {
+    padding: 1em;
+    border: 1px solid var(--card-border);
+    border-radius: 1em;
+  }
 }
