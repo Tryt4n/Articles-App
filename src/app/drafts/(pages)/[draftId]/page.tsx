@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = await fetchPost({ id: params.draftId });
 
-  return { title: `Edit - ${post.title}` };
+  return { title: `Edit Post - ${post.title}` };
 }
 
 export default async function DraftPage({ params }: { params: { draftId: string } }) {
@@ -28,16 +28,29 @@ export default async function DraftPage({ params }: { params: { draftId: string 
 
   return (
     <>
-      <h1 aria-label="Post title">{post.title}</h1>
+      <h1 aria-label="Post title">Current Post: {post.title}</h1>
 
-      <div>
+      <div className="post-times-container">
         <time dateTime={post.createdAt.toString()}>
-          Post created at: {format(post.createdAt, "H:mm, dd.MM.yyyy")}
+          Post created at:&nbsp;
+          <span className="post-inner-time-text">{format(post.createdAt, "H:mm, dd.MM.yyyy")}</span>
         </time>
 
         {post.publishedAt && (
           <time dateTime={post.publishedAt.toString()}>
-            Post published at: {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
+            Post published at:&nbsp;
+            <span className="post-inner-time-text">
+              {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
+            </span>
+          </time>
+        )}
+
+        {post.updatedAt && post.updatedAt !== post.createdAt && (
+          <time dateTime={post.updatedAt.toString()}>
+            Last edit at:&nbsp;
+            <span className="post-inner-time-text">
+              {format(post.updatedAt, "H:mm, dd.MM.yyyy")}
+            </span>
           </time>
         )}
       </div>
