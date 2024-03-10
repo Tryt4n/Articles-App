@@ -6,7 +6,7 @@
   font-size: 0.875em;
   letter-spacing: 0.05em;
 
-  .post-inner-time-text {
+  .post-inner-time-text > span {
     font-weight: bold;
     letter-spacing: normal;
   }
