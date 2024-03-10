@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Tags from "./components/Tags";
 import FirstWords from "./components/FirstWords";
-import Time from "./components/Time";
+import Time from "../Time/Time";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
 import type { CardAppearance } from "./types";
@@ -90,14 +90,20 @@ export default async function Card({
                       searchParams.filterBy === "author" &&
                       searchParams.query !== ""
                         ? markSearchedPhrase(author.name)
-                        : author!.name}
+                        : author.name}
                     </span>
 
-                    <Time time={post.publishedAt!} />
+                    <Time
+                      time={post.publishedAt!}
+                      className="post-card-details-time"
+                    />
                   </div>
                 </div>
               ) : (
-                <Time time={post.publishedAt!} />
+                <Time
+                  time={post.publishedAt!}
+                  className="post-card-details-time"
+                />
               )}
 
               <p
