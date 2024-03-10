@@ -17,8 +17,9 @@ import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
 import PostPreview from "../PostPreview/PostPreview";
+import { type PostProps } from "@/app/components/Post/Post";
 import type { PostFormProps } from "./types";
-import type { Post } from "@/types/posts";
+import type { Post as PostType } from "@/types/posts";
 import "./style.css";
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
@@ -42,12 +43,12 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const selectedCategoryRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
-    const data = {
+    const data: PostProps = {
       title: titleValue,
       imageSrc: imageValue,
       tags: tagsValue,
       category: selectedCategoryValue,
-      markdownText: textAreaValue,
+      content: textAreaValue,
     };
 
     localStorage.setItem("live-preview-data", JSON.stringify(data));
@@ -88,6 +89,14 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           name="author-id"
           value={authorId}
         />
+
+        <Link
+          className="btn post-form-preview-link"
+          href={"/post-preview"}
+          target="_blank"
+        >
+          Click to See Live Preview
+        </Link>
 
         <PostFormInput
           type="text"
@@ -145,7 +154,7 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           ref={selectedCategoryRef}
           onChange={() => {
             if (!selectedCategoryRef.current) return;
-            setSelectedCategoryValue(selectedCategoryRef.current.value as Post["category"]);
+            setSelectedCategoryValue(selectedCategoryRef.current.value as PostType["category"]);
           }}
         />
 
@@ -164,30 +173,18 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           )}
 
           {post && <DeletePostBtn formAction={deletePostAction} />}
-
-          <Link
-            className="btn"
-            href={"/post-preview"}
-            target="_blank"
-          >
-            See Live Preview
-          </Link>
         </div>
       </form>
 
-      <article className="post-form-preview-container">
-        <h2>Post Preview:</h2>
-
-        <div className="post-form-preview">
-          <PostPreview
-            title={titleValue}
-            imageSrc={imageValue}
-            tags={tagsValue}
-            category={selectedCategoryValue}
-            markdownText={textAreaValue}
-          />
-        </div>
-      </article>
+      <PostPreview
+        postData={{
+          title: titleValue,
+          imageSrc: imageValue,
+          tags: tagsValue,
+          category: selectedCategoryValue,
+          content: textAreaValue,
+        }}
+      />
     </>
   );
 }
