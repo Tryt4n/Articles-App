@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { fetchPost, fetchPostTags } from "@/db/posts";
-import { format } from "date-fns/format";
 import PostForm from "../../components/PostForm/PostForm";
+import Time from "@/app/components/Time/Time";
 import type { Metadata } from "next/types";
 
 export async function generateMetadata({
@@ -31,28 +31,35 @@ export default async function DraftPage({ params }: { params: { draftId: string 
       <h1 aria-label="Post title">Current Post: {post.title}</h1>
 
       <div className="post-times-container">
-        <time dateTime={post.createdAt.toString()}>
+        <Time
+          time={post.createdAt}
+          timeFormat="H:mm, dd.MM.yyyy"
+          className="post-inner-time-text"
+        >
           Post created at:&nbsp;
-          <span className="post-inner-time-text">{format(post.createdAt, "H:mm, dd.MM.yyyy")}</span>
-        </time>
+        </Time>
 
         {post.publishedAt && (
-          <time dateTime={post.publishedAt.toString()}>
+          <Time
+            time={post.publishedAt}
+            timeFormat="H:mm, dd.MM.yyyy"
+            className="post-inner-time-text"
+          >
             Post published at:&nbsp;
-            <span className="post-inner-time-text">
-              {format(post.publishedAt, "H:mm, dd.MM.yyyy")}
-            </span>
-          </time>
+          </Time>
         )}
 
         {post.updatedAt && post.updatedAt !== post.createdAt && (
-          <time dateTime={post.updatedAt.toString()}>
+          <Time
+            time={post.updatedAt}
+            timeFormat="H:mm, dd.MM.yyyy"
+            className="post-inner-time-text"
+          >
             Last edit at:&nbsp;
-            <span className="post-inner-time-text">
-              {format(post.updatedAt, "H:mm, dd.MM.yyyy")}
-            </span>
-          </time>
+          </Time>
         )}
+
+        {!post.published && <strong>The post is not published yet.</strong>}
       </div>
 
       {session?.user && (
