@@ -17,7 +17,7 @@
     & a:hover,
     & a.active {
       text-decoration: underline;
-      color: rgb(38, 38, 149);
+      color: var(--tx-link);
     }
   }
 

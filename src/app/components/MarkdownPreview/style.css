@@ -42,10 +42,10 @@
 
   a {
     text-decoration: underline;
-    color: rgb(38, 38, 149);
+    color: var(--tx-link);
 
     &:visited {
-      color: rgb(128, 0, 128);
+      color: var(--tx-link-visited);
     }
   }
 
@@ -92,8 +92,8 @@
     --border-thickness: 2px;
     --border-style: solid;
 
+    margin-inline: auto;
     border-collapse: collapse;
-    border-top: var(--border-thickness) var(--border-style) var(--border-color);
     word-wrap: break-word;
     word-break: break-all;
 
