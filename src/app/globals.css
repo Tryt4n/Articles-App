@@ -4,6 +4,8 @@
   --tx-gray: #696969;
   --tx-card: rgb(113, 107, 107);
   --tx-warning: #ff1659;
+  --tx-link: rgb(38, 38, 149);
+  --tx-link-visited: rgb(128, 0, 128);
   --card-border: rgb(233, 224, 224);
   --bg-highlight: hsla(29, 100%, 60%, 0.9);
 
