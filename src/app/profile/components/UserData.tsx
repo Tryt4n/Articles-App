@@ -42,7 +42,7 @@ export default function UserData({ user, children }: { user: User; children: Rea
                       <time dateTime={displayDate}>
                         {displayText} {displayDate}
                       </time>
-                      <Link href={`/posts/${comment.postId}#${comment.id}`}>Click to see</Link>
+                      <Link href={`/post/${comment.postId}#${comment.id}`}>Click to see</Link>
                     </li>
                   );
                 })}

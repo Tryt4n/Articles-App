@@ -51,7 +51,7 @@ export default async function Card({
       )}
 
       <section>
-        <Link href={`/posts/${post.id}`}>
+        <Link href={`/post/${post.id}`}>
           <div className="post-card-image-wrapper card-image-placeholder">
             <Image
               src={post.image}
