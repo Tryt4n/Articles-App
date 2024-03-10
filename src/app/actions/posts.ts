@@ -83,7 +83,7 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
       });
       revalidatePath("/drafts");
       revalidatePath(`/drafts/${postId}`);
-      revalidatePath(`/posts/${postId}`);
+      revalidatePath(`/post/${postId}`);
     }
 
     redirect("/drafts");
@@ -98,8 +98,8 @@ export async function publishPostAction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/drafts");
   revalidatePath(`/drafts/${postId}`);
-  revalidatePath(`/posts/${postId}`);
-  revalidatePath("/posts/published");
+  revalidatePath(`/post/${postId}`);
+  revalidatePath("/post/published");
   revalidatePath(`/author/${authorId}`);
   redirect("/drafts");
 }
@@ -148,7 +148,7 @@ export async function deletePostAction(formData: FormData) {
   await deletePost(postId, existingTags);
   revalidatePath("/");
   revalidatePath("/drafts");
-  revalidatePath(`/posts/${postId}`);
-  revalidatePath("/posts/published");
+  revalidatePath(`/post/${postId}`);
+  revalidatePath("/post/published");
   redirect("/drafts");
 }
