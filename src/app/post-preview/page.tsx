@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import PostPreview, {
-  type PostPreviewProps,
-} from "@/app/drafts/components/PostPreview/PostPreview";
+import Post, { type PostProps } from "../components/Post/Post";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import "./style.css";
 
 export default function PostPreviewPage() {
-  const [parsedData, setParsedData] = useState<PostPreviewProps | null>(null);
+  const [parsedData, setParsedData] = useState<PostProps | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,13 +39,15 @@ export default function PostPreviewPage() {
   return (
     <>
       {parsedData ? (
-        <PostPreview
-          title={parsedData.title}
-          imageSrc={parsedData.imageSrc}
-          tags={parsedData.tags}
-          category={parsedData.category}
-          markdownText={parsedData.markdownText}
-        />
+        <pre>
+          <Post
+            title={parsedData.title}
+            imageSrc={parsedData.imageSrc}
+            tags={parsedData.tags}
+            category={parsedData.category}
+            content={parsedData.content}
+          />
+        </pre>
       ) : (
         <h1>Here would show post preview when you start editing any of your post.</h1>
       )}
