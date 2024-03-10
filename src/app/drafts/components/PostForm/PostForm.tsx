@@ -169,7 +169,6 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
             className="btn"
             href={"/post-preview"}
             target="_blank"
-            rel="noopener noreferrer"
           >
             See Live Preview
           </Link>
