@@ -109,6 +109,8 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           id="image"
           defaultValue={imageValue}
           required
+          minLength={10}
+          maxLength={150}
           error={errors.image}
           ref={imageRef}
           onChange={() => {
