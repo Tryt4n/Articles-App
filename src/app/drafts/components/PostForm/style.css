@@ -5,6 +5,10 @@
     margin-bottom: 1em;
   }
 
+  .post-form-preview-link {
+    margin-left: auto;
+  }
+
   label {
     display: block;
     max-width: max-content;
@@ -26,14 +30,4 @@
   display: flex;
   gap: 1em;
   justify-content: flex-end;
-}
-
-.post-form-preview-container {
-  margin-block: 3em;
-
-  .post-form-preview {
-    padding: 1em;
-    border: 1px solid var(--card-border);
-    border-radius: 1em;
-  }
 }
