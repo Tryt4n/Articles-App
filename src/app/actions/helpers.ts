@@ -36,7 +36,7 @@ export async function validatePostForm(post: PartialWithRequiredFields, original
     const isTitleUnique = await checkIsTitleUnique(post.title);
 
     if (!isTitleUnique) {
-      errorMessages.title = "The title is already exists. Please choose another title.";
+      errorMessages.title = "The title already exists. Please choose another title.";
       return errorMessages;
     }
   }
