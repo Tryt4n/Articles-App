@@ -1,5 +1,6 @@
 import AuthProvider from "./context/AuthProvider";
 import Navbar from "./components/Navbar/Navbar";
+import { ToastContextProvider } from "./context/ToastContext";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./layout.css";
@@ -18,8 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="container">
         <AuthProvider>
-          <Navbar />
-          {children}
+          <ToastContextProvider>
+            <Navbar />
+
+            {children}
+          </ToastContextProvider>
         </AuthProvider>
       </body>
     </html>
