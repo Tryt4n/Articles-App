@@ -1,0 +1,41 @@
+.modal {
+  --modal-padding: 1em;
+  --btn-size: 2em;
+  --btn-padding: 0.5em;
+
+  width: 90vw;
+  height: 80svh;
+  padding: 1em;
+  border: none;
+  border-radius: 0.5em;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  .modal-close-btn-wrapper {
+    & button {
+      display: block;
+      max-width: var(--btn-size);
+      max-height: var(--btn-size);
+      margin-left: auto;
+      padding: var(--btn-padding);
+      background-color: transparent;
+      border: none;
+      border-radius: 50vw;
+
+      & > svg {
+        max-height: calc(var(--btn-size) / 2);
+        max-width: calc(var(--btn-size) / 2);
+      }
+
+      &:hover {
+        background-color: hsla(0, 0%, 0%, 0.1);
+      }
+    }
+  }
+
+  .modal-content-container {
+    max-height: calc(80svh - ((var(--modal-padding) * 4) + var(--btn-size)));
+    margin-block: var(--modal-padding);
+    padding-inline: var(--modal-padding);
+    overflow-y: auto;
+  }
+}
