@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
-import useToast from "@/app/hooks/useToast";
 import {
   createAndPublishPostAction,
   createPostAction,
@@ -24,12 +23,6 @@ import type { Post as PostType } from "@/types/posts";
 import "./style.css";
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
-  // const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, {
-  //   title: undefined,
-  //   content: undefined,
-  //   tags: undefined,
-  //   image: undefined,
-  // });
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, null);
 
   const [titleValue, setTitleValue] = useState(post?.title || "");
@@ -56,36 +49,11 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
     localStorage.setItem("live-preview-data", JSON.stringify(data));
   }, [imageValue, selectedCategoryValue, tagsValue, textAreaValue, titleValue]);
 
-  //!
-  const { toastMessage, setToastMessage } = useToast();
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (!isFormSubmitted) return;
-
-    if (!errors) {
-      setToastMessage("Post saved successfully!");
-      const timer = setTimeout(() => {
-        setToastMessage("Post saved successfully!");
-      }, 100);
-
-      return () => clearTimeout(timer);
-    } else {
-      setToastMessage("Cannot save post. Please fix the errors and try again.");
-    }
-  }, [errors, isFormSubmitted, setToastMessage]);
-
-  function handleFormSubmit() {
-    setIsFormSubmitted(true);
-  }
-  //!
-
   return (
     <>
       <form
         action={mainAction}
         className="post-form"
-        onSubmit={handleFormSubmit}
       >
         {post && (
           <>
