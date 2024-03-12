@@ -4,6 +4,7 @@ import React from "react";
 import { updateUserAction } from "@/app/actions/users";
 import { useFormState } from "react-dom";
 import { FormInput } from "@/app/components/FormInput/FormInput";
+import SaveProfileBtn from "./SaveProfileBtn";
 
 type EditProfileForm = { userId: string } & (
   | {
@@ -79,12 +80,7 @@ export default function EditProfileForm({ userId, name, email }: EditProfileForm
             />
           )}
         </div>
-        <button
-          type="submit"
-          className="btn"
-        >
-          Save
-        </button>
+        <SaveProfileBtn />
       </div>
 
       <ul
