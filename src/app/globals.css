@@ -8,6 +8,7 @@
   --tx-link-visited: rgb(128, 0, 128);
   --card-border: rgb(233, 224, 224);
   --bg-highlight: hsla(29, 100%, 60%, 0.9);
+  --bg-light: hsla(0, 0%, 0%, 0.1);
 
   /* Spacing */
   --card-spacing: 1.5em;
