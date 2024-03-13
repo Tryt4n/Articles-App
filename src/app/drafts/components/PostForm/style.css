@@ -23,6 +23,47 @@
     font-size: 0.875em;
     color: var(--tx-warning);
   }
+
+  .post-content-form-inner-wrapper {
+    position: relative;
+    margin-block: 1em 0.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+    legend {
+      font-weight: bold;
+    }
+  }
+
+  .post-content-info-btn {
+    position: absolute;
+    right: 0;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    background-color: transparent;
+    text-wrap: nowrap;
+    translate: 0 calc(100% - 1em);
+    transition: 300ms ease-in-out;
+
+    & svg {
+      width: 1.25em;
+      height: 1.25em;
+      transition: 300ms ease-in-out;
+    }
+
+    &:hover {
+      background-color: var(--bg-light);
+
+      & svg {
+        scale: 1.25;
+      }
+    }
+  }
 }
 
 .post-form-btns-container {
