@@ -1,7 +1,8 @@
 import React, { forwardRef, type ForwardedRef } from "react";
-import Modal from "@/app/components/Modal/Modal";
 import useModal from "@/app/hooks/useModal";
+import ModalMarkdownInfo from "./ModalMarkdownInfo/ModalMarkdownInfo";
 import TextareaAutosize from "react-textarea-autosize";
+import InfoIcon from "@/app/Icons/InfoIcon";
 
 export const ContentTextArea = forwardRef(InnerComponent);
 
@@ -19,14 +20,19 @@ function InnerComponent(
 
   return (
     <fieldset>
-      <legend>Fully supported markdown</legend>
-      <button
-        type="button"
-        aria-controls="modal"
-        onClick={showModal}
-      >
-        How it works?
-      </button>
+      <div className="post-content-form-inner-wrapper">
+        <legend>Fully supported markdown</legend>
+        <button
+          type="button"
+          className="post-content-info-btn"
+          aria-controls="modal"
+          aria-haspopup="dialog"
+          onClick={showModal}
+        >
+          How it works?
+          <InfoIcon />
+        </button>
+      </div>
 
       <label htmlFor="post-content">Content:</label>
       <TextareaAutosize
@@ -53,7 +59,7 @@ function InnerComponent(
         </strong>
       )}
 
-      <Modal id="modal">some content</Modal>
+      <ModalMarkdownInfo id="modal" />
     </fieldset>
   );
 }
