@@ -1,0 +1,30 @@
+.modal {
+  .modal-markdown-info-heading {
+    text-align: center;
+    margin-block: 1em;
+  }
+
+  .markdown-preview {
+    margin-top: 0;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin-block: 1em;
+  }
+
+  .modal-markdown-info-main-content {
+    & article {
+      padding: 1em;
+      border: 1px solid var(--card-border);
+      border-radius: 0.5em;
+      white-space: pre;
+    }
+  }
+
+  .modal-markdown-info-example {
+    overflow-x: auto;
+    padding-bottom: 0.5em;
+  }
+}
