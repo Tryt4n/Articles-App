@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Options as ReactMarkdownOptions } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -8,12 +8,14 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "katex/dist/katex.min.css";
 import "./style.css";
 
-export default function MarkdownPreview({ markdownText }: { markdownText: string }) {
+export default function MarkdownPreview({
+  markdownText,
+  ...props
+}: { markdownText: string } & ReactMarkdownOptions) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeKatex]}
-      disallowedElements={["h1"]}
       className="markdown-preview"
       components={{
         a: ({ node, ...props }) => (
@@ -46,6 +48,7 @@ export default function MarkdownPreview({ markdownText }: { markdownText: string
           );
         },
       }}
+      {...props}
     >
       {markdownText}
     </ReactMarkdown>
