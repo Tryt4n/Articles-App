@@ -21,7 +21,16 @@ export default function MarkdownPreview({
         a: ({ node, ...props }) => (
           <a
             {...props}
-            target="_blank"
+            href={
+              props.href && props.href.startsWith("tel")
+                ? `tel:${props.href.replace("tel", "")}`
+                : props.href
+            }
+            target={
+              props.href && (props.href.startsWith("http") || props.href.startsWith("www"))
+                ? "_blank"
+                : undefined
+            }
             rel="noopener noreferrer"
           />
         ),
