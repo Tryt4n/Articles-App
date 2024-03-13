@@ -70,7 +70,10 @@ export default function Post({ title, imageSrc, tags, category, content }: PostP
         </>
       </div>
 
-      <MarkdownPreview markdownText={content} />
+      <MarkdownPreview
+        markdownText={content}
+        disallowedElements={["h1"]}
+      />
     </main>
   );
 }
