@@ -25,6 +25,12 @@ export default function MarkdownPreview({
             rel="noopener noreferrer"
           />
         ),
+        input: ({ node, ...props }) => (
+          <input
+            {...props}
+            role="presentation"
+          />
+        ),
         code(props) {
           const { children, className, node, ref, ...rest } = props;
           const match = /language-(\w+)/.exec(className || "");
