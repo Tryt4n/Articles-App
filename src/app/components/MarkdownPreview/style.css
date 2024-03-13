@@ -47,6 +47,11 @@
     &:visited {
       color: var(--tx-link-visited);
     }
+
+    &:has(> img) {
+      display: block;
+      max-width: max-content;
+    }
   }
 
   ul:not(.contains-task-list),
