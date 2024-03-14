@@ -1,68 +1,20 @@
 import React from "react";
-import ReactMarkdown, { type Options as ReactMarkdownOptions } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import customPlugin from "@/react-markdown/plugins";
+import { markdownComponents } from "@/react-markdown/components";
 import "katex/dist/katex.min.css";
 import "./style.css";
 
-export default function MarkdownPreview({
-  markdownText,
-  ...props
-}: { markdownText: string } & ReactMarkdownOptions) {
+export default function MarkdownPreview({ markdownText, ...props }: { markdownText: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeKatex]}
+      rehypePlugins={[rehypeKatex, customPlugin]}
       className="markdown-preview"
-      components={{
-        a: ({ node, ...props }) => (
-          <a
-            {...props}
-            href={
-              props.href && props.href.startsWith("tel")
-                ? `tel:${props.href.replace("tel", "")}`
-                : props.href
-            }
-            target={
-              props.href && (props.href.startsWith("http") || props.href.startsWith("www"))
-                ? "_blank"
-                : undefined
-            }
-            rel="noopener noreferrer"
-          />
-        ),
-        input: ({ node, ...props }) => (
-          <input
-            {...props}
-            role="presentation"
-          />
-        ),
-        code(props) {
-          const { children, className, node, ref, ...rest } = props;
-          const match = /language-(\w+)/.exec(className || "");
-          return match ? (
-            <SyntaxHighlighter
-              {...rest}
-              PreTag="div"
-              language={match[1]}
-              style={vscDarkPlus}
-              className="language-code-block"
-            >
-              {String(children).replace(/\n$/, "")}
-            </SyntaxHighlighter>
-          ) : (
-            <code
-              {...rest}
-              className={className}
-            >
-              {children}
-            </code>
-          );
-        },
-      }}
+      components={markdownComponents}
       {...props}
     >
       {markdownText}
