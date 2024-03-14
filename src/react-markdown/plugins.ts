@@ -3,6 +3,26 @@ import { h } from "hastscript";
 import type { Node, Parent } from "unist";
 import type { NodeType } from "./types";
 
+/**
+ * A custom plugin for the unified processor that processes the tree and adds custom nodes
+ * for text that matches the specified patterns
+ * @returns A function that takes a tree (Node) as an argument
+ *
+ * The plugin looks for text nodes that match the following patterns:
+ * - `This is a [custom text [color: red, size: 20px] text] example.`
+ * - `This is a [custom text [size: 20px, color: red]] example.`
+ * - `This is a [custom text [color: rgba(0, 0, 0, 0.5), size: 20px]] example.`
+ * - `This is a [custom text [size: 20px, color: rgba(0, 0, 0, 0.5)]] example.`
+ *
+ * The plugin then replaces the matched text with a new 'custom' node that contains the matched text
+ * and the specified color and size as properties
+ *
+ * For example, the first pattern would be replaced with the following node:
+ * ```html
+ * <p>This is a <span style="color: red; font-size: 20px;">custom text</span> example.</p>
+ * ```
+ */
+
 export default function customPlugin() {
   // The function returns another function that takes a tree (Node) as an argument
   return (tree: Node) => {
