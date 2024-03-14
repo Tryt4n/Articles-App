@@ -1,19 +1,17 @@
 import React, { forwardRef, type ForwardedRef } from "react";
 import useModal from "@/app/hooks/useModal";
 import ModalMarkdownInfo from "./ModalMarkdownInfo/ModalMarkdownInfo";
-import TextareaAutosize from "react-textarea-autosize";
+import TextareaAutosize, { type TextareaAutosizeProps } from "react-textarea-autosize";
 import InfoIcon from "@/app/Icons/InfoIcon";
 
 export const ContentTextArea = forwardRef(InnerComponent);
 
 type ContentTextAreaProps = {
-  value: string;
-  setValue: (value: string) => void;
   error?: string;
-};
+} & TextareaAutosizeProps;
 
 function InnerComponent(
-  { value, setValue, error }: ContentTextAreaProps,
+  { error, ...props }: ContentTextAreaProps,
   ref: ForwardedRef<HTMLTextAreaElement>
 ) {
   const { showModal } = useModal();
@@ -36,16 +34,13 @@ function InnerComponent(
 
       <label htmlFor="post-content">Content:</label>
       <TextareaAutosize
-        id="post-content"
-        name="post-content"
-        placeholder="Write your post here..."
         required
         minLength={100}
+        placeholder="Write your post here..."
+        {...props}
+        id="post-content"
+        name="post-content"
         ref={ref}
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
         aria-errormessage={error ? "content-error" : undefined}
         aria-invalid={!!error}
         aria-describedby="modal"
