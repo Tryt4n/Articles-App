@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useDeferredValue, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import {
   createAndPublishPostAction,
@@ -17,7 +17,6 @@ import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
 import PostPreview from "../PostPreview/PostPreview";
-import { type PostProps } from "@/app/components/Post/Post";
 import type { PostFormProps } from "./types";
 import type { Post as PostType } from "@/types/posts";
 import "./style.css";
@@ -25,11 +24,15 @@ import "./style.css";
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, null);
 
-  const [titleValue, setTitleValue] = useState(post?.title || "");
-  const [imageValue, setImageValue] = useState(post?.image || "");
-  const [tagsValue, setTagsValue] = useState(postTags || []);
-  const [textAreaValue, setTextAreaValue] = useState(post?.content || "");
-  const [selectedCategoryValue, setSelectedCategoryValue] = useState(post?.category || "general");
+  const [postData, setPostData] = useState({
+    title: post?.title || "",
+    imageSrc: post?.image || "",
+    tags: postTags || [],
+    category: post?.category || "general",
+    content: post?.content || "",
+  });
+
+  const deferredPostData = useDeferredValue(postData);
 
   const titleRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
@@ -38,16 +41,8 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const selectedCategoryRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
-    const data: PostProps = {
-      title: titleValue,
-      imageSrc: imageValue,
-      tags: tagsValue,
-      category: selectedCategoryValue,
-      content: textAreaValue,
-    };
-
-    localStorage.setItem("live-preview-data", JSON.stringify(data));
-  }, [imageValue, selectedCategoryValue, tagsValue, textAreaValue, titleValue]);
+    localStorage.setItem("live-preview-data", JSON.stringify(deferredPostData));
+  }, [deferredPostData]);
 
   return (
     <>
@@ -97,13 +92,13 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           type="text"
           label="Title:"
           id="title"
-          defaultValue={titleValue}
+          defaultValue={deferredPostData.title}
           required
           error={errors?.title}
           ref={titleRef}
           onChange={() => {
             if (!titleRef.current) return;
-            setTitleValue(titleRef.current.value);
+            setPostData({ ...postData, title: titleRef.current.value });
           }}
         />
 
@@ -111,15 +106,15 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           type="text"
           label="Image Link:"
           id="image"
-          defaultValue={imageValue}
+          defaultValue={deferredPostData.imageSrc}
           required
           minLength={10}
-          maxLength={150}
+          maxLength={200}
           error={errors?.image}
           ref={imageRef}
           onChange={() => {
             if (!imageRef.current) return;
-            setImageValue(imageRef.current.value);
+            setPostData({ ...postData, imageSrc: imageRef.current.value });
           }}
         />
 
@@ -127,11 +122,11 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
           type="text"
           label="Add Tags (optional):"
           id="tags"
-          defaultValue={`${tagsValue
+          defaultValue={`${deferredPostData.tags
             .map((tag) => {
               return tag.name;
             })
-            .join(" ")}${tagsValue.length > 0 ? " " : ""}`} // Add space if there are tags
+            .join(" ")}${deferredPostData.tags.length > 0 ? " " : ""}`} // Add space if there are tags
           error={errors?.tags}
           ref={tagsRef}
           onChange={() => {
@@ -140,23 +135,26 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
               .split(" ")
               .filter((tag) => tag.trim() !== "") // Ignore empty tags
               .map((tag) => ({ id: tag, name: tag }));
-            setTagsValue(newTagsValue);
+            setPostData({ ...postData, tags: newTagsValue });
           }}
         />
 
         <SelectedCategoryInput
-          category={selectedCategoryValue}
+          category={deferredPostData.category}
           ref={selectedCategoryRef}
           onChange={() => {
             if (!selectedCategoryRef.current) return;
-            setSelectedCategoryValue(selectedCategoryRef.current.value as PostType["category"]);
+            setPostData({
+              ...postData,
+              category: selectedCategoryRef.current.value as PostType["category"],
+            });
           }}
         />
 
         <ContentTextArea
           ref={textAreaRef}
-          value={textAreaValue}
-          setValue={setTextAreaValue}
+          defaultValue={deferredPostData.content}
+          onChange={(e) => setPostData({ ...postData, content: e.target.value })}
           error={errors?.content}
         />
 
@@ -171,15 +169,7 @@ export default function PostForm({ post, postTags, authorId }: PostFormProps) {
         </div>
       </form>
 
-      <PostPreview
-        postData={{
-          title: titleValue,
-          imageSrc: imageValue,
-          tags: tagsValue,
-          category: selectedCategoryValue,
-          content: textAreaValue,
-        }}
-      />
+      <PostPreview postData={deferredPostData} />
     </>
   );
 }
