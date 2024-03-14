@@ -79,6 +79,22 @@ export default function ModalMarkdownInfo({ ...props }: ComponentPropsWithoutRef
 
           <hr />
 
+          <MarkdownExample markdownText="[Colored text[color: green]]" />
+
+          <hr />
+
+          <MarkdownExample markdownText="[Changed size[size: 20]] by default in `px`." />
+
+          <hr />
+
+          <MarkdownExample markdownText="[Changed font size and color[color: #ffa500, size: 1.5em]]" />
+
+          <hr />
+
+          <MarkdownExample markdownText="It is possible to combine it with~***`[other[color: #ffa500, size: 14px]]`***~ elements. It must be the deepest nested element." />
+
+          <hr />
+
           <MarkdownExample
             markdownText={`
 **If you have very long word that doesn't fit in the container, you can use \`&shy;\` to enforce breaking the word with a hyphen.**
