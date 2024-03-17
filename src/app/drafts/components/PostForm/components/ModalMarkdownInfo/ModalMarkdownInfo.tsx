@@ -91,7 +91,7 @@ export default function ModalMarkdownInfo({ ...props }: ComponentPropsWithoutRef
 
           <hr />
 
-          <MarkdownExample markdownText="It is possible to combine it with~***`[other[color: #ffa500, size: 14px]]`***~ elements. It must be the deepest nested element." />
+          <MarkdownExample markdownText="It is possible to combine it with ~***`[other[color: #ffa500, size: 14px]]`***~ elements. It must be the deepest nested element." />
 
           <hr />
 
@@ -172,7 +172,7 @@ Next line.
 
           <MarkdownExample
             markdownText={`
->To create blockquotes use the greater than sign.
+>To create [blockquotes[size: 1.1em]] use the greater than sign.
             `}
           />
 
@@ -190,7 +190,7 @@ Next line.
 
           <MarkdownExample
             markdownText={`
-> *Blockquotes* can be nested.
+> *[Blockquotes[color: orangered]]* can be nested.
 >
 >> Add a **\`>>\`** in front of the paragraph you want to nest.
             `}
@@ -223,7 +223,7 @@ ___
           <MarkdownExample
             markdownText={`
 * Lit item 1
-* List item 2
+* List [item[color:hsl(84.6,70.4%,47.6%)]] 2
 * __List item bold__
                     `}
           />
@@ -259,7 +259,7 @@ ___
           <MarkdownExample
             markdownText={`
 * [ ] Unchecked
-* [x] Checked
+* [x] [Checked[color:hsl(160,100%,25%), size: 1.25em]]
                     `}
           />
 
@@ -280,10 +280,10 @@ ___
 
           <MarkdownExample
             markdownText={`
-| Header 1 | Header 2 | Header 3 |
-| -------- | -------- | -------- |
-| cell 1   | cell 2   | cell 3   |
-| cell 4   | cell 5   | cell 6   |
+| Header 1 | [Header 2[color: red]] | Header 3 |
+| -------- | ---------------------- | -------- |
+| cell 1   | cell 2                 | cell 3   |
+| cell 4   | cell 5                 | cell 6   |
         `}
           />
 
@@ -308,6 +308,7 @@ ___
             markdownText={`
 \`\`\`
 // This is a code block without any styles
+[// It is possible to change font size and color on code blocks without any programming languages styles[color: red, size: .75em]]
 function greet(name) {
   console.log("Hello, " + name + "!");
 }
@@ -422,8 +423,7 @@ public class HelloWorld {
 $v^2$
 $v_2$
 
-Lift($$L$$) can be determined by Lift Coefficient ($$C_L$$) like the following
-equation.
+Lift($$L$$) can be determined by Lift Coefficient ($$C_L$$) like the following equation.
 $$
 L = \\frac{1}{2} \\\rho v^2 S C_L
 $$
