@@ -93,10 +93,12 @@ export default async function Card({
                         : author.name}
                     </span>
 
-                    <Time
-                      time={post.publishedAt!}
-                      className="post-card-details-time"
-                    />
+                    {post.publishedAt && (
+                      <Time
+                        time={post.publishedAt}
+                        className="post-card-details-time"
+                      />
+                    )}
                   </div>
                 </div>
               ) : (
