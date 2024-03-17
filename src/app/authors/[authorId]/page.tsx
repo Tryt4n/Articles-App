@@ -21,6 +21,8 @@ export default async function AuthorPage({ params }: { params: { authorId: strin
   const author = await fetchUser({ id: params.authorId });
   const session = await getServerSession(authOptions);
 
+  const authorPublishedPosts = author.posts?.filter((post) => post.published);
+
   return (
     <main className="author-page">
       <div className="author-avatar-wrapper">
@@ -39,12 +41,12 @@ export default async function AuthorPage({ params }: { params: { authorId: strin
         <a href={`mailto:${author?.email}`}>{author?.email}</a>
       </div>
 
-      {author.posts && author.posts.length > 0 && (
+      {authorPublishedPosts && authorPublishedPosts.length > 0 && (
         <article>
           <h2 className="articles-header">Articles written:</h2>
 
           <AuthorCardsList
-            posts={author.posts}
+            posts={authorPublishedPosts}
             isAuthor={author.id === session?.user.id}
           />
         </article>
