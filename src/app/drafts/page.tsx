@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import AuthorCardsList from "../components/AuthorCardsList/AuthorCardsList";
 import type { Metadata } from "next/types";
+import "./style.css";
 
 export const metadata: Metadata = {
   title: "Your Posts",
@@ -15,12 +16,12 @@ export default async function DraftsPage() {
   const user = session?.user && (await fetchUser({ id: session.user.id }));
 
   return (
-    <main>
-      <h1>Your Posts</h1>
+    <main className="drafts">
+      <h1 className="drafts-heading">Your Posts</h1>
 
       <Link
         href="/drafts/new"
-        className="btn"
+        className="btn drafts-new-post-btn"
       >
         Create new post
       </Link>
@@ -29,7 +30,7 @@ export default async function DraftsPage() {
         <>
           {user.posts.some((post) => !post.published) && (
             <article>
-              <h2>Your Drafts</h2>
+              <h2 className="drafts-subheading">Drafts:</h2>
               <AuthorCardsList
                 posts={user.posts.filter((post) => !post.published)}
                 isAuthor
@@ -39,7 +40,7 @@ export default async function DraftsPage() {
 
           {user.posts.some((post) => post.published) && (
             <article>
-              <h2>Your Published Posts</h2>
+              <h2 className="drafts-subheading">Published Posts:</h2>
               <AuthorCardsList
                 posts={user.posts.filter((post) => post.published)}
                 isAuthor

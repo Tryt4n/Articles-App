@@ -1,0 +1,17 @@
+.drafts {
+  .drafts-heading {
+    margin-bottom: 1em;
+  }
+
+  .drafts-subheading {
+    text-align: center;
+  }
+
+  .drafts-new-post-btn {
+    margin-inline: 3em;
+  }
+
+  article:not(:last-of-type) {
+    margin-bottom: 3em;
+  }
+}
