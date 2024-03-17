@@ -1,13 +1,33 @@
 .profile-page {
-  h1 {
+  .profile-subheader {
     text-align: center;
   }
 
+  section {
+    display: grid;
+    place-content: center;
+  }
+
   .profile-content-wrapper {
+    min-width: 300px;
+    margin-bottom: 1em;
     display: flex;
     gap: 1em;
     align-items: center;
-    margin-bottom: 1em;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .profile-content-label {
+    font-weight: bold;
+  }
+
+  .form-errors-list {
+    text-align: center;
+  }
+
+  .profile-go-back-btn {
+    margin-inline: 3em;
   }
 }
 

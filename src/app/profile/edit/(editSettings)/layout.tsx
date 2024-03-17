@@ -6,7 +6,7 @@ export default function ProfileEditSettingsLayout({ children }: { children: Reac
     <>
       <Link
         href="/profile"
-        className="btn"
+        className="btn profile-go-back-btn"
       >
         Go Back
       </Link>

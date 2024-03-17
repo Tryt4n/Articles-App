@@ -36,8 +36,14 @@ export default function EditProfileBtn({ email, name, password }: EditButton) {
   return (
     <div className="profile-content-wrapper">
       <p>
-        {type.charAt(0).toUpperCase() + type.slice(1)}: {value}
+        <span className="profile-content-label">
+          {type.charAt(0).toUpperCase() + type.slice(1)}
+          {type !== "password" && ":"}
+        </span>
+        &nbsp;
+        {value}
       </p>
+
       <Link
         href={`/profile/edit/${type}`}
         className="btn"

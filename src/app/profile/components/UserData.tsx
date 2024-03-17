@@ -12,7 +12,7 @@ export default function UserData({ user, children }: { user: User; children: Rea
       {user && (
         <>
           <section>
-            <h2>Your profile informations</h2>
+            <h2 className="profile-subheader">Your profile informations</h2>
             {children}
 
             {user.receivedLikes && user.receivedLikes.length > 0 && (
@@ -24,7 +24,7 @@ export default function UserData({ user, children }: { user: User; children: Rea
 
           {user.comments && user.comments.length > 0 && (
             <section>
-              <h2>Your activity</h2>
+              <h2 className="profile-subheader">Your activity</h2>
               <ul>
                 {user.comments.map((comment) => {
                   const formattedCommentDate = formatDate(comment.createdAt);
