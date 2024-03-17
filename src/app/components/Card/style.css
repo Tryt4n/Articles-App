@@ -273,6 +273,10 @@
     flex-direction: column;
     justify-content: space-between;
 
+    &:has(> span:only-child) {
+      justify-content: center;
+    }
+
     & [title="Author"] {
       color: var(--tx-link);
     }
