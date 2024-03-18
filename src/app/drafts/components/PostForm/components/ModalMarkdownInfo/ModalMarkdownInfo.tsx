@@ -91,6 +91,18 @@ export default function ModalMarkdownInfo({ ...props }: ComponentPropsWithoutRef
 
           <hr />
 
+          <MarkdownExample
+            markdownText={`
+**[It's very important.[color: red, size: 1.25em]]**
+You cannot use \`color\` and \`size\` alone at the same line. If you want use both \`color\` and \`size\` at the same line you have to include both of them in the same \`[]\` brackets even if you want change only one of them.
+*Examples:*
+**not working version**: [Changed color[color: #ffa500]] and [changed size[size: 1.25em]]
+**working version**: [Changed color[color: #ffa500, size: 16px]] and [Changed size[size: 1.25em, color: black]].
+`}
+          />
+
+          <hr />
+
           <MarkdownExample markdownText="It is possible to combine it with ~***`[other[color: #ffa500, size: 14px]]`***~ elements. It must be the deepest nested element." />
 
           <hr />
