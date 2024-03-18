@@ -1,12 +1,13 @@
+"use client";
+
 import React from "react";
-import Post, { type PostProps } from "@/app/components/Post/Post";
+import usePost from "../../(pages)/hooks/usePost";
+import Post from "@/app/components/Post/Post";
 import "./style.css";
 
-type PostPreviewProps = {
-  postData: PostProps;
-};
+export default function PostPreview() {
+  const { postData } = usePost();
 
-export default function PostPreview({ postData }: PostPreviewProps) {
   return (
     <article className="post-form-preview-container">
       <h2>Post Preview:</h2>
