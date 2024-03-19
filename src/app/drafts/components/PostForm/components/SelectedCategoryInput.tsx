@@ -1,15 +1,12 @@
 import React, { useState, useEffect, type ComponentProps } from "react";
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
 import { postCategories } from "@/app/constants/posts";
 import type { Post } from "@/types/posts";
 
 type SelectedCategoryInputProps = { category: Post["category"] } & ComponentProps<"select">;
 
-export const SelectedCategoryInput = React.forwardRef<
-  HTMLSelectElement,
-  SelectedCategoryInputProps
->(({ category, ...props }, ref) => {
-  const { postData, setPostData } = usePost();
+export default function SelectedCategoryInput({ category, ...props }: SelectedCategoryInputProps) {
+  const { postData, setPostData, refs } = usePostForm();
   const [selectCategory, setSelectCategory] = useState(category);
 
   useEffect(() => {
@@ -26,7 +23,7 @@ export const SelectedCategoryInput = React.forwardRef<
         {...props}
         name="post-category"
         id="post-category"
-        ref={ref}
+        ref={refs.selectedCategoryRef}
         defaultValue={selectCategory}
         required
         onChange={(e) => {
@@ -48,6 +45,4 @@ export const SelectedCategoryInput = React.forwardRef<
       </select>
     </div>
   );
-});
-
-SelectedCategoryInput.displayName = "post form SelectedCategoryInput";
+}

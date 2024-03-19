@@ -1,12 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  useDeferredValue,
-  forwardRef,
-  type ForwardedRef,
-  type ComponentPropsWithRef,
-} from "react";
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
+import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithRef } from "react";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
 import { PostFormInput } from "./PostFormInput";
 
 type TitleInputProps = {
@@ -14,13 +7,8 @@ type TitleInputProps = {
   error?: string;
 } & ComponentPropsWithRef<"input">;
 
-export const TitleInput = forwardRef(InnerComponent);
-
-function InnerComponent(
-  { title, error, ...props }: TitleInputProps,
-  ref: ForwardedRef<HTMLInputElement>
-) {
-  const { postData, setPostData } = usePost();
+export default function TitleInput({ title, error, ...props }: TitleInputProps) {
+  const { postData, setPostData, refs } = usePostForm();
   const [inputTitle, setInputTitle] = useState(title);
   const deferredTitle = useDeferredValue(inputTitle);
 
@@ -40,7 +28,7 @@ function InnerComponent(
       type="text"
       label="Title:"
       id="title"
-      ref={ref}
+      ref={refs.titleRef}
       defaultValue={inputTitle}
       required
       error={error}

@@ -1,26 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-  useDeferredValue,
-  forwardRef,
-  type ComponentPropsWithRef,
-  type ForwardedRef,
-} from "react";
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
+import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithRef } from "react";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
 import { PostFormInput } from "./PostFormInput";
-
-export const ImageInput = forwardRef(InnerComponent);
 
 type ImageInputProps = {
   imageSrc: string;
   error?: string;
 } & ComponentPropsWithRef<"input">;
 
-function InnerComponent(
-  { imageSrc, error, ...props }: ImageInputProps,
-  ref: ForwardedRef<HTMLInputElement>
-) {
-  const { postData, setPostData } = usePost();
+export default function ImageInput({ imageSrc, error, ...props }: ImageInputProps) {
+  const { postData, setPostData, refs } = usePostForm();
   const [inputImage, setInputImage] = useState(imageSrc);
   const deferredImage = useDeferredValue(inputImage);
 
@@ -43,7 +31,7 @@ function InnerComponent(
       type="text"
       label="Image Link:"
       id="image"
-      ref={ref}
+      ref={refs.imageRef}
       defaultValue={inputImage}
       minLength={10}
       maxLength={200}

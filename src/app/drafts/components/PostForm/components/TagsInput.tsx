@@ -1,26 +1,16 @@
-import React, {
-  useState,
-  useEffect,
-  useDeferredValue,
-  forwardRef,
-  type ComponentPropsWithRef,
-  type ForwardedRef,
-} from "react";
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
+import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithRef } from "react";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
 import { PostFormInput } from "./PostFormInput";
 import type { PostTags } from "@/types/tags";
 
-export const TagsInput = forwardRef(InnerComponent);
-
 type TagsInputProps = { tags: PostTags; error?: string } & ComponentPropsWithRef<"input">;
 
-function InnerComponent(
-  { tags, error, ...props }: TagsInputProps,
-  ref: ForwardedRef<HTMLInputElement>
-) {
-  const { postData, setPostData } = usePost();
+export default function TagsInput({ tags, error, ...props }: TagsInputProps) {
+  const { postData, setPostData, refs } = usePostForm();
   const [inputTags, setInputTags] = useState(tags);
   const deferredTags = useDeferredValue(inputTags);
+
+  const { tagsRef } = refs;
 
   // Update global state with deferred value to prevent lag
   useEffect(() => {
@@ -43,11 +33,12 @@ function InnerComponent(
           return tag.name;
         })
         .join(" ")}${inputTags.length > 0 ? " " : ""}`} // Add space if there are tags
-      ref={ref}
+      // ref={ref}
+      ref={tagsRef}
       error={error}
       onChange={() => {
-        if (typeof ref === "object" && ref !== null && ref.current !== null) {
-          const newTagsValue = ref.current.value
+        if (typeof tagsRef === "object" && tagsRef !== null && tagsRef.current !== null) {
+          const newTagsValue = tagsRef.current.value
             .split(" ")
             .filter((tag) => tag.trim() !== "") // Ignore empty tags
             .map((tag) => ({ id: tag, name: tag }));
