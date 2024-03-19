@@ -22,4 +22,4 @@ export const postCategories = [
   "others",
 ] as const;
 
-export const filteringOptions = ["title", "author"] as const;
+export const filteringOptions = ["title", "author", "tag"] as const;

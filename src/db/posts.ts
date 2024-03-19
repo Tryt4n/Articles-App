@@ -39,6 +39,17 @@ export const fetchPostsBySearchParams = NextCache(
             name: { contains: query },
           },
         };
+      } else if (filterBy === "tag") {
+        whereClause = {
+          ...whereClause,
+          tags: {
+            some: {
+              tag: {
+                name: { contains: query },
+              },
+            },
+          },
+        };
       }
     }
 
