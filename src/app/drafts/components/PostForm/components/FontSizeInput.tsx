@@ -1,26 +1,25 @@
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
-import React, {
-  useState,
-  useEffect,
-  useDeferredValue,
-  forwardRef,
-  type ForwardedRef,
-  type ComponentPropsWithoutRef,
-} from "react";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithoutRef } from "react";
 
-export const FontSizeInput = forwardRef(InnerComponent);
-
-function InnerComponent(
-  { ...props }: ComponentPropsWithoutRef<"input">,
-  ref: ForwardedRef<HTMLInputElement>
-) {
-  const { setTextOptions } = usePost();
+export default function FontSizeInput({ ...props }: ComponentPropsWithoutRef<"input">) {
+  const { setTextOptions, refs } = usePostForm();
   const [fontSize, setFontSize] = useState("16px");
   const deferredFontSize = useDeferredValue(fontSize);
 
   useEffect(() => {
     setTextOptions((prevValue) => ({ ...prevValue, textSize: deferredFontSize }));
   }, [deferredFontSize, setTextOptions]);
+
+  const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const pattern =
+      /^\d+(p|px|e|em|r|re|rem|c|ch|l|lh|r|rl|rlh|v|vw|vh|s|sv|svw|svh|l|lv|lvw|lvh|d|dv|dvw|dvh)?$/;
+    if (pattern.test(value)) {
+      setFontSize(value);
+    } else {
+      e.target.value = value.slice(0, -1);
+    }
+  };
 
   return (
     <label>
@@ -29,11 +28,14 @@ function InnerComponent(
         type="text"
         name="post-content-font-size"
         id="post-content-font-size"
-        ref={ref}
+        ref={refs.fontSizeInputRef}
         defaultValue={fontSize}
         aria-label="Change font size"
-        onChange={(e) => setFontSize(e.target.value)}
+        placeholder="e.g: 16px/2rem/2ch/etc."
+        minLength={2}
         maxLength={5}
+        pattern="\d+(px|em|rem|ch|lh|rlh|vw|vmin|vmax|svw|svh|lvw|lvh|dvw|dvh)"
+        onChange={handleFontSizeChange}
       />
     </label>
   );
