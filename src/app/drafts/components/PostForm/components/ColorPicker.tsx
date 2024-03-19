@@ -1,20 +1,8 @@
-import React, {
-  useState,
-  useEffect,
-  useDeferredValue,
-  forwardRef,
-  type ForwardedRef,
-  type ComponentPropsWithoutRef,
-} from "react";
-import usePost from "@/app/drafts/(pages)/hooks/usePost";
+import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithoutRef } from "react";
+import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
 
-export const ColorPicker = forwardRef(InnerComponent);
-
-function InnerComponent(
-  { ...props }: ComponentPropsWithoutRef<"input">,
-  ref: ForwardedRef<HTMLInputElement>
-) {
-  const { setTextOptions } = usePost();
+export default function ColorPicker({ ...props }: ComponentPropsWithoutRef<"input">) {
+  const { setTextOptions, refs } = usePostForm();
   const [writingColor, setWritingColor] = useState("#000000");
   const deferredColor = useDeferredValue(writingColor);
 
@@ -29,7 +17,7 @@ function InnerComponent(
         type="color"
         name="post-content-color"
         id="post-content-color"
-        ref={ref}
+        ref={refs.colorPickerRef}
         defaultValue={writingColor}
         aria-label="Change font color"
         onChange={(e) => setWritingColor(e.target.value)}
