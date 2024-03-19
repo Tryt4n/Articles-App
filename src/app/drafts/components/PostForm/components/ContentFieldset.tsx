@@ -32,13 +32,18 @@ export default function ContentFieldset({ content, error }: ContentFieldsetType)
         </button>
       </div>
 
-      <div>
-        <div>
-          <ColorPicker />
-          <FontSizeInput />
-        </div>
+      <div className="post-content-form-text-options-container">
+        <div className="post-content-form-text-options-inner-wrapper">
+          <div className="post-content-form-text-inputs-wrapper">
+            <FontSizeInput />
+            <ColorPicker />
+          </div>
 
-        <ChangeTextBtn aria-controls="post-content" />
+          <ChangeTextBtn
+            className="btn post-content-change-text-btn"
+            aria-controls="post-content"
+          />
+        </div>
 
         <SelectedText />
       </div>

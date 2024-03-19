@@ -17,6 +17,7 @@ export default function ColorPicker({ ...props }: ComponentPropsWithoutRef<"inpu
         type="color"
         name="post-content-color"
         id="post-content-color"
+        className="post-content-form-color-input"
         ref={refs.colorPickerRef}
         defaultValue={writingColor}
         aria-label="Change font color"

@@ -40,3 +40,8 @@
     overflow-y: auto;
   }
 }
+
+html:has(.modal[open]) {
+  overflow: hidden;
+  margin-right: var(--scrollbar-width);
+}

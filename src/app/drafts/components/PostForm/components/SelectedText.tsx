@@ -7,12 +7,19 @@ export default function SelectedText() {
 
   return (
     <>
-      {selectedText && (
-        <p>
-          <strong>Currently selected text: </strong>
-          {selectedText}
-        </p>
-      )}
+      <p
+        className="post-content-selected-text"
+        aria-label="Selected text"
+        aria-hidden={!selectedText}
+        aria-live="polite"
+      >
+        {selectedText && (
+          <>
+            <strong>Currently selected text: </strong>
+            {selectedText}
+          </>
+        )}
+      </p>
     </>
   );
 }

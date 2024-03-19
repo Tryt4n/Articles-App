@@ -28,10 +28,11 @@ export default function FontSizeInput({ ...props }: ComponentPropsWithoutRef<"in
         type="text"
         name="post-content-font-size"
         id="post-content-font-size"
+        className="post-content-form-font-size-input"
         ref={refs.fontSizeInputRef}
         defaultValue={fontSize}
         aria-label="Change font size"
-        placeholder="e.g: 16px/2rem/2ch/etc."
+        placeholder="16px"
         minLength={2}
         maxLength={5}
         pattern="\d+(px|em|rem|ch|lh|rlh|vw|vmin|vmax|svw|svh|lvw|lvh|dvw|dvh)"
