@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import usePost from "../../(pages)/hooks/usePost";
+import usePostForm from "../../(pages)/hooks/usePostForm";
 import Post from "@/app/components/Post/Post";
 import "./style.css";
 
 export default function PostPreview() {
-  const { postData } = usePost();
+  const { postData } = usePostForm();
 
   return (
     <article className="post-form-preview-container">
