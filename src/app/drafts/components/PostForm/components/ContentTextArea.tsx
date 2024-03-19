@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useDeferredValue, useMemo } from "react";
 import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import { startViewTransition } from "@/app/helpers/helpers";
 import TextareaAutosize, { type TextareaAutosizeProps } from "react-textarea-autosize";
 
 type ContentTextAreaProps = { content: string; error?: string } & TextareaAutosizeProps;
@@ -21,7 +22,9 @@ export default function ContentTextArea({ content, error, ...props }: ContentTex
 
   function handleOnSelect(e: React.SyntheticEvent<HTMLTextAreaElement, Event>) {
     const target = e.target as HTMLTextAreaElement;
-    setSelectedText(target.value.substring(target.selectionStart, target.selectionEnd));
+    startViewTransition(() => {
+      setSelectedText(target.value.substring(target.selectionStart, target.selectionEnd));
+    });
   }
 
   function handleOnClick(e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) {
