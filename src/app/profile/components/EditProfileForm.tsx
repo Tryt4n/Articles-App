@@ -51,7 +51,7 @@ export default function EditProfileForm({ userId, name, email }: EditProfileForm
       <div className="profile-edit-form-inner-wrapper">
         <div className="profile-edit-inputs-wrapper">
           <FormInput
-            className="profile-content-wrapper"
+            className="profile-edit-form-input"
             type={type === "name" ? "text" : type}
             label={`${type.charAt(0).toUpperCase() + type.slice(1)}:`}
             id="edit-profile"
@@ -67,7 +67,7 @@ export default function EditProfileForm({ userId, name, email }: EditProfileForm
 
           {type === "password" && (
             <FormInput
-              className="profile-content-wrapper"
+              className="profile-edit-form-input"
               type="password"
               label="Password confirmation:"
               id="edit-profile-password-confirmation"
