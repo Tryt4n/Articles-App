@@ -14,4 +14,9 @@
   article:not(:last-of-type) {
     margin-bottom: 3em;
   }
+
+  .drafts-no-posts-text {
+    display: inline-block;
+    margin-block: 1em;
+  }
 }
