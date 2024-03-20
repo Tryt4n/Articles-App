@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import NavLink from "./components/NavLink";
 import SignupLink from "./components/SignupLink";
-import Image from "next/image";
+import ProfileMenuBtn from "./components/ProfileMenuBtn";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../api/auth/[...nextauth]/authOptions";
 import "./style.css";
@@ -34,27 +34,19 @@ export default async function Navbar() {
       </ul>
 
       <div className="auth-container">
-        <Link
-          href={session ? "/api/auth/signout" : "/api/auth/signin"}
-          className="btn btn--accent"
-        >
-          {session ? "Logout" : "Login"}
-        </Link>
         {!session ? (
-          <SignupLink />
+          <>
+            <Link
+              href="/api/auth/signin"
+              className="btn btn--accent"
+            >
+              Login
+            </Link>
+
+            <SignupLink />
+          </>
         ) : (
-          <Link
-            href={"/profile"}
-            className="profile-icon-link card-image-placeholder"
-          >
-            <span className="visually-hidden">Profile</span>
-            <Image
-              src={session.user?.image || ""}
-              alt="user image"
-              width={50}
-              height={50}
-            />
-          </Link>
+          <ProfileMenuBtn imageSrc={session.user.image} />
         )}
       </div>
     </nav>
