@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { type ComponentPropsWithoutRef } from "react";
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 
 type NavLinkProps = {
   children: string;
-} & LinkProps;
+} & ComponentPropsWithoutRef<"a"> &
+  LinkProps;
 
 export default function NavLink({ children, ...props }: NavLinkProps) {
   const pathname = usePathname();
