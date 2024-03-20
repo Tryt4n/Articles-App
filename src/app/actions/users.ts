@@ -80,6 +80,7 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/profile");
+    revalidatePath("/profile/settings");
     revalidatePath("/signup");
     redirect("/api/auth/signin");
   }
@@ -142,5 +143,6 @@ export async function updateUserAction(
 
   revalidatePath(`/profile`);
   revalidatePath(`/authors`);
-  redirect(`/profile`);
+  revalidatePath(`/profile/settings`);
+  redirect(`/profile/settings`);
 }

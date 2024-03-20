@@ -60,8 +60,7 @@ export default function ProfileMenu({ imageSrc }: ProfileMenuBtnProps) {
 
         <li>
           <NavLink
-            // href="/profile/settings"
-            href="#"
+            href="/profile/settings"
             tabIndex={menuOpen ? 0 : -1}
             onClick={() => setMenuOpen(false)}
             onKeyDown={(e: React.KeyboardEvent<HTMLAnchorElement>) => {

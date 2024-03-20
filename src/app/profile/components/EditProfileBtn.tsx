@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-type EditButton =
+type EditButton = { editable?: boolean } & (
   | {
       email: string;
       name?: undefined;
@@ -16,9 +16,10 @@ type EditButton =
       email?: undefined;
       name?: undefined;
       password: true | null;
-    };
+    }
+);
 
-export default function EditProfileBtn({ email, name, password }: EditButton) {
+export default function EditProfileBtn({ email, name, password, editable = false }: EditButton) {
   let type: "email" | "name" | "password";
   let value: string | undefined;
 
@@ -44,12 +45,14 @@ export default function EditProfileBtn({ email, name, password }: EditButton) {
         {value}
       </p>
 
-      <Link
-        href={`/profile/edit/${type}`}
-        className="btn"
-      >
-        Edit
-      </Link>
+      {editable && (
+        <Link
+          href={`/profile/settings/${type}`}
+          className="btn"
+        >
+          Edit
+        </Link>
+      )}
     </div>
   );
 }
