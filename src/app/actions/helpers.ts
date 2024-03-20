@@ -1,5 +1,5 @@
 import { PostSchema } from "@/zod/postSchema";
-import { checkIsTitleUnique, fetchPost, fetchPostTags } from "@/db/posts";
+import { checkIsTitleUnique, fetchPost } from "@/db/posts";
 import type { Post } from "@/types/posts";
 
 type EdiPostState = Record<"title" | "content" | "tags" | "image", string | undefined>;
@@ -60,20 +60,19 @@ export async function checkIfPostHasChanged(
   checkedTags: string[]
 ) {
   const originalPost = checkedPost.id && (await fetchPost({ id: checkedPost.id }));
-  const originalPostTags = checkedPost.id && (await fetchPostTags({ postId: checkedPost.id }));
 
-  if (!originalPost || !originalPostTags) return false;
+  if (!originalPost) return false;
 
   const tagsAreDifferent =
-    originalPostTags.length !== checkedTags.length ||
-    originalPostTags.some((post, index) => post.name !== checkedTags[index]);
+    originalPost.tags.length !== checkedTags.length ||
+    originalPost.tags.some((post, index) => post.name !== checkedTags[index]);
 
   if (
     originalPost.title !== checkedPost.title ||
     originalPost.image !== checkedPost.image ||
     originalPost.content !== checkedPost.content ||
     originalPost.category !== checkedPost.category ||
-    (originalPostTags && tagsAreDifferent)
+    tagsAreDifferent
   ) {
     return true;
   } else {
