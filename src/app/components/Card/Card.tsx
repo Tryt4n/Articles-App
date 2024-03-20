@@ -1,12 +1,12 @@
 import React from "react";
-import { fetchUser } from "@/db/users";
+import { markSearchedPhrase } from "@/app/helpers/markSearchedPhrase";
 import Link from "next/link";
 import Image from "next/image";
 import Tags from "./components/Tags";
 import FirstWords from "./components/FirstWords";
 import Time from "../Time/Time";
 import type { SearchProps } from "@/app/page";
-import type { Post } from "@/types/posts";
+import type { CardPost } from "@/types/posts";
 import type { CardAppearance } from "./types";
 import "./style.css";
 
@@ -17,28 +17,12 @@ export default async function Card({
   appearance = "with-author-info",
   editAccess,
 }: {
-  post: Post;
+  post: CardPost;
   priority: boolean;
   searchParams?: SearchProps["searchParams"];
   appearance?: CardAppearance;
   editAccess?: boolean;
 }) {
-  const author = await fetchUser({ id: post.authorId });
-
-  function markSearchedPhrase(text: string) {
-    if (!searchParams) return;
-
-    return text
-      .split(new RegExp(`(${searchParams.query})`, "gi"))
-      .map((part, index) =>
-        part.toLowerCase() === searchParams.query.toLowerCase() ? (
-          <mark key={index}>{part}</mark>
-        ) : (
-          part
-        )
-      );
-  }
-
   return (
     <li className="post-card">
       {editAccess && (
@@ -64,22 +48,29 @@ export default async function Card({
           </div>
 
           <div className="post-card-content-wrapper">
-            <Tags postId={post.id} />
+            <Tags
+              tags={post.tags || []}
+              searchedTag={
+                searchParams && searchParams.filterBy === "tag" && searchParams.query !== ""
+                  ? searchParams.query
+                  : undefined
+              }
+            />
 
             <h3 className="post-card-header">
               {searchParams && searchParams.filterBy === "title" && searchParams.query !== ""
-                ? markSearchedPhrase(post.title)
+                ? markSearchedPhrase(post.title, searchParams.query)
                 : post.title}
             </h3>
 
             <FirstWords content={post.content} />
 
             <div className="post-card-inner-content-wrapper">
-              {appearance === "with-author-info" ? (
+              {appearance === "with-author-info" && post.author ? (
                 <div className="post-card-details">
                   <Image
-                    src={author.image}
-                    alt={`${author.name} avatar`}
+                    src={post.author.image || "/user-placeholder.svg"}
+                    alt={`${post.author.name} avatar`}
                     width={40}
                     height={40}
                     className="post-card-avatar-image card-image-placeholder"
@@ -89,8 +80,8 @@ export default async function Card({
                       {searchParams &&
                       searchParams.filterBy === "author" &&
                       searchParams.query !== ""
-                        ? markSearchedPhrase(author.name)
-                        : author.name}
+                        ? markSearchedPhrase(post.author.name, searchParams.query)
+                        : post.author.name}
                     </span>
 
                     {post.publishedAt && (
