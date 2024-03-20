@@ -1,5 +1,5 @@
 import React from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 
 export default function SelectedText() {
   const { textOptions } = usePostForm();

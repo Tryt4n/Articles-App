@@ -1,8 +1,8 @@
 import React from "react";
 import { fetchAllAuthors } from "@/db/users";
-import "./authorsPage.css";
 import AuthorCard from "./AuthorCard";
 import type { Metadata } from "next/types";
+import "./authorsPage.css";
 
 export const metadata: Metadata = {
   title: "Authors",

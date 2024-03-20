@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useDeferredValue, useMemo } from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 import { startViewTransition } from "@/app/helpers/helpers";
 import TextareaAutosize, { type TextareaAutosizeProps } from "react-textarea-autosize";
 

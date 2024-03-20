@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithRef } from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 import { PostFormInput } from "./PostFormInput";
 import type { PostTags } from "@/types/tags";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import usePostForm from "../../(pages)/hooks/usePostForm";
+import usePostForm from "../../hooks/usePostForm";
 import Post from "@/app/components/Post/Post";
 import "./style.css";
 

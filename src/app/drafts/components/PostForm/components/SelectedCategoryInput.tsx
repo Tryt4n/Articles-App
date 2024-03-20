@@ -1,5 +1,5 @@
 import React, { useState, useEffect, type ComponentProps } from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 import { postCategories } from "@/app/constants/posts";
 import type { Post } from "@/types/posts";
 

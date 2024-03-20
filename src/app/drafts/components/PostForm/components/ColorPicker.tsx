@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithoutRef } from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 
 export default function ColorPicker({ ...props }: ComponentPropsWithoutRef<"input">) {
   const { setTextOptions, refs } = usePostForm();

@@ -1,4 +1,4 @@
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithoutRef } from "react";
 
 export default function FontSizeInput({ ...props }: ComponentPropsWithoutRef<"input">) {
