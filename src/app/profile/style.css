@@ -18,6 +18,7 @@
     flex-wrap: wrap;
   }
 
+  label,
   .profile-content-label {
     font-weight: bold;
   }
@@ -33,7 +34,7 @@
 
 .profile-edit-form {
   & > * {
-    margin-block: 1.5em;
+    margin-bottom: 1em;
   }
 
   .profile-content-wrapper {
@@ -53,14 +54,40 @@
     margin-bottom: 0.5em;
     display: flex;
     align-items: center;
-    gap: 1em;
-    flex-wrap: wrap;
+    column-gap: 1em;
+    row-gap: 0.5em;
+
+    &:has(
+        > .profile-edit-inputs-wrapper:where(> .profile-edit-form-input + .profile-edit-form-input)
+      ) {
+      flex-wrap: wrap;
+    }
+    &:has(.profile-edit-form-input + .profile-edit-form-input) {
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .profile-edit-form-input {
+        flex-grow: 1;
+        flex-wrap: wrap;
+
+        input {
+          max-width: 100%;
+        }
+      }
+    }
   }
 
   .profile-edit-inputs-wrapper {
     display: flex;
     justify-content: space-between;
-    gap: 2em;
+    column-gap: 2em;
+    row-gap: 0.5em;
     flex-wrap: wrap;
+  }
+
+  .profile-edit-form-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
   }
 }
