@@ -3,12 +3,13 @@
 import React, { useState, type ComponentPropsWithoutRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import NavLink from "./NavLink";
 
 type ProfileMenuBtnProps = {
   imageSrc: string;
 } & ComponentPropsWithoutRef<"button">;
 
-export default function ProfileMenuBtn({ imageSrc }: ProfileMenuBtnProps) {
+export default function ProfileMenu({ imageSrc }: ProfileMenuBtnProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -43,9 +44,10 @@ export default function ProfileMenuBtn({ imageSrc }: ProfileMenuBtnProps) {
         aria-hidden={!menuOpen}
       >
         <li>
-          <Link
+          <NavLink
             href="/profile"
             tabIndex={menuOpen ? 0 : -1}
+            onClick={() => setMenuOpen(false)}
             onKeyDown={(e: React.KeyboardEvent<HTMLAnchorElement>) => {
               if (e.key === "Enter") {
                 setMenuOpen(false);
@@ -53,29 +55,31 @@ export default function ProfileMenuBtn({ imageSrc }: ProfileMenuBtnProps) {
             }}
           >
             Profile
-          </Link>
+          </NavLink>
         </li>
 
         <li>
-          <Link
+          <NavLink
             // href="/profile/settings"
             href="#"
             tabIndex={menuOpen ? 0 : -1}
-            onKeyDown={(e) => {
+            onClick={() => setMenuOpen(false)}
+            onKeyDown={(e: React.KeyboardEvent<HTMLAnchorElement>) => {
               if (e.key === "Enter") {
                 setMenuOpen(false);
               }
             }}
           >
             Settings
-          </Link>
+          </NavLink>
         </li>
 
         <li>
-          <Link
+          <NavLink
             href="/api/auth/signout"
             tabIndex={menuOpen ? 0 : -1}
-            onKeyDown={(e) => {
+            onClick={() => setMenuOpen(false)}
+            onKeyDown={(e: React.KeyboardEvent<HTMLAnchorElement>) => {
               if (e.key === "Enter") {
                 setMenuOpen(false);
               }
@@ -86,7 +90,7 @@ export default function ProfileMenuBtn({ imageSrc }: ProfileMenuBtnProps) {
             }}
           >
             Logout
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

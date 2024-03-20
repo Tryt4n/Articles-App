@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import NavLink from "./components/NavLink";
 import SignupLink from "./components/SignupLink";
-import ProfileMenuBtn from "./components/ProfileMenuBtn";
+import ProfileMenu from "./components/ProfileMenu";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../api/auth/[...nextauth]/authOptions";
 import "./style.css";
@@ -46,7 +46,7 @@ export default async function Navbar() {
             <SignupLink />
           </>
         ) : (
-          <ProfileMenuBtn imageSrc={session.user.image} />
+          <ProfileMenu imageSrc={session.user.image} />
         )}
       </div>
     </nav>
