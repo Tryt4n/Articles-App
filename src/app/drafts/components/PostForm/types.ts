@@ -1,10 +1,10 @@
 import type { Post } from "@/types/posts";
-import type { PostTags } from "@/types/tags";
+import type { Tag } from "@/types/tags";
 
 export type PostFormProps =
   | {
       post: Post;
-      postTags: PostTags;
+      postTags: Tag[];
       authorId: string;
     }
   | {

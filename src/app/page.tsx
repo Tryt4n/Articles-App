@@ -1,13 +1,13 @@
 import SearchingForm from "./components/SearchingForm/SearchingForm";
 import CardsList from "./components/CardsList/CardsList";
-import type { filteringOptions, postCategories } from "./constants/posts";
+import type { PostCategories, PostFilteringOptions } from "@/types/posts";
 import "@/app/style.css";
 
 export type SearchProps = {
   searchParams: {
     query: string;
-    filterBy: (typeof filteringOptions)[number];
-    category: (typeof postCategories)[number] | "";
+    filterBy: PostFilteringOptions;
+    category: PostCategories | "";
   };
 };
 

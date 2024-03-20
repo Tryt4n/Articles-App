@@ -2,11 +2,11 @@ import prisma from "./db";
 import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
 import { wait } from "@/app/helpers/helpers";
-import type { Prisma, Tag } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
 import type { User } from "@/types/users";
-import type { PostTags } from "@/types/tags";
+import type { Tag } from "@/types/tags";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: string }) => {
@@ -96,7 +96,7 @@ export const fetchPostsBySearchParams = NextCache(
         image: post.author.image || "/user-placeholder.svg",
       },
       tags: post.tags.map((postTag) => postTag.tag),
-    })) as (Post & { author: Pick<User, "name" | "image">; tags: PostTags })[];
+    })) as (Post & { author: Pick<User, "name" | "image">; tags: Tag[] })[];
   }),
   ["post", "posts"]
 );

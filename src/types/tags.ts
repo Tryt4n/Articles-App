@@ -1,3 +1,3 @@
-import type { Tag } from "@prisma/client";
+import type { Tag as dbTag } from "@prisma/client";
 
-export type PostTags = Tag[];
+export type Tag = dbTag;

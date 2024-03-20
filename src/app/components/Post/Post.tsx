@@ -2,13 +2,13 @@ import React from "react";
 import Image from "next/image";
 import MarkdownPreview from "@/app/components/MarkdownPreview/MarkdownPreview";
 import type { Post } from "@/types/posts";
-import type { PostTags } from "@/types/tags";
+import type { Tag } from "@/types/tags";
 import "./style.css";
 
 export type PostProps = {
   title: Post["title"];
   imageSrc: Post["image"];
-  tags: PostTags;
+  tags: Tag[];
   category: Post["category"];
   content: string;
 };

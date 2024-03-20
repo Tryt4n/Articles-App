@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useDeferredValue, type ComponentPropsWithRef } from "react";
 import usePostForm from "@/app/drafts/hooks/usePostForm";
 import { PostFormInput } from "./PostFormInput";
-import type { PostTags } from "@/types/tags";
+import type { Tag } from "@/types/tags";
 
-type TagsInputProps = { tags: PostTags; error?: string } & ComponentPropsWithRef<"input">;
+type TagsInputProps = { tags: Tag[]; error?: string } & ComponentPropsWithRef<"input">;
 
 export default function TagsInput({ tags, error, ...props }: TagsInputProps) {
   const { postData, setPostData, refs } = usePostForm();

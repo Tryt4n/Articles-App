@@ -1,9 +1,9 @@
 import React from "react";
 import { markSearchedPhrase } from "@/app/helpers/markSearchedPhrase";
-import type { PostTags } from "@/types/tags";
+import type { Tag } from "@/types/tags";
 
 type TagsProps = {
-  tags: PostTags;
+  tags: Tag[];
   searchedTag?: string;
 };
 
