@@ -1,15 +1,21 @@
 import React from "react";
-import { fetchPostTags } from "@/db/posts";
+import { markSearchedPhrase } from "@/app/helpers/markSearchedPhrase";
+import type { PostTags } from "@/types/tags";
 
-export default async function Tags({ postId }: { postId: string }) {
-  const postTags = await fetchPostTags({ postId });
+type TagsProps = {
+  tags: PostTags;
+  searchedTag?: string;
+};
 
+export default async function Tags({ tags, searchedTag }: TagsProps) {
   return (
     <>
-      {postTags && postTags.length > 0 && (
+      {tags && tags.length > 0 && (
         <ul className="post-card-tags-wrapper">
-          {postTags.map((tag) => (
-            <li key={tag.id}>{tag.name}</li>
+          {tags.map((tag) => (
+            <li key={tag.id}>
+              {searchedTag ? markSearchedPhrase(tag.name, searchedTag) : tag.name}
+            </li>
           ))}
         </ul>
       )}
