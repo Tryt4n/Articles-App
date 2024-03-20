@@ -26,7 +26,7 @@ export default async function DraftsPage() {
         Create new post
       </Link>
 
-      {user && user.posts && user.posts.length > 0 && (
+      {user && user.posts && user.posts.length > 0 ? (
         <>
           {user.posts.some((post) => !post.published) && (
             <article>
@@ -48,6 +48,8 @@ export default async function DraftsPage() {
             </article>
           )}
         </>
+      ) : (
+        <strong className="drafts-no-posts-text">You haven&apos;t written any posts yet.</strong>
       )}
     </main>
   );
