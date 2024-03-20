@@ -5,12 +5,29 @@ import { wait } from "@/app/helpers/helpers";
 import type { Prisma, Tag } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
+import type { User } from "@/types/users";
+import type { PostTags } from "@/types/tags";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: string }) => {
     // await wait(1000);
 
-    return prisma.post.findUnique({ where: { id } }) as unknown as Post;
+    const [post, postTags, postComments, postReceivedLikes] = await prisma.$transaction([
+      prisma.post.findUnique({ where: { id } }),
+      prisma.postTag.findMany({
+        where: { postId: id },
+        include: { tag: true },
+      }),
+      prisma.comment.findMany({ where: { postId: id } }),
+      prisma.like.findMany({ where: { postId: id } }),
+    ]);
+
+    return {
+      ...(post as Post),
+      tags: postTags.map((postTag) => postTag.tag),
+      comments: postComments,
+      receivedLikes: postReceivedLikes,
+    };
   }),
   ["post"]
 );
@@ -27,46 +44,61 @@ export const fetchPostsBySearchParams = NextCache(
     };
 
     if (query !== "") {
-      if (filterBy === "title") {
-        whereClause = {
-          ...whereClause,
-          title: { contains: query },
-        };
-      } else if (filterBy === "author") {
-        whereClause = {
-          ...whereClause,
-          author: {
-            name: { contains: query },
-          },
-        };
-      } else if (filterBy === "tag") {
-        whereClause = {
-          ...whereClause,
-          tags: {
-            some: {
-              tag: {
-                name: { contains: query },
+      switch (filterBy) {
+        case "title":
+          whereClause = {
+            ...whereClause,
+            title: { contains: query },
+          };
+          break;
+        case "author":
+          whereClause = {
+            ...whereClause,
+            author: {
+              name: { contains: query },
+            },
+          };
+          break;
+        case "tag":
+          whereClause = {
+            ...whereClause,
+            tags: {
+              some: {
+                tag: {
+                  name: { contains: query },
+                },
               },
             },
-          },
-        };
+          };
+          break;
+        default:
+          break;
       }
     }
 
-    return prisma.post.findMany({
+    const posts = await prisma.post.findMany({
       where: whereClause,
-    }) as unknown as Post[];
+      include: {
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+        tags: { include: { tag: true } },
+      },
+    });
+
+    return posts.map((post) => ({
+      ...post,
+      author: {
+        ...post.author,
+        image: post.author.image || "/user-placeholder.svg",
+      },
+      tags: post.tags.map((postTag) => postTag.tag),
+    })) as (Post & { author: Pick<User, "name" | "image">; tags: PostTags })[];
   }),
   ["post", "posts"]
-);
-
-export const fetchPostTags = NextCache(
-  ReactCache(async ({ postId }: { postId: string }) => {
-    // await wait(1000);
-
-    return prisma.tag.findMany({ where: { posts: { some: { postId } } } });
-  }),
-  ["tags"]
 );
 
 export const createPost = async (
