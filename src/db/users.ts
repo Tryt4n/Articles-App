@@ -7,17 +7,32 @@ import type { User, UserRole } from "@/types/users";
 
 export const fetchUser = NextCache(
   ReactCache(async ({ id }: { id: string }) => {
-    // await wait(1000);
-
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        image: true,
-        role: true,
-        posts: true,
+      include: {
+        posts: {
+          select: {
+            id: true,
+            author: true,
+            authorId: true,
+            category: true,
+            comments: true,
+            likes: true,
+            savedBy: true,
+            title: true,
+            content: true,
+            image: true,
+            published: true,
+            publishedAt: true,
+            createdAt: true,
+            updatedAt: true,
+            tags: {
+              select: {
+                tag: true,
+              },
+            },
+          },
+        },
         comments: true,
         followers: true,
         followings: true,
@@ -26,7 +41,13 @@ export const fetchUser = NextCache(
       },
     });
 
-    return user as unknown as User;
+    return {
+      ...user,
+      posts: user?.posts.map((post) => ({
+        ...post,
+        tags: post.tags.map((postTag) => postTag.tag),
+      })),
+    } as User;
   }),
   ["user"]
 );
@@ -44,7 +65,7 @@ export const fetchAllAuthors = NextCache(
     return authors.map((author) => ({
       ...author,
       role: author.role as UserRole,
-    })) as unknown as User[];
+    })) as User[];
   }),
   ["authors"]
 );
@@ -53,7 +74,7 @@ export async function createNewUser(
   user: Pick<User, "id" | "email" | "name" | "image" | "role" | "password">
 ) {
   // await wait(1000);
-  return prisma.user.create({ data: user });
+  return await prisma.user.create({ data: user });
 }
 
 export async function isNewUserEmailUnique(email: string) {
@@ -95,5 +116,5 @@ export async function updateUserEmail(id: string, email: string) {
 }
 
 export async function updateUserPassword(id: string, password: string) {
-  return prisma.user.update({ where: { id }, data: { password } });
+  return await prisma.user.update({ where: { id }, data: { password } });
 }
