@@ -13,7 +13,7 @@ export type PostProps = {
   content: string;
 };
 
-export default function Post({ title, imageSrc, tags, category, content }: PostProps) {
+export default function Post({ title, imageSrc, tags = [], category, content }: PostProps) {
   function isValidUrl(url: string) {
     try {
       new URL(url);
