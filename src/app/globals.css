@@ -113,10 +113,10 @@ legend {
 
 input,
 select {
-  font: inherit;
-  color: inherit;
   padding: 0;
   border-width: 1px;
+  font: inherit;
+  color: inherit;
 }
 
 label,
@@ -129,6 +129,7 @@ select,
 textarea {
   width: 100%;
   height: 2em;
+  background-color: initial;
   border-radius: 0.25em;
   &:not([type="color"]) {
     min-width: 10em;
