@@ -1,5 +1,5 @@
 import React, { type ComponentPropsWithoutRef } from "react";
-import usePostForm from "@/app/drafts/(pages)/hooks/usePostForm";
+import usePostForm from "@/app/drafts/hooks/usePostForm";
 
 export default function ChangeTextBtn({ ...props }: ComponentPropsWithoutRef<"button">) {
   const { refs, textOptions, setTextOptions, setPostData } = usePostForm();
@@ -26,6 +26,7 @@ export default function ChangeTextBtn({ ...props }: ComponentPropsWithoutRef<"bu
       const end = textArea.selectionEnd; // End of the selected text
       textArea.value =
         textArea.value.substring(0, start) + insertText + textArea.value.substring(end); // Replace the selected text with the new one
+
       setTextOptions((prevValue) => ({ ...prevValue, selectedText: insertText }));
 
       newCursorPosition = start + insertText.length;
@@ -45,6 +46,7 @@ export default function ChangeTextBtn({ ...props }: ComponentPropsWithoutRef<"bu
 
     // Update global state
     setPostData((prevValue) => ({ ...prevValue, content: textArea.value }));
+    setTextOptions((prevValue) => ({ ...prevValue, selectedText: "" }));
 
     // Set focus on the textarea at the end of the inserted text
     textArea.focus();
