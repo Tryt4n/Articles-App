@@ -1,13 +1,13 @@
 import React from "react";
 import Card from "../Card/Card";
-import type { Post } from "@/types/posts";
+import type { CardPost } from "@/types/posts";
 import "./style.css";
 
 export default function AuthorCardsList({
   posts,
   isAuthor = false,
 }: {
-  posts: Post[];
+  posts: CardPost[];
   isAuthor?: boolean;
 }) {
   return (
