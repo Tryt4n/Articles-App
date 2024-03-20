@@ -2,7 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-import { fetchPost, fetchPostTags } from "@/db/posts";
+import { fetchPost } from "@/db/posts";
 import PostForm from "../../components/PostForm/PostForm";
 import Time from "@/app/components/Time/Time";
 import type { Metadata } from "next/types";
@@ -19,7 +19,6 @@ export async function generateMetadata({
 
 export default async function DraftPage({ params }: { params: { draftId: string } }) {
   const post = await fetchPost({ id: params.draftId });
-  const postTags = await fetchPostTags({ postId: post.id });
   const session = await getServerSession(authOptions);
 
   if (session?.user.id !== post.authorId) {
@@ -66,7 +65,7 @@ export default async function DraftPage({ params }: { params: { draftId: string 
         <PostForm
           key={params.draftId}
           post={post}
-          postTags={postTags}
+          postTags={post.tags}
           authorId={session.user.id}
         />
       )}
