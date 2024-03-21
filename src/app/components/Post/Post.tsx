@@ -7,13 +7,20 @@ import "./style.css";
 
 export type PostProps = {
   title: Post["title"];
-  imageSrc: Post["image"];
+  image: Post["image"];
   tags: Tag[];
   category: Post["category"];
   content: string;
 };
 
-export default function Post({ title, imageSrc, tags = [], category, content }: PostProps) {
+export default function Post({
+  title,
+  image,
+  tags = [],
+  category,
+  content,
+  children,
+}: PostProps & { children?: React.ReactNode }) {
   function isValidUrl(url: string) {
     try {
       new URL(url);
@@ -23,7 +30,7 @@ export default function Post({ title, imageSrc, tags = [], category, content }: 
     }
   }
 
-  const checkedImgSrc = isValidUrl(imageSrc);
+  const checkedImgSrc = isValidUrl(image);
 
   return (
     <main className="post-preview">
@@ -57,10 +64,10 @@ export default function Post({ title, imageSrc, tags = [], category, content }: 
         }
       >
         <>
-          {imageSrc && checkedImgSrc && (
+          {image && checkedImgSrc && (
             <Image
               className="post-preview-image"
-              src={imageSrc}
+              src={image}
               alt="Post Image"
               width={1168}
               height={400}
@@ -74,6 +81,8 @@ export default function Post({ title, imageSrc, tags = [], category, content }: 
         markdownText={content}
         disallowedElements={["h1"]}
       />
+
+      {children}
     </main>
   );
 }
