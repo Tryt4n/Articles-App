@@ -31,7 +31,7 @@ export const PostContext = createContext<PostContextType | null>(null);
 export default function PostContextProvider({ children }: { children: React.ReactNode }) {
   const [postData, setPostData] = useState<PostProps>({
     title: "",
-    imageSrc: "",
+    image: "",
     tags: [],
     category: "general",
     content: "",

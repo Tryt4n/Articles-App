@@ -42,7 +42,7 @@ export default function PostPreviewPage() {
         <pre>
           <Post
             title={parsedData.title}
-            imageSrc={parsedData.imageSrc}
+            image={parsedData.image}
             tags={parsedData.tags}
             category={parsedData.category}
             content={parsedData.content}

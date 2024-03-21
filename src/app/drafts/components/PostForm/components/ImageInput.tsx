@@ -14,15 +14,12 @@ export default function ImageInput({ imageSrc, error, ...props }: ImageInputProp
 
   // Update global state with deferred value to prevent lag
   useEffect(() => {
-    setPostData((prevPostData) => ({ ...prevPostData, imageSrc: deferredImage }));
+    setPostData((prevPostData) => ({ ...prevPostData, image: deferredImage }));
   }, [deferredImage, setPostData]);
 
   // Update local storage for post preview page
   useEffect(() => {
-    localStorage.setItem(
-      "live-preview-data",
-      JSON.stringify({ ...postData, imageSrc: inputImage })
-    );
+    localStorage.setItem("live-preview-data", JSON.stringify({ ...postData, image: inputImage }));
   }, [inputImage, postData]);
 
   return (
