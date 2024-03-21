@@ -7,6 +7,8 @@ import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
 import type { User } from "@/types/users";
 import type { Tag } from "@/types/tags";
+import type { Comment } from "@/types/comments";
+import type { Like } from "@/types/likes";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: string }) => {
@@ -16,17 +18,26 @@ export const fetchPost = NextCache(
       prisma.post.findUnique({ where: { id } }),
       prisma.postTag.findMany({
         where: { postId: id },
-        include: { tag: true },
+        include: { tag: true }, // Include the tag of the post
       }),
-      prisma.comment.findMany({ where: { postId: id } }),
+      prisma.comment.findMany({
+        where: { postId: id },
+        include: { author: true, like: true }, // Include the author of the comment
+      }),
       prisma.like.findMany({ where: { postId: id } }),
     ]);
 
     return {
       ...(post as Post),
-      tags: postTags.map((postTag) => postTag.tag),
-      comments: postComments,
-      receivedLikes: postReceivedLikes,
+      tags: postTags.map((postTag) => postTag.tag) as Tag[],
+      comments: postComments.map((comment) => ({
+        ...comment,
+        author: {
+          name: comment.author.name,
+          image: comment.author.image || "/user-placeholder.svg",
+        },
+      })) as Comment[],
+      receivedLikes: postReceivedLikes as Like[],
     };
   }),
   ["post"]
