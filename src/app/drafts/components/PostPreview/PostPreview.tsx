@@ -15,7 +15,7 @@ export default function PostPreview() {
       <pre className="post-form-preview">
         <Post
           title={postData.title}
-          imageSrc={postData.imageSrc}
+          image={postData.image}
           tags={postData.tags}
           category={postData.category}
           content={postData.content}
