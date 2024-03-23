@@ -4,15 +4,14 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { postComment } from "@/app/actions/comments";
 import CommentTextarea from "./CommentTextarea";
 import PostCommentBtn from "./PostCommentBtn";
+import ReplyToInput from "./ReplyToInput";
 import type { Post } from "@/types/posts";
-import type { User } from "@/types/users";
 
 type CommentFormProps = {
   postId: Post["id"];
-  replyTo?: User["id"];
 };
 
-export default async function CommentForm({ postId, replyTo }: CommentFormProps) {
+export default async function CommentForm({ postId }: CommentFormProps) {
   const session = await getServerSession(authOptions);
 
   return (
@@ -29,13 +28,7 @@ export default async function CommentForm({ postId, replyTo }: CommentFormProps)
         value={session?.user?.id}
       />
 
-      {replyTo && (
-        <input
-          type="hidden"
-          name="reply-to"
-          value={replyTo}
-        />
-      )}
+      <ReplyToInput />
 
       <label>
         <CommentTextarea
