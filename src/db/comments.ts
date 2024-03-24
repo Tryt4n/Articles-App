@@ -8,3 +8,11 @@ export async function createComment(
     data: comment,
   });
 }
+
+export async function deleteComment(commentId: string) {
+  return await prisma.comment.delete({
+    where: {
+      id: commentId,
+    },
+  });
+}
