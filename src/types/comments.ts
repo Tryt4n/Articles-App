@@ -6,4 +6,5 @@ export type Comment = dbComment & {
     name: User["name"];
     image: User["image"];
   };
+  replies?: Comment[];
 };
