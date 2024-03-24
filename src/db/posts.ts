@@ -14,28 +14,39 @@ export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: string }) => {
     // await wait(1000);
 
-    const [post, postTags, postComments, postReceivedLikes] = await prisma.$transaction([
-      prisma.post.findUnique({ where: { id } }),
-      prisma.postTag.findMany({
-        where: { postId: id },
-        include: { tag: true }, // Include the tag of the post
-      }),
-      prisma.comment.findMany({
-        where: { postId: id },
-        include: { author: true, like: true }, // Include the author of the comment
-      }),
-      prisma.like.findMany({ where: { postId: id } }),
-    ]);
+    const [post, postTags, postComments, postReplies, postReceivedLikes] =
+      await prisma.$transaction([
+        prisma.post.findUnique({ where: { id } }),
+        prisma.postTag.findMany({
+          where: { postId: id },
+          include: { tag: true }, // Include the tag of the post
+        }),
+        prisma.comment.findMany({
+          where: { postId: id, replyToId: null },
+          // Include the author of the comment and likes
+          include: {
+            author: { select: { name: true, image: true } },
+            like: true,
+          },
+        }),
+        prisma.comment.findMany({
+          where: { postId: id, replyToId: { not: null } },
+          // Include the author of the comment and likes
+          include: {
+            author: { select: { name: true, image: true } },
+            like: true,
+          },
+        }),
+        prisma.like.findMany({ where: { postId: id } }),
+      ]);
 
     return {
       ...(post as Post),
       tags: postTags.map((postTag) => postTag.tag) as Tag[],
-      comments: postComments.map((comment) => ({
+      comments: (postComments as Comment[]).map((comment) => ({
         ...comment,
-        author: {
-          name: comment.author.name,
-          image: comment.author.image || "/user-placeholder.svg",
-        },
+        // Filter replies related to the comment
+        replies: (postReplies as Comment[]).filter((reply) => reply.replyToId === comment.id),
       })) as Comment[],
       receivedLikes: postReceivedLikes as Like[],
     };
