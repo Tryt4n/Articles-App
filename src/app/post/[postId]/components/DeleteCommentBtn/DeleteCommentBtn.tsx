@@ -1,8 +1,8 @@
 "use client";
 
 import React, { type ComponentPropsWithoutRef } from "react";
+import { useFormStatus } from "react-dom";
 import { deleteCommentAction } from "@/app/actions/comments";
-import DeleteBtn from "./DeleteBtn";
 import type { Post } from "@/types/posts";
 import type { Comment } from "@/types/comments";
 
@@ -28,5 +28,18 @@ export default function DeleteCommentBtn({ postId, commentId, ...props }: Delete
 
       <DeleteBtn {...props} />
     </form>
+  );
+}
+function DeleteBtn() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      aria-label="Click to delete comment."
+    >
+      {pending ? "Deleting" : "Delete"}
+    </button>
   );
 }
