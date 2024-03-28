@@ -5,6 +5,9 @@ import Image from "next/image";
 import Time from "../../../../components/Time/Time";
 import ReplyBtn from "@/app/post/[postId]/components/ReplyBtn";
 import DeleteCommentBtn from "../DeleteCommentBtn/DeleteCommentBtn";
+import EditCommentBtn from "../EditCommentBtn/EditCommentBtn";
+import EditPostCommentForm from "../EditPostCommentForm/EditPostCommentForm";
+import ReplyPostCommentForm from "../ReplyPostCommentForm/ReplyPostCommentForm";
 import type { Comment } from "@/types/comments";
 
 export default function PostComment({ comment }: { comment: Comment }) {
@@ -13,13 +16,10 @@ export default function PostComment({ comment }: { comment: Comment }) {
       {comment.replies && comment.replies.length > 0 && (
         <ul style={{ border: "3px solid #666", margin: "1em" }}>
           {comment.replies.map((reply) => (
-            <li
+            <Comment
               key={reply.id}
-              style={{ borderBottom: "1px solid black" }}
-            >
-              <p>{reply.content}</p>
-              <strong>{reply.author.name}</strong>
-            </li>
+              comment={reply}
+            />
           ))}
         </ul>
       )}
@@ -27,7 +27,7 @@ export default function PostComment({ comment }: { comment: Comment }) {
   );
 }
 
-async function Comment({ comment, children }: { comment: Comment; children: React.ReactNode }) {
+async function Comment({ comment, children }: { comment: Comment; children?: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
   const user = comment.author.name === session?.user?.name ? "You" : comment.author.name;
@@ -62,25 +62,35 @@ async function Comment({ comment, children }: { comment: Comment; children: Reac
         />
       </div>
 
-      {session && comment.author.name !== session.user.name && (
-        <ReplyBtn
-          reply={{
-            repliedCommentId: comment.id,
-            replyAuthor: { id: comment.authorId, name: comment.author.name },
-          }}
-        />
+      {session && comment.author.name !== session.user.name && comment.replyToId == null && (
+        <ReplyBtn comment={comment} />
       )}
 
       {session && comment.author.name === session.user.name && (
-        <DeleteCommentBtn
-          postId={comment.postId}
-          commentId={comment.id}
-        />
+        <>
+          <DeleteCommentBtn
+            postId={comment.postId}
+            commentId={comment.id}
+          />
+
+          <EditCommentBtn comment={comment} />
+        </>
       )}
 
       <p>{comment.content}</p>
 
       {children}
+
+      {session?.user && (
+        <ReplyPostCommentForm
+          commentId={comment.id}
+          authorId={session.user.id}
+        />
+      )}
+
+      {session && comment.author.name === session.user.name && (
+        <EditPostCommentForm commentId={comment.id} />
+      )}
     </li>
   );
 }
