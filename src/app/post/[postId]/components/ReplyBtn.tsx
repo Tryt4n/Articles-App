@@ -1,28 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { type ComponentPropsWithoutRef } from "react";
 import useComments from "../../hooks/useComments";
-import type { CommentReply } from "../../context/CommentsContext";
+import { startViewTransition } from "@/app/helpers/helpers";
+import type { Comment } from "@/types/comments";
 
-type ReplyBtnProps = { reply: Omit<CommentReply, "originalComment"> };
+type ReplyBtnProps = { comment: Comment } & ComponentPropsWithoutRef<"button">;
 
-export default function ReplyBtn({ reply }: ReplyBtnProps) {
-  const { commentReply, setCommentReply, commentRef } = useComments();
+export default function ReplyBtn({ comment, ...props }: ReplyBtnProps) {
+  const { formCommentStatus, setFormCommentStatus, currentComment, setCurrentComment } =
+    useComments();
 
-  function replyToComment() {
-    if (!commentRef.current) return;
-
-    setCommentReply(reply);
-    commentRef.current.focus();
+  function openEditCommentForm() {
+    startViewTransition(() => {
+      setFormCommentStatus("reply");
+      setCurrentComment(comment);
+    });
   }
 
   return (
-    <button
-      type="button"
-      disabled={commentReply?.repliedCommentId === reply.repliedCommentId}
-      onClick={replyToComment}
-    >
-      {commentReply?.repliedCommentId === reply.repliedCommentId ? "Replying" : "Reply"}
-    </button>
+    <>
+      <button
+        {...props}
+        type="button"
+        onClick={openEditCommentForm}
+        disabled={formCommentStatus === "reply" && currentComment?.id === comment.id}
+      >
+        {formCommentStatus === "reply" && currentComment?.id === comment.id ? "Replying" : "Reply"}
+      </button>
+    </>
   );
 }
