@@ -1,10 +1,12 @@
 import React from "react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
 import { fetchPost } from "@/db/posts";
 import CommentsContextProvider from "../context/CommentsContext";
 import Post from "@/app/components/Post/Post";
 import PostComments from "@/app/post/[postId]/components/PostComments/PostComments";
-import CommentForm from "./components/CommentForm";
+import NewPostCommentForm from "./components/NewPostCommentForm/NewPostCommentForm";
 import type { Metadata } from "next/types";
 
 export async function generateMetadata({
@@ -25,6 +27,7 @@ export default async function PostPage({
   children: React.ReactNode;
 }) {
   const post = await fetchPost({ id: params.postId });
+  const session = await getServerSession(authOptions);
 
   if (!post || !post.id) redirect("/");
 
@@ -39,7 +42,12 @@ export default async function PostPage({
       >
         <PostComments comments={post.comments} />
 
-        <CommentForm postId={post.id} />
+        {session?.user && (
+          <NewPostCommentForm
+            postId={post.id}
+            user={session.user.id}
+          />
+        )}
 
         {children}
       </Post>
