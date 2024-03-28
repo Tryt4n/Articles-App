@@ -16,3 +16,15 @@ export async function deleteComment(commentId: string) {
     },
   });
 }
+
+export async function editComment(commentId: string, content: string) {
+  return await prisma.comment.update({
+    where: {
+      id: commentId,
+    },
+    data: {
+      content,
+      updatedAt: new Date(),
+    },
+  });
+}
