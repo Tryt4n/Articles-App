@@ -1,6 +1,6 @@
 "use server";
 
-import { createComment, deleteComment } from "@/db/comments";
+import { createComment, deleteComment, editComment } from "@/db/comments";
 import { revalidatePath } from "next/cache";
 import type { Comment } from "@/types/comments";
 import type { User } from "@/types/users";
@@ -29,6 +29,16 @@ export async function deleteCommentAction(formData: FormData) {
   const postId = formData.get("post-id") as Post["id"];
 
   await deleteComment(commentId);
+
+  revalidatePath(`/post/${postId}`);
+}
+
+export async function editCommentAction(formData: FormData) {
+  const commentId = formData.get("comment-id") as Comment["id"];
+  const content = formData.get("new-comment") as Comment["content"];
+  const postId = formData.get("post-id") as Post["id"];
+
+  await editComment(commentId, content);
 
   revalidatePath(`/post/${postId}`);
 }
