@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CommentsContext } from "../context/CommentsContext";
+import { CommentsContext } from "../[postId]/context/CommentsContext";
 
 export default function useComments() {
   const post = useContext(CommentsContext);
