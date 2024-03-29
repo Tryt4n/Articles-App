@@ -3,11 +3,10 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import Image from "next/image";
 import Time from "../../../../components/Time/Time";
-import ReplyBtn from "@/app/post/[postId]/components/ReplyBtn";
+import NavigateToComment from "../NavigateToComment/NavigateToComment";
+import CommentActionBtn from "../CommentActionBtn/CommentActionBtn";
 import DeleteCommentBtn from "../DeleteCommentBtn/DeleteCommentBtn";
-import EditCommentBtn from "../EditCommentBtn/EditCommentBtn";
-import EditPostCommentForm from "../EditPostCommentForm/EditPostCommentForm";
-import ReplyPostCommentForm from "../ReplyPostCommentForm/ReplyPostCommentForm";
+import CommentForm from "../CommentForm/CommentForm";
 import type { Comment } from "@/types/comments";
 
 export default function PostComment({ comment }: { comment: Comment }) {
@@ -38,8 +37,11 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
   return (
     <li
       key={comment.id}
+      id={comment.id}
       style={{ backgroundColor: "#99999980", marginBlock: "2em" }}
     >
+      <NavigateToComment commentId={comment.id} />
+
       <div>
         <div>
           <Image
@@ -63,7 +65,10 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
       </div>
 
       {session && comment.author.name !== session.user.name && comment.replyToId == null && (
-        <ReplyBtn comment={comment} />
+        <CommentActionBtn
+          status="reply"
+          comment={comment}
+        />
       )}
 
       {session && comment.author.name === session.user.name && (
@@ -73,7 +78,10 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
             commentId={comment.id}
           />
 
-          <EditCommentBtn comment={comment} />
+          <CommentActionBtn
+            status="edit"
+            comment={comment}
+          />
         </>
       )}
 
@@ -82,14 +90,34 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
       {children}
 
       {session?.user && (
-        <ReplyPostCommentForm
+        <CommentForm
+          status="reply"
           commentId={comment.id}
-          authorId={session.user.id}
-        />
+        >
+          <input
+            type="hidden"
+            name="post-id"
+            value={comment.postId}
+          />
+          <input
+            type="hidden"
+            name="author-id"
+            value={session.user.id}
+          />
+        </CommentForm>
       )}
 
       {session && comment.author.name === session.user.name && (
-        <EditPostCommentForm commentId={comment.id} />
+        <CommentForm
+          status="edit"
+          commentId={comment.id}
+        >
+          <input
+            type="hidden"
+            name="post-id"
+            value={comment.postId}
+          />
+        </CommentForm>
       )}
     </li>
   );
