@@ -10,7 +10,7 @@ export async function postCommentAction(formData: FormData) {
   const comment = formData.get("new-comment") as Comment["content"];
   const postId = formData.get("post-id") as Post["id"];
   const authorId = formData.get("author-id") as User["id"];
-  const replyToId = formData.get("reply-to") as Comment["id"] | undefined;
+  const replyToId = formData.get("comment-id") as Comment["id"] | undefined;
 
   const newComment = {
     content: comment,
@@ -19,9 +19,12 @@ export async function postCommentAction(formData: FormData) {
     replyToId: replyToId || null,
   };
 
-  await createComment(newComment);
+  if (comment.trim() !== "") {
+    await createComment(newComment);
 
-  revalidatePath(`/post/${postId}`);
+    revalidatePath(`/post/${postId}`);
+    revalidatePath("/profile");
+  }
 }
 
 export async function deleteCommentAction(formData: FormData) {
@@ -31,14 +34,18 @@ export async function deleteCommentAction(formData: FormData) {
   await deleteComment(commentId);
 
   revalidatePath(`/post/${postId}`);
+  revalidatePath("/profile");
 }
 
-export async function editCommentAction(formData: FormData) {
+export async function editCommentAction(originalContent: Comment["content"], formData: FormData) {
   const commentId = formData.get("comment-id") as Comment["id"];
   const content = formData.get("new-comment") as Comment["content"];
   const postId = formData.get("post-id") as Post["id"];
 
-  await editComment(commentId, content);
+  if (content.trim() !== "" && content !== originalContent) {
+    await editComment(commentId, content);
 
-  revalidatePath(`/post/${postId}`);
+    revalidatePath(`/post/${postId}`);
+    revalidatePath("/profile");
+  }
 }
