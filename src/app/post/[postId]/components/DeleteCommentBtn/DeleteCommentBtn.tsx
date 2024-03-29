@@ -1,8 +1,9 @@
 "use client";
 
 import React, { type ComponentPropsWithoutRef } from "react";
-import { useFormStatus } from "react-dom";
+import useComments from "@/app/post/hooks/useComments";
 import { deleteCommentAction } from "@/app/actions/comments";
+import CommentBtn from "../CommentBtn/CommentBtn";
 import type { Post } from "@/types/posts";
 import type { Comment } from "@/types/comments";
 
@@ -12,8 +13,20 @@ type DeleteCommentBtnProps = {
 } & ComponentPropsWithoutRef<"button">;
 
 export default function DeleteCommentBtn({ postId, commentId, ...props }: DeleteCommentBtnProps) {
+  const { formCommentStatus, setFormCommentStatus, setCurrentComment, contentRef } = useComments();
+
+  function resetCommentFormStatus() {
+    if (formCommentStatus === "edit") {
+      setFormCommentStatus("new");
+      setCurrentComment(null);
+    }
+  }
+
   return (
-    <form action={deleteCommentAction}>
+    <form
+      action={deleteCommentAction}
+      onSubmit={resetCommentFormStatus}
+    >
       <input
         type="hidden"
         name="post-id"
@@ -26,20 +39,11 @@ export default function DeleteCommentBtn({ postId, commentId, ...props }: Delete
         value={commentId}
       />
 
-      <DeleteBtn {...props} />
+      <CommentBtn
+        text="Delete"
+        aria-label="Click to delete comment"
+        {...props}
+      />
     </form>
-  );
-}
-function DeleteBtn() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      aria-label="Click to delete comment."
-    >
-      {pending ? "Deleting" : "Delete"}
-    </button>
   );
 }
