@@ -9,7 +9,7 @@ export async function createComment(
   });
 }
 
-export async function deleteComment(commentId: string) {
+export async function deleteComment(commentId: Comment["id"]) {
   return await prisma.comment.delete({
     where: {
       id: commentId,
@@ -17,7 +17,7 @@ export async function deleteComment(commentId: string) {
   });
 }
 
-export async function editComment(commentId: string, content: string) {
+export async function editComment(commentId: Comment["id"], content: Comment["content"]) {
   return await prisma.comment.update({
     where: {
       id: commentId,
