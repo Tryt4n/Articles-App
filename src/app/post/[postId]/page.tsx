@@ -6,6 +6,7 @@ import { fetchPost } from "@/db/posts";
 import CommentsContextProvider from "./context/CommentsContext";
 import Post from "@/app/components/Post/Post";
 import PostComments from "@/app/post/[postId]/components/PostComments/PostComments";
+import LikeBtn from "../../components/LikeBtn/LikeBtn";
 import CommentForm from "./components/CommentForm/CommentForm";
 import type { Metadata } from "next/types";
 
@@ -59,6 +60,18 @@ export default async function PostPage({
             />
           </CommentForm>
         )}
+
+        {session?.user && (
+          <LikeBtn
+            userId={session.user.id}
+            postId={post.id}
+            alreadyLiked={
+              post.receivedLikes.length > 0 &&
+              post.receivedLikes.map((like) => like.userId).includes(session.user.id)
+            }
+          />
+        )}
+
         {children}
       </Post>
     </CommentsContextProvider>
