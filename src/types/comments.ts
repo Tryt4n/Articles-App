@@ -1,4 +1,4 @@
-import type { Comment as dbComment } from "@prisma/client";
+import type { Like, Comment as dbComment } from "@prisma/client";
 import type { User } from "./users";
 
 export type Comment = dbComment & {
@@ -7,4 +7,5 @@ export type Comment = dbComment & {
     image: User["image"];
   };
   replies?: Comment[];
+  likes: Like[];
 };

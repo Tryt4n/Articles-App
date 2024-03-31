@@ -26,7 +26,7 @@ export const fetchPost = NextCache(
           // Include the author of the comment and likes
           include: {
             author: { select: { name: true, image: true } },
-            like: true,
+            likes: true,
           },
         }),
         prisma.comment.findMany({
@@ -34,7 +34,7 @@ export const fetchPost = NextCache(
           // Include the author of the comment and likes
           include: {
             author: { select: { name: true, image: true } },
-            like: true,
+            likes: true,
           },
         }),
         prisma.like.findMany({ where: { postId: id } }),
