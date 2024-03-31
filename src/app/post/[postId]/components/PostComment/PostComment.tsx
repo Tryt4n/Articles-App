@@ -6,6 +6,7 @@ import Time from "../../../../components/Time/Time";
 import NavigateToComment from "../NavigateToComment/NavigateToComment";
 import CommentActionBtn from "../CommentActionBtn/CommentActionBtn";
 import DeleteCommentBtn from "../DeleteCommentBtn/DeleteCommentBtn";
+import LikeBtn from "../../../../components/LikeBtn/LikeBtn";
 import CommentForm from "../CommentForm/CommentForm";
 import type { Comment } from "@/types/comments";
 
@@ -52,6 +53,13 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
           />
           <strong title="Comment's author name">{user}</strong>
           <span className="visually-hidden">&apos;s comment</span>
+
+          {comment.likes.length > 0 && (
+            <span>
+              <strong>Received likes:</strong>
+              {comment.likes.length}
+            </span>
+          )}
         </div>
 
         <Time
@@ -62,6 +70,14 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
           }
           timeFormat="HH:mm, d MMM yyyy"
         />
+        {session?.user && (
+          <LikeBtn
+            commentId={comment.id}
+            postId={comment.postId}
+            userId={session.user.id}
+            alreadyLiked={comment.likes.map((like) => like.userId).includes(session.user.id)}
+          />
+        )}
       </div>
 
       {session && comment.author.name !== session.user.name && comment.replyToId == null && (
