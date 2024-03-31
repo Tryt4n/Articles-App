@@ -11,7 +11,7 @@ import type { Comment } from "@/types/comments";
 import type { Like } from "@/types/likes";
 
 export const fetchPost = NextCache(
-  ReactCache(async ({ id }: { id: string }) => {
+  ReactCache(async ({ id }: { id: Post["id"] }) => {
     // await wait(1000);
 
     const [post, postTags, postComments, postReplies, postReceivedLikes] =
@@ -155,7 +155,7 @@ export const createPost = async (
   });
 };
 
-export const publishPost = async (postId: string) => {
+export const publishPost = async (postId: Post["id"]) => {
   await prisma.post.update({
     where: { id: postId },
     data: {
@@ -188,7 +188,7 @@ export const createAndPublishPost = async (
   }
 };
 
-export const deletePost = async (postId: string, postTags?: Tag[]) => {
+export const deletePost = async (postId: Post["id"], postTags?: Tag[]) => {
   const postComments = await prisma.comment.findMany({
     where: {
       postId: postId,
@@ -289,7 +289,7 @@ export const editPost = async (
   });
 };
 
-export const checkIsTitleUnique = async (title: string) => {
+export const checkIsTitleUnique = async (title: Post["title"]) => {
   const post = await prisma.post.findUnique({ where: { title } });
 
   return post === null;
