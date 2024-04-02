@@ -1,0 +1,22 @@
+.save-post-btn {
+  position: absolute;
+  background: transparent;
+  top: 0;
+  right: 0;
+  width: 2.5em;
+  z-index: 1;
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  border-radius: 50vw;
+
+  & svg {
+    width: 2em;
+    height: 2em;
+    transition: 300ms ease-in-out;
+
+    &:hover {
+      scale: 1.1;
+    }
+  }
+}
