@@ -7,6 +7,7 @@ import CommentsContextProvider from "./context/CommentsContext";
 import Post from "@/app/components/Post/Post";
 import PostComments from "@/app/post/[postId]/components/PostComments/PostComments";
 import LikeBtn from "../../components/LikeBtn/LikeBtn";
+import SavePostBtn from "@/app/components/SavePostBtn/SavePostBtn";
 import CommentForm from "./components/CommentForm/CommentForm";
 import type { Metadata } from "next/types";
 
@@ -62,14 +63,28 @@ export default async function PostPage({
         )}
 
         {session?.user && (
-          <LikeBtn
-            userId={session.user.id}
-            postId={post.id}
-            alreadyLiked={
-              post.receivedLikes.length > 0 &&
-              post.receivedLikes.map((like) => like.userId).includes(session.user.id)
-            }
-          />
+          <>
+            <LikeBtn
+              userId={session.user.id}
+              postId={post.id}
+              alreadyLiked={
+                post.receivedLikes.length > 0 &&
+                post.receivedLikes.map((like) => like.userId).includes(session.user.id)
+              }
+            />
+
+            <SavePostBtn
+              authorId={session.user.id}
+              postId={post.id}
+              alreadySaved={
+                session.user.savedPosts &&
+                session.user.savedPosts.length > 0 &&
+                session.user.savedPosts.includes(post.id)
+                  ? true
+                  : false
+              }
+            />
+          </>
         )}
 
         {children}
