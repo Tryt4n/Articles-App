@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { checkIfPostHasChanged, createUniqueTagsArray, validatePostForm } from "./helpers";
 import type { PostCategories } from "@/types/posts";
 import type { Tag } from "@prisma/client";
+import { savePost } from "@/db/posts";
 
 export async function createPostAction(prevState: unknown, formData: FormData) {
   const authorId = formData.get("author-id") as string;
@@ -151,4 +152,15 @@ export async function deletePostAction(formData: FormData) {
   revalidatePath(`/post/${postId}`);
   revalidatePath("/post/published");
   redirect("/drafts");
+}
+
+export async function savePostAction(formData: FormData) {
+  const postId = formData.get("post-id") as string;
+  const userId = formData.get("user-id") as string;
+
+  await savePost(userId, postId);
+  revalidatePath("/");
+  revalidatePath(`/post/${postId}`);
+  revalidatePath(`/author/${userId}`);
+  revalidatePath("/profile");
 }
