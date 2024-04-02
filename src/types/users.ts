@@ -8,7 +8,7 @@ export type User = Omit<dbUser, "role"> & {
   receivedLikes?: Like[];
   followers?: Follow[];
   followings?: Follow[];
-  savedPosts?: SavedPost[];
+  savedPosts?: SavedPost["postId"][];
 };
 
 export type UserRole = "user" | "moderator" | "admin";
