@@ -1,7 +1,6 @@
 import prisma from "./db";
 import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
-import { wait } from "@/app/helpers/helpers";
 import type { Prisma } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
 import type { Post } from "@/types/posts";
@@ -12,9 +11,7 @@ import type { Like } from "@/types/likes";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: Post["id"] }) => {
-    // await wait(1000);
-
-    const [post, postTags, postComments, postReplies, postReceivedLikes] =
+    const [post, postTags, postComments, postReplies, postReceivedLikes, savedPosts] =
       await prisma.$transaction([
         prisma.post.findUnique({ where: { id } }),
         prisma.postTag.findMany({
@@ -38,6 +35,7 @@ export const fetchPost = NextCache(
           },
         }),
         prisma.like.findMany({ where: { postId: id } }),
+        prisma.savedPost.findMany({ where: { postId: id } }),
       ]);
 
     return {
@@ -49,6 +47,7 @@ export const fetchPost = NextCache(
         replies: (postReplies as Comment[]).filter((reply) => reply.replyToId === comment.id),
       })) as Comment[],
       receivedLikes: postReceivedLikes as Like[],
+      savedPosts: savedPosts,
     };
   }),
   ["post"]
@@ -56,8 +55,6 @@ export const fetchPost = NextCache(
 
 export const fetchPostsBySearchParams = NextCache(
   ReactCache(async ({ searchParams }: SearchProps) => {
-    // await wait(1000);
-
     const { query, filterBy, category } = searchParams;
 
     let whereClause: Prisma.PostWhereInput = {
@@ -294,3 +291,34 @@ export const checkIsTitleUnique = async (title: Post["title"]) => {
 
   return post === null;
 };
+
+export async function savePost(userId: User["id"], postId: Post["id"]) {
+  return prisma.$transaction(async (prisma) => {
+    const existingSavedPost = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          postId: postId,
+          userId: userId,
+        },
+      },
+    });
+
+    if (existingSavedPost) {
+      return prisma.savedPost.delete({
+        where: {
+          userId_postId: {
+            postId: postId,
+            userId: userId,
+          },
+        },
+      });
+    } else {
+      return prisma.savedPost.create({
+        data: {
+          postId: postId,
+          userId: userId,
+        },
+      });
+    }
+  });
+}
