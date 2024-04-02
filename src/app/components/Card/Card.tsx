@@ -1,6 +1,9 @@
 import React from "react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { markSearchedPhrase } from "@/app/helpers/markSearchedPhrase";
 import Link from "next/link";
+import SavePostBtn from "../SavePostBtn/SavePostBtn";
 import Image from "next/image";
 import Tags from "./components/Tags";
 import FirstWords from "./components/FirstWords";
@@ -23,15 +26,34 @@ export default async function Card({
   appearance?: CardAppearance;
   editAccess?: boolean;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <li className="post-card">
-      {editAccess && (
+      {editAccess ? (
         <Link
           href={`/drafts/${post.id}`}
           className="btn post-card-edit-btn"
         >
           Edit
         </Link>
+      ) : (
+        <>
+          {session?.user && (
+            <SavePostBtn
+              authorId={session.user.id}
+              postId={post.id}
+              alreadySaved={
+                session.user.savedPosts &&
+                session.user.savedPosts.length > 0 &&
+                session.user.savedPosts.includes(post.id)
+                  ? true
+                  : false
+              }
+              className="post-card-save-btn"
+            />
+          )}
+        </>
       )}
 
       <section>
