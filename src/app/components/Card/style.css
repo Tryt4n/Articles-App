@@ -299,4 +299,10 @@
   mark {
     background-color: var(--bg-highlight);
   }
+
+  .post-card-save-btn {
+    top: 1em;
+    right: 1em;
+    background-color: aliceblue;
+  }
 }
