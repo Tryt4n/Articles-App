@@ -1,0 +1,29 @@
+.follow-author-btn {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-content: center;
+
+  & button {
+    padding: 0.5em;
+    background: transparent;
+    border-radius: 50vw;
+
+    &:hover {
+      background-color: hsla(0, 0%, 50%, 0.25);
+
+      & svg {
+        scale: 1.05;
+      }
+    }
+  }
+
+  & svg {
+    width: 2em;
+    height: 2em;
+    transition: 300ms ease-in-out;
+  }
+}
