@@ -2,6 +2,8 @@
 
 import React from "react";
 import { useFormStatus } from "react-dom";
+import LikeIcon from "@/app/Icons/LikeIcon";
+import LikeFilledIcon from "@/app/Icons/LikeFilledIcon";
 
 type ActionBtnProps = {
   alreadyLiked: boolean;
@@ -18,7 +20,10 @@ export default function ActionBtn({ alreadyLiked, isComment, ...props }: ActionB
       disabled={pending}
       {...props}
     >
-      {pending ? (alreadyLiked ? "Unliking" : "Liking") : alreadyLiked ? "Unlike" : "Like"}
+      <span className="visually-hidden">
+        {pending ? (alreadyLiked ? "Unliking" : "Liking") : alreadyLiked ? "Unlike" : "Like"}
+      </span>
+      {alreadyLiked ? <LikeFilledIcon /> : <LikeIcon />}
     </button>
   );
 }
