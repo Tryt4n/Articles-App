@@ -75,7 +75,7 @@ export const authOptions: NextAuthOptions = {
       const dbUser = await prisma.user.findUnique({
         where: { email: token.email! },
         select: {
-          followings: true,
+          followers: { select: { followingUserId: true } },
           savedPosts: { select: { postId: true } },
         },
       });
@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
         role: token.role,
         expires: session.expires,
         savedPosts: dbUser?.savedPosts.map((post) => post.postId),
-        followings: dbUser?.followings,
+        followings: dbUser?.followers.map((user) => user.followingUserId),
       };
       return session;
     },
