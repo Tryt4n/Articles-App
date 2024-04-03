@@ -7,7 +7,7 @@ export type User = Omit<dbUser, "role"> & {
   comments?: Comment[];
   receivedLikes?: Like[];
   followers?: Follow[];
-  followings?: Follow[];
+  followings?: Follow["followingUserId"][];
   savedPosts?: SavedPost["postId"][];
 };
 
