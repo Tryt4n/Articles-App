@@ -1,15 +1,16 @@
 import React from "react";
 import PostComment from "../PostComment/PostComment";
 import type { Comment } from "@/types/comments";
+import "./style.css";
 
 export default async function PostComments({ comments = [] }: { comments: Comment[] }) {
   return (
     <>
-      <section>
+      <section className="post-comments">
         <h2>Comments:</h2>
 
         {comments.length > 0 ? (
-          <ul>
+          <ul className="post-comments-list">
             {comments.map((comment) => (
               <PostComment
                 key={comment.id}
@@ -18,7 +19,9 @@ export default async function PostComments({ comments = [] }: { comments: Commen
             ))}
           </ul>
         ) : (
-          <p>This post has no comments yet.</p>
+          <p className="post-comments-empty">
+            <strong>This post has no comments yet.</strong>
+          </p>
         )}
       </section>
     </>

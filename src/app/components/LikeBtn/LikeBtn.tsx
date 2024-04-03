@@ -4,6 +4,7 @@ import ActionBtn from "./Btn";
 import type { Comment } from "@/types/comments";
 import type { Post } from "@/types/posts";
 import type { User } from "@/types/users";
+import "./style.css";
 
 type LikeCommentBtnProps = {
   postId: Post["id"];
@@ -22,7 +23,7 @@ export default async function LikeBtn({
   return (
     <form
       action={likeAction}
-      className={props.className}
+      className="like-btn"
     >
       {commentId && (
         <input
@@ -46,6 +47,8 @@ export default async function LikeBtn({
         alreadyLiked={alreadyLiked}
         isComment={commentId ? true : false}
         {...props}
+        className={undefined}
+        style={undefined}
       />
     </form>
   );

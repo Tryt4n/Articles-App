@@ -1,0 +1,85 @@
+.post-comment {
+  padding: 1em;
+  font-size: 14px;
+
+  &:not(:first-child) {
+    border-top-right-radius: 1em;
+  }
+  &:not(:last-child) {
+    border-bottom-left-radius: 1em;
+    margin-bottom: 2em;
+  }
+
+  .post-comment-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .post-comment-user-wrapper {
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .post-comment-avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50vw;
+  }
+
+  .post-comment-btns-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.25em;
+
+    & > .post-likes:not(:has(button)) {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  .post-comment-btns-inner-wrapper {
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+  }
+
+  .post-comment-content {
+    margin-block: 1em;
+    padding: 1em;
+    border: 1px solid gray;
+    border-radius: 0.25em;
+    font-size: initial;
+  }
+
+  .post-comment-time {
+    width: 100%;
+    text-align: end;
+  }
+}
+
+.post-comment-replies-wrapper {
+  overflow: hidden;
+  margin: 1em;
+  border-radius: 0.5em;
+
+  .post-comment-replies-heading {
+    margin-block: 0 1em;
+  }
+
+  .post-comment-replies-list {
+    border: 1px solid #333;
+    border-radius: 0.5em;
+
+    background-color: hsl(0, 0%, 0%, 0.1);
+  }
+
+  .post-comment:nth-child(2n) {
+    background-color: hsl(0, 0%, 0%, 0.15);
+  }
+}

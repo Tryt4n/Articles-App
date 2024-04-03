@@ -1,16 +1,15 @@
-.follow-author-btn {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  aspect-ratio: 1;
-
-  display: grid;
-  place-content: center;
-
+.like-btn {
   & button {
+    aspect-ratio: 1;
     padding: 0.5em;
     background: transparent;
     border-radius: 50vw;
+
+    svg {
+      width: 1.5em;
+      height: 1.5em;
+      transition: 300ms ease-in-out;
+    }
 
     &:hover {
       background-color: hsla(0, 0%, 50%, 0.25);
@@ -24,11 +23,5 @@
       cursor: not-allowed;
       opacity: 0.5;
     }
-  }
-
-  & svg {
-    width: 2em;
-    height: 2em;
-    transition: 300ms ease-in-out;
   }
 }

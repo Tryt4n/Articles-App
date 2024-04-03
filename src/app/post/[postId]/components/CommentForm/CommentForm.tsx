@@ -8,6 +8,7 @@ import CommentTextarea from "../CommentTextarea/CommentTextarea";
 import CommentBtn from "../CommentBtn/CommentBtn";
 import type { Comment } from "@/types/comments";
 import type { FormStatus } from "../../types/formTypes";
+import "./style.css";
 
 type CommentFormProps = {
   status: FormStatus;
@@ -43,6 +44,7 @@ export default function CommentForm({ status, commentId, children, ...props }: C
           }
           onSubmit={cancelEditing}
           {...props}
+          className={`comment-form${props.className ? ` ${props.className}` : ""}`}
         >
           {commentId && (
             <input
@@ -58,6 +60,7 @@ export default function CommentForm({ status, commentId, children, ...props }: C
             <CommentTextarea
               name="new-comment"
               id="new-comment"
+              className="comment-form-textarea"
               cols={30}
               rows={10}
               minLength={1}
@@ -68,7 +71,7 @@ export default function CommentForm({ status, commentId, children, ...props }: C
             />
           </label>
 
-          <div>
+          <div className="comment-form-btns-wrapper">
             <CommentBtn
               text={
                 (status === "new" ? "Comment" : status).charAt(0).toUpperCase() +

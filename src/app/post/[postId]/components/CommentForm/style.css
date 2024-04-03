@@ -1,0 +1,13 @@
+.comment-form {
+  margin-block: 1em;
+
+  .comment-form-textarea {
+    margin-bottom: 0.5em;
+  }
+
+  .comment-form-btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+  }
+}

@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { fetchPost } from "@/db/posts";
 import CommentsContextProvider from "./context/CommentsContext";
 import Post from "@/app/components/Post/Post";
+import PostLikes from "./components/PostLikes/PostLikes";
 import PostComments from "@/app/post/[postId]/components/PostComments/PostComments";
-import LikeBtn from "../../components/LikeBtn/LikeBtn";
 import SavePostBtn from "@/app/components/SavePostBtn/SavePostBtn";
 import CommentForm from "./components/CommentForm/CommentForm";
 import type { Metadata } from "next/types";
@@ -42,36 +42,39 @@ export default async function PostPage({
         tags={post.tags}
         content={post.content}
       >
-        <PostComments comments={post.comments} />
         {session?.user && (
-          <CommentForm
-            status="new"
-            key={post.comments.length} // This is a hack to force the form to re-render and clear the textarea.
-          >
-            <input
-              type="hidden"
-              name="post-id"
-              value={post.id}
-            />
-
-            <input
-              type="hidden"
-              name="author-id"
-              value={session.user.id}
-            />
-          </CommentForm>
+          <PostLikes
+            userId={session.user.id}
+            postId={post.id}
+            alreadyLiked={
+              post.receivedLikes.length > 0 &&
+              post.receivedLikes.map((like) => like.userId).includes(session.user.id)
+            }
+            receivedLikes={post.receivedLikes.length}
+            style={{ marginBlock: "1em" }}
+          />
         )}
+
+        <PostComments comments={post.comments} />
 
         {session?.user && (
           <>
-            <LikeBtn
-              userId={session.user.id}
-              postId={post.id}
-              alreadyLiked={
-                post.receivedLikes.length > 0 &&
-                post.receivedLikes.map((like) => like.userId).includes(session.user.id)
-              }
-            />
+            <CommentForm
+              status="new"
+              key={post.comments.length} // This is a hack to force the form to re-render and clear the textarea.
+            >
+              <input
+                type="hidden"
+                name="post-id"
+                value={post.id}
+              />
+
+              <input
+                type="hidden"
+                name="author-id"
+                value={session.user.id}
+              />
+            </CommentForm>
 
             <SavePostBtn
               authorId={session.user.id}

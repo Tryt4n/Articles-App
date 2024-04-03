@@ -4,24 +4,29 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import Image from "next/image";
 import Time from "../../../../components/Time/Time";
 import NavigateToComment from "../NavigateToComment/NavigateToComment";
+import PostLikes from "../PostLikes/PostLikes";
 import CommentActionBtn from "../CommentActionBtn/CommentActionBtn";
 import DeleteCommentBtn from "../DeleteCommentBtn/DeleteCommentBtn";
-import LikeBtn from "../../../../components/LikeBtn/LikeBtn";
 import CommentForm from "../CommentForm/CommentForm";
 import type { Comment } from "@/types/comments";
+import "./style.css";
 
 export default function PostComment({ comment }: { comment: Comment }) {
   return (
     <Comment comment={comment}>
       {comment.replies && comment.replies.length > 0 && (
-        <ul style={{ border: "3px solid #666", margin: "1em" }}>
-          {comment.replies.map((reply) => (
-            <Comment
-              key={reply.id}
-              comment={reply}
-            />
-          ))}
-        </ul>
+        <section className="post-comment-replies-wrapper">
+          <h3 className="post-comment-replies-heading">Replies:</h3>
+
+          <ul className="post-comment-replies-list">
+            {comment.replies.map((reply) => (
+              <Comment
+                key={reply.id}
+                comment={reply}
+              />
+            ))}
+          </ul>
+        </section>
       )}
     </Comment>
   );
@@ -39,29 +44,66 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
     <li
       key={comment.id}
       id={comment.id}
-      style={{ backgroundColor: "#99999980", marginBlock: "2em" }}
+      className="post-comment"
     >
       <NavigateToComment commentId={comment.id} />
 
-      <div>
-        <div>
+      <div className="post-comment-wrapper">
+        <div className="post-comment-user-wrapper">
           <Image
             src={userAvatar}
             alt={imageAlt}
             width={50}
             height={50}
+            className="post-comment-avatar"
           />
           <strong title="Comment's author name">{user}</strong>
           <span className="visually-hidden">&apos;s comment</span>
-
-          {comment.likes.length > 0 && (
-            <span>
-              <strong>Received likes:</strong>
-              {comment.likes.length}
-            </span>
-          )}
         </div>
 
+        <div className="post-comment-btns-wrapper">
+          {session?.user && (
+            <PostLikes
+              commentId={comment.id}
+              postId={comment.postId}
+              userId={session.user.id}
+              alreadyLiked={comment.likes.map((like) => like.userId).includes(session.user.id)}
+              receivedLikes={comment.likes.length}
+              isCurrentUser={comment.author.name === session.user.name}
+            />
+          )}
+
+          <div className="post-comment-btns-inner-wrapper">
+            {session && comment.author.name !== session.user.name && comment.replyToId == null && (
+              <CommentActionBtn
+                status="reply"
+                comment={comment}
+                className="btn"
+              />
+            )}
+
+            {session && comment.author.name === session.user.name && (
+              <>
+                <CommentActionBtn
+                  status="edit"
+                  comment={comment}
+                  className="btn"
+                />
+
+                <DeleteCommentBtn
+                  postId={comment.postId}
+                  commentId={comment.id}
+                  className="btn btn--accent"
+                />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <p className="post-comment-content">{comment.content}</p>
+
+      <div className="post-comment-time">
         <Time
           time={
             JSON.stringify(comment.createdAt) === JSON.stringify(comment.updatedAt)
@@ -69,39 +111,14 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
               : comment.updatedAt
           }
           timeFormat="HH:mm, d MMM yyyy"
-        />
-        {session?.user && (
-          <LikeBtn
-            commentId={comment.id}
-            postId={comment.postId}
-            userId={session.user.id}
-            alreadyLiked={comment.likes.map((like) => like.userId).includes(session.user.id)}
-          />
-        )}
+        >
+          {`${
+            JSON.stringify(comment.createdAt) === JSON.stringify(comment.updatedAt)
+              ? "Created"
+              : "Edited"
+          } at: `}
+        </Time>
       </div>
-
-      {session && comment.author.name !== session.user.name && comment.replyToId == null && (
-        <CommentActionBtn
-          status="reply"
-          comment={comment}
-        />
-      )}
-
-      {session && comment.author.name === session.user.name && (
-        <>
-          <DeleteCommentBtn
-            postId={comment.postId}
-            commentId={comment.id}
-          />
-
-          <CommentActionBtn
-            status="edit"
-            comment={comment}
-          />
-        </>
-      )}
-
-      <p>{comment.content}</p>
 
       {children}
 
