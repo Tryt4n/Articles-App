@@ -110,3 +110,24 @@ export async function updateUserEmail(id: User["id"], email: User["email"]) {
 export async function updateUserPassword(id: User["id"], password: User["password"]) {
   return await prisma.user.update({ where: { id }, data: { password } });
 }
+
+export async function followAuthor(userId: User["id"], authorId: User["id"]) {
+  return prisma.$transaction(async (prisma) => {
+    const existingFollow = await prisma.follow.findUnique({
+      where: { followerId_followingUserId: { followerId: userId, followingUserId: authorId } },
+    });
+
+    if (existingFollow) {
+      return prisma.follow.delete({
+        where: { id: existingFollow.id },
+      });
+    } else {
+      return prisma.follow.create({
+        data: {
+          followerId: userId,
+          followingUserId: authorId,
+        },
+      });
+    }
+  });
+}
