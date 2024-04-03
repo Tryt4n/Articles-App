@@ -11,6 +11,7 @@
 }
 
 .author-container {
+  position: relative;
   margin-block: 3em;
   padding: 1em;
   border-radius: 2em;
