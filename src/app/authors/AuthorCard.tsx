@@ -1,9 +1,14 @@
 import React from "react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import Image from "next/image";
 import Link from "next/link";
-import type { User } from "next-auth";
+import FollowAuthorBtn from "../components/FollowAuthorBtn/FollowAuthorBtn";
+import type { User } from "@/types/users";
 
-export default function AuthorCard({ author }: { author: User }) {
+export default async function AuthorCard({ author }: { author: User }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <li>
       <section className="author-container">
@@ -19,6 +24,20 @@ export default function AuthorCard({ author }: { author: User }) {
           </div>
           <h3>{author.name}</h3>
         </Link>
+
+        {session?.user && (
+          <FollowAuthorBtn
+            userId={session.user.id}
+            authorId={author.id}
+            alreadyFollowed={
+              session.user.followings &&
+              session.user.followings.length > 0 &&
+              session.user.followings.includes(author.id)
+                ? true
+                : false
+            }
+          />
+        )}
 
         <address>
           <span>email: </span>
