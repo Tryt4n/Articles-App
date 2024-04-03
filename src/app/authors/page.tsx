@@ -2,7 +2,7 @@ import React from "react";
 import { fetchAllAuthors } from "@/db/users";
 import AuthorCard from "./AuthorCard";
 import type { Metadata } from "next/types";
-import "./authorsPage.css";
+import "./style.css";
 
 export const metadata: Metadata = {
   title: "Authors",
