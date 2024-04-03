@@ -1,11 +1,12 @@
 import React from "react";
-import Image from "next/image";
-import { fetchUser } from "@/db/users";
-import AuthorCardsList from "@/app/components/AuthorCardsList/AuthorCardsList";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import { fetchUser } from "@/db/users";
+import Image from "next/image";
+import AuthorCardsList from "@/app/components/AuthorCardsList/AuthorCardsList";
+import FollowAuthorBtn from "@/app/components/FollowAuthorBtn/FollowAuthorBtn";
 import type { Metadata } from "next";
-import "./authorPage.css";
+import "./style.css";
 
 export async function generateMetadata({
   params,
@@ -40,6 +41,21 @@ export default async function AuthorPage({ params }: { params: { authorId: strin
         &nbsp;
         <a href={`mailto:${author?.email}`}>{author?.email}</a>
       </div>
+
+      {session?.user && (
+        <FollowAuthorBtn
+          userId={session.user.id}
+          authorId={author.id}
+          alreadyFollowed={
+            session.user.followings &&
+            session.user.followings.length > 0 &&
+            session.user.followings.includes(author.id)
+              ? true
+              : false
+          }
+          className="author-page-follow-btn"
+        />
+      )}
 
       {authorPublishedPosts && authorPublishedPosts.length > 0 && (
         <article>
