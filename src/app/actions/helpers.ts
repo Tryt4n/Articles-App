@@ -11,9 +11,9 @@ type RequiredPostProperties = {
   image: Post["image"];
 };
 
-type PartialWithRequiredFields = RequiredPostProperties & Partial<Post>;
+type PartialWithRequiredFields = RequiredPostProperties & Partial<Omit<Post, "tags">>;
 
-export function createUniqueTagsArray(tags: string) {
+export function createUniqueTagsArray(tags: RequiredPostProperties["tags"]) {
   return [
     ...new Set(
       tags
@@ -24,7 +24,10 @@ export function createUniqueTagsArray(tags: string) {
   ];
 }
 
-export async function validatePostForm(post: PartialWithRequiredFields, originalTitle?: string) {
+export async function validatePostForm(
+  post: PartialWithRequiredFields,
+  originalTitle?: Post["title"]
+) {
   let errorMessages: EdiPostState = {
     title: undefined,
     content: undefined,

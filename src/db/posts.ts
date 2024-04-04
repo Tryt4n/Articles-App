@@ -121,7 +121,7 @@ export const fetchPostsBySearchParams = NextCache(
 );
 
 export const createPost = async (
-  post: Omit<Post, "id" | "published" | "publishedAt" | "createdAt" | "updatedAt">,
+  post: Pick<Post, "authorId" | "title" | "content" | "category" | "image">,
   postTags?: (Omit<Tag, "id"> & { id: null })[]
 ) => {
   const tagIds: string[] = [];
@@ -163,7 +163,7 @@ export const publishPost = async (postId: Post["id"]) => {
 };
 
 export const createAndPublishPost = async (
-  post: Omit<Post, "id" | "published" | "publishedAt" | "createdAt" | "updatedAt">,
+  post: Pick<Post, "authorId" | "title" | "content" | "category" | "image">,
   authorId: Post["authorId"],
   postTags?: (Omit<Tag, "id"> & { id: null })[]
 ) => {

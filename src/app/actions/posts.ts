@@ -4,15 +4,16 @@ import { createAndPublishPost, createPost, deletePost, editPost, publishPost } f
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { checkIfPostHasChanged, createUniqueTagsArray, validatePostForm } from "./helpers";
-import type { PostCategories } from "@/types/posts";
-import type { Tag } from "@prisma/client";
 import { savePost } from "@/db/posts";
+import type { Post, PostCategories } from "@/types/posts";
+import type { User } from "@/types/users";
+import type { Tag } from "@/types/tags";
 
 export async function createPostAction(prevState: unknown, formData: FormData) {
-  const authorId = formData.get("author-id") as string;
-  const title = (formData.get("post-title") as string).trimEnd();
-  const image = (formData.get("post-image") as string).trimEnd();
-  const content = (formData.get("post-content") as string).trimEnd();
+  const authorId = formData.get("author-id") as User["id"];
+  const title = (formData.get("post-title") as Post["title"]).trimEnd();
+  const image = (formData.get("post-image") as Post["image"]).trimEnd();
+  const content = (formData.get("post-content") as Post["content"]).trimEnd();
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
 
@@ -42,11 +43,11 @@ export async function createPostAction(prevState: unknown, formData: FormData) {
 }
 
 export async function editPostAction(prevState: unknown, formData: FormData) {
-  const postId = formData.get("post-id") as string;
-  const title = (formData.get("post-title") as string).trimEnd();
-  const originalTitle = formData.get("original-post-title") as string;
-  const image = (formData.get("post-image") as string).trimEnd();
-  const content = (formData.get("post-content") as string).trimEnd();
+  const postId = formData.get("post-id") as Post["id"];
+  const title = (formData.get("post-title") as Post["title"]).trimEnd();
+  const originalTitle = formData.get("original-post-title") as Post["title"];
+  const image = (formData.get("post-image") as Post["image"]).trimEnd();
+  const content = (formData.get("post-content") as Post["content"]).trimEnd();
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
   const existingTags = JSON.parse(formData.get("existing-post-tags") as string) as Tag[];
@@ -92,8 +93,8 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
 }
 
 export async function publishPostAction(formData: FormData) {
-  const authorId = formData.get("author-id") as string;
-  const postId = formData.get("post-id") as string;
+  const authorId = formData.get("author-id") as User["id"];
+  const postId = formData.get("post-id") as Post["id"];
 
   await publishPost(postId);
   revalidatePath("/");
@@ -106,10 +107,10 @@ export async function publishPostAction(formData: FormData) {
 }
 
 export async function createAndPublishPostAction(formData: FormData) {
-  const authorId = formData.get("author-id") as string;
-  const title = (formData.get("post-title") as string).trimEnd();
-  const image = (formData.get("post-image") as string).trimEnd();
-  const content = (formData.get("post-content") as string).trimEnd();
+  const authorId = formData.get("author-id") as User["id"];
+  const title = (formData.get("post-title") as Post["title"]).trimEnd();
+  const image = (formData.get("post-image") as Post["image"]).trimEnd();
+  const content = (formData.get("post-content") as Post["content"]).trimEnd();
   const category = formData.get("post-category") as PostCategories;
   const tags = formData.get("post-tags") as string;
 
@@ -142,7 +143,7 @@ export async function createAndPublishPostAction(formData: FormData) {
 }
 
 export async function deletePostAction(formData: FormData) {
-  const postId = formData.get("post-id") as string;
+  const postId = formData.get("post-id") as Post["id"];
   const existingTagsString = formData.get("existing-post-tags") as string;
   const existingTags = existingTagsString ? (JSON.parse(existingTagsString) as Tag[]) : [];
 
@@ -155,8 +156,8 @@ export async function deletePostAction(formData: FormData) {
 }
 
 export async function savePostAction(formData: FormData) {
-  const postId = formData.get("post-id") as string;
-  const userId = formData.get("user-id") as string;
+  const postId = formData.get("post-id") as Post["id"];
+  const userId = formData.get("user-id") as User["id"];
 
   await savePost(userId, postId);
   revalidatePath("/");
