@@ -263,9 +263,10 @@
   .post-card-avatar-image {
     height: 2.5em;
     width: 2.5em;
-    border-radius: 50vw;
     aspect-ratio: 1;
     border: 1ps solid var(--card-border);
+    border-radius: 50vw;
+    object-fit: cover;
   }
 
   .post-card-details-inner-wrapper {
