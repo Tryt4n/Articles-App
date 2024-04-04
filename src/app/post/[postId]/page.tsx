@@ -52,6 +52,7 @@ export default async function PostPage({
             }
             receivedLikes={post.receivedLikes.length}
             style={{ marginBlock: "1em" }}
+            isCurrentUser={session.user.id === post.authorId}
           />
         )}
 

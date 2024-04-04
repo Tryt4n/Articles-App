@@ -25,7 +25,7 @@ export default async function AuthorCard({ author }: { author: User }) {
           <h3>{author.name}</h3>
         </Link>
 
-        {session?.user && (
+        {session?.user && session.user.id !== author.id && (
           <FollowAuthorBtn
             userId={session.user.id}
             authorId={author.id}

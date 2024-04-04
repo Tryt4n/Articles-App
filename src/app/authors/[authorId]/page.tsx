@@ -42,7 +42,7 @@ export default async function AuthorPage({ params }: { params: { authorId: strin
         <a href={`mailto:${author?.email}`}>{author?.email}</a>
       </div>
 
-      {session?.user && (
+      {session?.user && session.user.id !== params.authorId && (
         <FollowAuthorBtn
           userId={session.user.id}
           authorId={author.id}
