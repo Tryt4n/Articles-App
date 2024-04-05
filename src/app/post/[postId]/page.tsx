@@ -10,11 +10,12 @@ import PostComments from "@/app/post/[postId]/components/PostComments/PostCommen
 import SavePostBtn from "@/app/components/SavePostBtn/SavePostBtn";
 import CommentForm from "./components/CommentForm/CommentForm";
 import type { Metadata } from "next/types";
+import type { Post as PostType } from "@/types/posts";
 
 export async function generateMetadata({
   params,
 }: {
-  params: { postId: string };
+  params: { postId: PostType["id"] };
 }): Promise<Metadata> {
   const post = await fetchPost({ id: params.postId });
 
@@ -25,8 +26,8 @@ export default async function PostPage({
   params,
   children,
 }: {
-  params: { postId: string };
-  children: React.ReactNode;
+  params: { postId: PostType["id"] };
+  children: never; // type `never` to fix build error
 }) {
   const post = await fetchPost({ id: params.postId });
   const session = await getServerSession(authOptions);

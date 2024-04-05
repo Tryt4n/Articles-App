@@ -7,18 +7,19 @@ import AuthorCardsList from "@/app/components/AuthorCardsList/AuthorCardsList";
 import FollowAuthorBtn from "@/app/components/FollowAuthorBtn/FollowAuthorBtn";
 import type { Metadata } from "next";
 import "./style.css";
+import type { User } from "@/types/users";
 
 export async function generateMetadata({
   params,
 }: {
-  params: { authorId: string };
+  params: { authorId: User["id"] };
 }): Promise<Metadata> {
   const author = await fetchUser({ id: params.authorId });
 
   return { title: author.name };
 }
 
-export default async function AuthorPage({ params }: { params: { authorId: string } }) {
+export default async function AuthorPage({ params }: { params: { authorId: User["id"] } }) {
   const author = await fetchUser({ id: params.authorId });
   const session = await getServerSession(authOptions);
 
