@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && prisma generate",
     "start": "next start",
     "lint": "next lint",
     "tsc": "tsc"
   },
   "dependencies": {
-    "@prisma/client": "^5.10.2",
+    "@prisma/client": "^5.12.1",
     "date-fns": "^3.3.1",
     "hastscript": "^9.0.0",
     "next": "14.1.0",
@@ -34,7 +34,7 @@
     "@types/react-syntax-highlighter": "^15.5.11",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
-    "prisma": "^5.12.0",
+    "prisma": "^5.12.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
   },
