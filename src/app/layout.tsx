@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import AuthProvider from "./context/AuthProvider";
 import Navbar from "./components/Navbar/Navbar";
 import ModalContextProvider from "./context/ModalContext";
@@ -16,16 +17,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="container">
-        <AuthProvider>
-          <ModalContextProvider>
-            <Navbar />
+    <>
+      <SpeedInsights />
 
-            {children}
-          </ModalContextProvider>
-        </AuthProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <body className="container">
+          <AuthProvider>
+            <ModalContextProvider>
+              <Navbar />
+
+              {children}
+            </ModalContextProvider>
+          </AuthProvider>
+        </body>
+      </html>
+    </>
   );
 }
