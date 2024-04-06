@@ -30,8 +30,6 @@
     gap: var(--gap);
     font-size: clamp(1em, 5vw, 1.2em);
     flex-shrink: 0;
-    max-width: var(--icon-size);
-    max-height: var(--icon-size);
 
     .profile-icon-link {
       overflow: hidden;
