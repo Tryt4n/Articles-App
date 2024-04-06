@@ -28,6 +28,8 @@ export default async function Card({
 }) {
   const session = await getServerSession(authOptions);
 
+  const LinkComponent = post.published ? "a" : "div";
+
   return (
     <li className="post-card">
       {editAccess ? (
@@ -57,7 +59,7 @@ export default async function Card({
       )}
 
       <section>
-        <Link href={`/post/${post.id}`}>
+        <LinkComponent href={post.published ? `/post/${post.id}` : undefined}>
           <div className="post-card-image-wrapper card-image-placeholder">
             <Image
               src={post.image}
@@ -129,7 +131,7 @@ export default async function Card({
               </p>
             </div>
           </div>
-        </Link>
+        </LinkComponent>
       </section>
     </li>
   );
