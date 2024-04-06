@@ -32,7 +32,7 @@ export default async function PostPage({
   const post = await fetchPost({ id: params.postId });
   const session = await getServerSession(authOptions);
 
-  if (!post || !post.id) redirect("/");
+  if (!post || !post.id || !post.published) redirect("/");
 
   return (
     <CommentsContextProvider>
@@ -43,19 +43,20 @@ export default async function PostPage({
         tags={post.tags}
         content={post.content}
       >
-        {session?.user && (
-          <PostLikes
-            userId={session.user.id}
-            postId={post.id}
-            alreadyLiked={
-              post.receivedLikes.length > 0 &&
-              post.receivedLikes.map((like) => like.userId).includes(session.user.id)
-            }
-            receivedLikes={post.receivedLikes.length}
-            style={{ marginBlock: "1em" }}
-            isCurrentUser={session.user.id === post.authorId}
-          />
-        )}
+        <PostLikes
+          userId={session?.user.id}
+          postId={post.id}
+          alreadyLiked={
+            session &&
+            post.receivedLikes.length > 0 &&
+            post.receivedLikes.map((like) => like.userId).includes(session.user.id)
+              ? true
+              : false
+          }
+          receivedLikes={post.receivedLikes.length}
+          style={{ marginBlock: "1em" }}
+          isCurrentUser={session?.user.id === post.authorId}
+        />
 
         <PostComments comments={post.comments} />
 

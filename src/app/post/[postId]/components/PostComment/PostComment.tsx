@@ -62,16 +62,18 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
         </div>
 
         <div className="post-comment-btns-wrapper">
-          {session?.user && (
-            <PostLikes
-              commentId={comment.id}
-              postId={comment.postId}
-              userId={session.user.id}
-              alreadyLiked={comment.likes.map((like) => like.userId).includes(session.user.id)}
-              receivedLikes={comment.likes.length}
-              isCurrentUser={comment.author.name === session.user.name}
-            />
-          )}
+          <PostLikes
+            commentId={comment.id}
+            postId={comment.postId}
+            userId={session?.user.id}
+            alreadyLiked={
+              session && comment.likes.map((like) => like.userId).includes(session.user.id)
+                ? true
+                : false
+            }
+            receivedLikes={comment.likes.length}
+            isCurrentUser={comment.author.name === session?.user.name}
+          />
 
           <div className="post-comment-btns-inner-wrapper">
             {session && comment.author.name !== session.user.name && comment.replyToId == null && (
