@@ -14,6 +14,7 @@ export default function SaveBtn({ alreadySaved, ...props }: SaveBtnProps) {
     <button
       type="submit"
       {...props}
+      disabled={pending}
     >
       <span className="visually-hidden">{`${alreadySaved ? "Unsav" : "Sav"}${
         pending ? "ing" : "e"

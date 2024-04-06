@@ -14,6 +14,7 @@ export default function FollowBtn({ alreadyFollowed, ...props }: FollowBtnProps)
     <button
       type="submit"
       {...props}
+      disabled={pending}
     >
       <span className="visually-hidden">{`${alreadyFollowed ? "Unfollow" : "Follow"}${
         pending ? "ing" : ""
