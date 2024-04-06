@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <SpeedInsights />
+      {process.env.NODE_ENV === "production" && <SpeedInsights />}
 
       <html lang="en">
         <body className="container">
