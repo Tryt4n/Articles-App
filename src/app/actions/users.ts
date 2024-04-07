@@ -63,9 +63,8 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
           customErrors[field].push(issue.message);
         }
       });
-
-      return customErrors;
     }
+    return customErrors;
   } else {
     // Database will generate the id
     const newUser: Omit<User, "id"> = {
