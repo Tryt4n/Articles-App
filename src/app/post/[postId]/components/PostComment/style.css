@@ -60,6 +60,13 @@
   .post-comment-time {
     width: 100%;
     text-align: end;
+
+    &:has(:nth-child(2)) {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.5lh;
+    }
   }
 }
 
