@@ -75,7 +75,7 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
       role: "user",
     };
 
-    await createNewUser(newUser as User); // Type assertion to satisfy TypeScript
+    await createNewUser(newUser); // Type assertion to satisfy TypeScript
 
     revalidatePath("/");
     revalidatePath("/profile");

@@ -70,7 +70,7 @@ export const fetchAllAuthors = NextCache(
 );
 
 export async function createNewUser(
-  user: Pick<User, "id" | "email" | "name" | "image" | "role" | "password">
+  user: Pick<User, "email" | "name" | "image" | "role" | "password">
 ) {
   return await prisma.user.create({ data: user });
 }
