@@ -31,12 +31,13 @@ export const fetchUser = NextCache(
               },
             },
           },
+          orderBy: { createdAt: "desc" },
         },
-        comments: true,
-        followers: true,
-        followings: true,
-        receivedLikes: true,
-        savedPosts: true,
+        comments: { orderBy: { updatedAt: "desc" } },
+        followers: { orderBy: { createdAt: "desc" } },
+        followings: { orderBy: { createdAt: "desc" } },
+        receivedLikes: { orderBy: { createdAt: "desc" } },
+        savedPosts: { orderBy: { post: { publishedAt: "desc" } } },
       },
     });
 
@@ -57,6 +58,7 @@ export const fetchAllAuthors = NextCache(
       where: {
         role: "moderator" || "admin",
       },
+      orderBy: { name: "asc" },
     });
 
     return authors.map((author) => ({

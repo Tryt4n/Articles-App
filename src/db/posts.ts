@@ -20,22 +20,27 @@ export const fetchPost = NextCache(
         }),
         prisma.comment.findMany({
           where: { postId: id, replyToId: null },
+          orderBy: { createdAt: "asc" },
           // Include the author of the comment and likes
           include: {
             author: { select: { name: true, image: true } },
-            likes: true,
+            likes: { orderBy: { createdAt: "desc" } },
           },
         }),
         prisma.comment.findMany({
           where: { postId: id, replyToId: { not: null } },
+          orderBy: { createdAt: "asc" },
           // Include the author of the comment and likes
           include: {
             author: { select: { name: true, image: true } },
-            likes: true,
+            likes: { orderBy: { createdAt: "desc" } },
           },
         }),
-        prisma.like.findMany({ where: { postId: id } }),
-        prisma.savedPost.findMany({ where: { postId: id } }),
+        prisma.like.findMany({ where: { postId: id }, orderBy: { createdAt: "desc" } }),
+        prisma.savedPost.findMany({
+          where: { postId: id },
+          orderBy: { post: { publishedAt: "desc" } },
+        }),
       ]);
 
     return {
@@ -97,6 +102,7 @@ export const fetchPostsBySearchParams = NextCache(
 
     const posts = await prisma.post.findMany({
       where: whereClause,
+      orderBy: { publishedAt: "desc" },
       include: {
         author: {
           select: {
@@ -104,7 +110,7 @@ export const fetchPostsBySearchParams = NextCache(
             image: true,
           },
         },
-        tags: { include: { tag: true } },
+        tags: { include: { tag: true }, orderBy: { tag: { name: "asc" } } },
       },
     });
 
