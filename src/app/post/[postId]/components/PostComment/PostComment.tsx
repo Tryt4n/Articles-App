@@ -107,19 +107,17 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
 
       <div className="post-comment-time">
         <Time
-          time={
-            JSON.stringify(comment.createdAt) === JSON.stringify(comment.updatedAt)
-              ? comment.createdAt
-              : comment.updatedAt
-          }
+          time={comment.createdAt}
           timeFormat="HH:mm, d MMM yyyy"
-        >
-          {`${
-            JSON.stringify(comment.createdAt) === JSON.stringify(comment.updatedAt)
-              ? "Created"
-              : "Edited"
-          } at: `}
-        </Time>
+        >{`Created at: `}</Time>
+
+        {JSON.stringify(comment.createdAt) !== JSON.stringify(comment.updatedAt) && (
+          <Time
+            time={comment.updatedAt}
+            timeFormat="HH:mm, d MMM yyyy"
+            className="test"
+          >{`Edited at: `}</Time>
+        )}
       </div>
 
       {children}
