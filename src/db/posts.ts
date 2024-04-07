@@ -67,14 +67,14 @@ export const fetchPostsBySearchParams = NextCache(
         case "title":
           whereClause = {
             ...whereClause,
-            title: { contains: query },
+            title: { contains: query, mode: "insensitive" },
           };
           break;
         case "author":
           whereClause = {
             ...whereClause,
             author: {
-              name: { contains: query },
+              name: { contains: query, mode: "insensitive" },
             },
           };
           break;
@@ -84,7 +84,7 @@ export const fetchPostsBySearchParams = NextCache(
             tags: {
               some: {
                 tag: {
-                  name: { contains: query },
+                  name: { contains: query, mode: "insensitive" },
                 },
               },
             },
