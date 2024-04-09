@@ -1,4 +1,5 @@
 import prisma from "./db";
+import bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
 import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
@@ -72,6 +73,9 @@ export const fetchAllAuthors = NextCache(
 export async function createNewUser(
   user: Pick<User, "email" | "name" | "image" | "role" | "password">
 ) {
+  if (user.password) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
   return await prisma.user.create({ data: user });
 }
 
@@ -110,6 +114,10 @@ export async function updateUserEmail(id: User["id"], email: User["email"]) {
 }
 
 export async function updateUserPassword(id: User["id"], password: User["password"]) {
+  if (password) {
+    password = await bcrypt.hash(password, 10);
+  }
+
   return await prisma.user.update({ where: { id }, data: { password } });
 }
 

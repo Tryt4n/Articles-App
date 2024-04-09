@@ -1,6 +1,7 @@
 import GitHubProvider, { type GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/db/db";
+import bcrypt from "bcrypt";
 import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
 import type { User, UserRole } from "@/types/users";
@@ -55,7 +56,8 @@ export const authOptions: NextAuthOptions = {
         if (
           user &&
           credentials?.username === user.email &&
-          credentials?.password === user.password
+          user.password &&
+          (await bcrypt.compare(credentials?.password, user.password))
         ) {
           return { ...user, role: user.role as UserRole };
         } else {
