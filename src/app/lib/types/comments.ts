@@ -1,5 +1,6 @@
-import type { Like, Comment as dbComment } from "@prisma/client";
+import type { Comment as dbComment } from "@prisma/client";
 import type { User } from "./users";
+import type { Like } from "./likes";
 
 export type Comment = dbComment & {
   author: {
@@ -7,5 +8,5 @@ export type Comment = dbComment & {
     image: User["image"];
   };
   replies?: Comment[];
-  likes: Like[];
+  likes?: Like[];
 };

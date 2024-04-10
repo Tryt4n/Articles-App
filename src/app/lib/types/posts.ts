@@ -1,7 +1,8 @@
 import type { filteringOptions, postCategories } from "@/app/constants/posts";
-import type { Post as DataBasePostType, User } from "@prisma/client";
-import type { Tag } from "./tags";
+import type { Post as DataBasePostType } from "@prisma/client";
+import type { User } from "./users";
 import type { Comment } from "./comments";
+import type { Tag } from "./tags";
 import type { Like } from "./likes";
 
 export type Post = DataBasePostType & {
