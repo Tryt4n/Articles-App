@@ -58,6 +58,16 @@ export const fetchPost = NextCache(
   ["post"]
 );
 
+export const fetchPostsById = NextCache(
+  ReactCache(async (ids: Post["id"][]) => {
+    return (await prisma.post.findMany({
+      where: { published: true, id: { in: ids } },
+      orderBy: { publishedAt: "desc" },
+    })) as Post[];
+  }),
+  ["savedPosts"]
+);
+
 export const fetchPostsBySearchParams = NextCache(
   ReactCache(async ({ searchParams }: SearchProps) => {
     const { query, filterBy, category } = searchParams;
