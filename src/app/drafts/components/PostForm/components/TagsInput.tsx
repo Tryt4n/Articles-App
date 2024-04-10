@@ -33,7 +33,6 @@ export default function TagsInput({ tags, error, ...props }: TagsInputProps) {
           return tag.name;
         })
         .join(" ")}${inputTags.length > 0 ? " " : ""}`} // Add space if there are tags
-      // ref={ref}
       ref={tagsRef}
       error={error}
       onChange={() => {
