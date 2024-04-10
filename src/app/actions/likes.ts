@@ -13,4 +13,5 @@ export async function likeAction(formData: FormData) {
 
   commentId ? likeComment(userId, commentId) : likePost(userId, postId);
   revalidatePath(`/post/${postId}`);
+  revalidatePath("/profile");
 }
