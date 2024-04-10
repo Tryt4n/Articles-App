@@ -51,9 +51,9 @@ export const fetchPost = NextCache(
         // Filter replies related to the comment
         replies: (postReplies as Comment[]).filter((reply) => reply.replyToId === comment.id),
       })) as Comment[],
-      receivedLikes: postReceivedLikes as Like[],
+      likes: postReceivedLikes as Like[],
       savedPosts: savedPosts,
-    };
+    } as Post;
   }),
   ["post"]
 );
@@ -114,14 +114,16 @@ export const fetchPostsBySearchParams = NextCache(
       },
     });
 
-    return posts.map((post) => ({
-      ...post,
-      author: {
-        ...post.author,
-        image: post.author.image || "/user-placeholder.svg",
-      },
-      tags: post.tags.map((postTag) => postTag.tag),
-    })) as (Post & { author: Pick<User, "name" | "image">; tags: Tag[] })[];
+    return {
+      ...posts.map((post) => ({
+        ...post,
+        author: {
+          ...post.author,
+          image: post.author.image || "/user-placeholder.svg",
+        },
+        tags: post.tags.map((postTag) => postTag.tag),
+      })),
+    } as Post[];
   }),
   ["post", "posts"]
 );
