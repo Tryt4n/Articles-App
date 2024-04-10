@@ -34,7 +34,10 @@ export const fetchUser = NextCache(
           },
           orderBy: { createdAt: "desc" },
         },
-        comments: { orderBy: { updatedAt: "desc" } },
+        comments: {
+          include: { likes: true },
+          orderBy: { updatedAt: "desc" },
+        },
         followers: { orderBy: { createdAt: "desc" } },
         followings: { orderBy: { createdAt: "desc" } },
         receivedLikes: { orderBy: { createdAt: "desc" } },
@@ -48,6 +51,7 @@ export const fetchUser = NextCache(
         ...post,
         tags: post.tags.map((postTag) => postTag.tag),
       })),
+      savedPosts: user?.savedPosts.map((savedPost) => savedPost.postId),
     } as User;
   }),
   ["user"]

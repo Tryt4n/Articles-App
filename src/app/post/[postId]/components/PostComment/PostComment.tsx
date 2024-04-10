@@ -67,11 +67,13 @@ async function Comment({ comment, children }: { comment: Comment; children?: Rea
             postId={comment.postId}
             userId={session?.user.id}
             alreadyLiked={
-              session && comment.likes.map((like) => like.userId).includes(session.user.id)
+              session &&
+              comment.likes &&
+              comment.likes.map((like) => like.userId).includes(session.user.id)
                 ? true
                 : false
             }
-            receivedLikes={comment.likes.length}
+            receivedLikes={comment.likes?.length || 0}
             isCurrentUser={comment.author.name === session?.user.name}
           />
 
