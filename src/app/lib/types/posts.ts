@@ -6,9 +6,9 @@ import type { Like } from "./likes";
 
 export type Post = DataBasePostType & {
   category: PostCategories;
-  comments: Comment[];
-  likes: Like[];
-  tags: Tag[];
+  comments?: Comment[];
+  likes?: Like[];
+  tags?: Tag[];
 };
 
 export type CardPost = Post & {
