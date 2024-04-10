@@ -40,7 +40,7 @@ export default async function PostPage({
         title={post.title}
         category={post.category}
         image={post.image}
-        tags={post.tags}
+        tags={post.tags || []}
         content={post.content}
       >
         <PostLikes
@@ -48,23 +48,24 @@ export default async function PostPage({
           postId={post.id}
           alreadyLiked={
             session &&
-            post.receivedLikes.length > 0 &&
-            post.receivedLikes.map((like) => like.userId).includes(session.user.id)
+            post.likes &&
+            post.likes.length > 0 &&
+            post.likes.map((like) => like.userId).includes(session.user.id)
               ? true
               : false
           }
-          receivedLikes={post.receivedLikes.length}
+          receivedLikes={post.likes?.length || 0}
           style={{ marginBlock: "1em" }}
           isCurrentUser={session?.user.id === post.authorId}
         />
 
-        <PostComments comments={post.comments} />
+        <PostComments comments={post.comments || []} />
 
         {session?.user && (
           <>
             <CommentForm
               status="new"
-              key={post.comments.length} // This is a hack to force the form to re-render and clear the textarea.
+              key={post.comments?.length} // This is a hack to force the form to re-render and clear the textarea.
             >
               <input
                 type="hidden"

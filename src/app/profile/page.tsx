@@ -29,13 +29,16 @@ export default async function ProfilePage() {
             {session.user.role !== "user" &&
               session.user.id === user.id &&
               user.posts &&
-              user.posts?.length > 0 &&
-              user?.posts?.some((post) => post.likes.length !== 0) && (
+              user.posts.length > 0 &&
+              user.posts.some((post) => post.likes?.length !== 0) && (
                 <p>
                   <strong>
                     Received likes for posts: &nbsp;
                     <span>
-                      {user.posts.reduce((totalLikes, post) => totalLikes + post.likes.length, 0)}
+                      {user.posts.reduce(
+                        (totalLikes, post) => totalLikes + (post.likes?.length || 0),
+                        0
+                      )}
                     </span>
                   </strong>
                 </p>

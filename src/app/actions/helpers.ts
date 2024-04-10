@@ -67,8 +67,9 @@ export async function checkIfPostHasChanged(
   if (!originalPost) return false;
 
   const tagsAreDifferent =
-    originalPost.tags.length !== checkedTags.length ||
-    originalPost.tags.some((post, index) => post.name !== checkedTags[index]);
+    originalPost.tags &&
+    (originalPost.tags.length !== checkedTags.length ||
+      originalPost.tags.some((post, index) => post.name !== checkedTags[index]));
 
   if (
     originalPost.title !== checkedPost.title ||

@@ -6,6 +6,7 @@ import { fetchPost } from "@/db/posts";
 import PostForm from "../../components/PostForm/PostForm";
 import Time from "@/app/components/Time/Time";
 import type { Metadata } from "next/types";
+import type { Post } from "@/app/lib/types/posts";
 
 export async function generateMetadata({
   params,
@@ -17,7 +18,7 @@ export async function generateMetadata({
   return { title: `Edit Post - ${post.title}` };
 }
 
-export default async function DraftPage({ params }: { params: { draftId: string } }) {
+export default async function DraftPage({ params }: { params: { draftId: Post["id"] } }) {
   const post = await fetchPost({ id: params.draftId });
   const session = await getServerSession(authOptions);
 
@@ -65,7 +66,7 @@ export default async function DraftPage({ params }: { params: { draftId: string 
         <PostForm
           key={params.draftId}
           post={post}
-          postTags={post.tags}
+          postTags={post.tags || []}
           authorId={session.user.id}
         />
       )}
