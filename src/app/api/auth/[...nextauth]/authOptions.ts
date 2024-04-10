@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
 import type { User, UserRole } from "@/app/lib/types/users";
+import { parsedEnv } from "@/env";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -38,8 +39,8 @@ export const authOptions: NextAuthOptions = {
           image: image,
         };
       },
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: parsedEnv.GITHUB_ID,
+      clientSecret: parsedEnv.GITHUB_SECRET,
     }),
 
     CredentialsProvider({
