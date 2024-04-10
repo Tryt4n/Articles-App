@@ -1,9 +1,9 @@
 import React, { type ComponentPropsWithoutRef } from "react";
 import { likeAction } from "@/app/actions/likes";
 import ActionBtn from "./Btn";
-import type { Comment } from "@/types/comments";
-import type { Post } from "@/types/posts";
-import type { User } from "@/types/users";
+import type { Comment } from "@/app/lib/types/comments";
+import type { Post } from "@/app/lib/types/posts";
+import type { User } from "@/app/lib/types/users";
 import "./style.css";
 
 type LikeCommentBtnProps = {

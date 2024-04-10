@@ -1,7 +1,7 @@
 import React, { useState, useEffect, type ComponentProps } from "react";
 import usePostForm from "@/app/drafts/hooks/usePostForm";
 import { postCategories } from "@/app/constants/posts";
-import type { Post } from "@/types/posts";
+import type { Post } from "@/app/lib/types/posts";
 
 type SelectedCategoryInputProps = { category: Post["category"] } & ComponentProps<"select">;
 

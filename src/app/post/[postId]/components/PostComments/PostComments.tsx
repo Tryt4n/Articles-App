@@ -1,6 +1,6 @@
 import React from "react";
 import PostComment from "../PostComment/PostComment";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 import "./style.css";
 
 export default async function PostComments({ comments = [] }: { comments: Comment[] }) {

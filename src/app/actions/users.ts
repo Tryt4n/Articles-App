@@ -15,8 +15,8 @@ import {
   ChangePasswordSchema,
   ChangeUsernameSchema,
   SignupSchema,
-} from "@/zod/userSchema";
-import type { User } from "@/types/users";
+} from "@/app/lib/zod/userSchema";
+import type { User } from "@/app/lib/types/users";
 import type { ErrorKeys } from "./types";
 
 export async function signupUserAction(prevState: unknown, formData: FormData) {

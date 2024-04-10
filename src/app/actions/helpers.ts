@@ -1,6 +1,6 @@
-import { PostSchema } from "@/zod/postSchema";
+import { PostSchema } from "@/app/lib/zod/postSchema";
 import { checkIsTitleUnique, fetchPost } from "@/db/posts";
-import type { Post } from "@/types/posts";
+import type { Post } from "@/app/lib/types/posts";
 
 type EdiPostState = Record<"title" | "content" | "tags" | "image", string | undefined>;
 

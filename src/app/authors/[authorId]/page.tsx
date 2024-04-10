@@ -7,7 +7,7 @@ import AuthorCardsList from "@/app/components/AuthorCardsList/AuthorCardsList";
 import FollowAuthorBtn from "@/app/components/FollowAuthorBtn/FollowAuthorBtn";
 import type { Metadata } from "next";
 import "./style.css";
-import type { User } from "@/types/users";
+import type { User } from "@/app/lib/types/users";
 
 export async function generateMetadata({
   params,

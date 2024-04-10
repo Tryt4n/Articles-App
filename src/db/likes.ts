@@ -1,7 +1,7 @@
 import prisma from "./db";
-import type { User } from "@/types/users";
-import type { Comment } from "@/types/comments";
-import type { Post } from "@/types/posts";
+import type { User } from "@/app/lib/types/users";
+import type { Comment } from "@/app/lib/types/comments";
+import type { Post } from "@/app/lib/types/posts";
 
 export async function likeComment(userId: User["id"], commentId: Comment["id"]) {
   return prisma.$transaction(async (prisma) => {

@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
-import type { Post } from "@/types/posts";
+import type { Post } from "@/app/lib/types/posts";
 
 export default function FirstWords({ content }: { content: Post["content"] }) {
   const specialChars = ["\\*\\*\\*", "\\*\\*", "\\*", "`", "``", "```", "~"]; // Special characters with regex escape

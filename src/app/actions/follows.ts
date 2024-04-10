@@ -2,7 +2,7 @@
 
 import { followAuthor } from "@/db/users";
 import { revalidatePath } from "next/cache";
-import type { User } from "@/types/users";
+import type { User } from "@/app/lib/types/users";
 
 export async function followAuthorAction(formData: FormData) {
   const userId = (formData.get("user-id") as User["id"])!;

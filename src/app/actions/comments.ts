@@ -2,9 +2,9 @@
 
 import { createComment, deleteComment, editComment } from "@/db/comments";
 import { revalidatePath } from "next/cache";
-import type { Comment } from "@/types/comments";
-import type { User } from "@/types/users";
-import type { Post } from "@/types/posts";
+import type { Comment } from "@/app/lib/types/comments";
+import type { User } from "@/app/lib/types/users";
+import type { Post } from "@/app/lib/types/posts";
 
 export async function postCommentAction(formData: FormData) {
   const comment = formData.get("new-comment") as Comment["content"];

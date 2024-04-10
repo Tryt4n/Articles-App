@@ -1,6 +1,6 @@
 import React from "react";
 import { markSearchedPhrase } from "@/app/helpers/markSearchedPhrase";
-import type { Tag } from "@/types/tags";
+import type { Tag } from "@/app/lib/types/tags";
 
 type TagsProps = {
   tags: Tag[];

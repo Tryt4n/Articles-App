@@ -6,7 +6,7 @@ import useComments from "@/app/post/hooks/useComments";
 import { editCommentAction, postCommentAction } from "@/app/actions/comments";
 import CommentTextarea from "../CommentTextarea/CommentTextarea";
 import CommentBtn from "../CommentBtn/CommentBtn";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 import type { FormStatus } from "../../types/formTypes";
 import "./style.css";
 

@@ -4,7 +4,7 @@ import prisma from "@/db/db";
 import bcrypt from "bcrypt";
 import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
-import type { User, UserRole } from "@/types/users";
+import type { User, UserRole } from "@/app/lib/types/users";
 
 export const authOptions: NextAuthOptions = {
   providers: [

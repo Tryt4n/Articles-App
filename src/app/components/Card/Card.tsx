@@ -9,7 +9,7 @@ import Tags from "./components/Tags";
 import FirstWords from "./components/FirstWords";
 import Time from "../Time/Time";
 import type { SearchProps } from "@/app/page";
-import type { CardPost } from "@/types/posts";
+import type { CardPost } from "@/app/lib/types/posts";
 import type { CardAppearance } from "./types";
 import "./style.css";
 

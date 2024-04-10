@@ -2,9 +2,9 @@
 
 import { likeComment, likePost } from "@/db/likes";
 import { revalidatePath } from "next/cache";
-import type { Comment } from "@/types/comments";
-import type { Post } from "@/types/posts";
-import type { User } from "@/types/users";
+import type { Comment } from "@/app/lib/types/comments";
+import type { Post } from "@/app/lib/types/posts";
+import type { User } from "@/app/lib/types/users";
 
 export async function likeAction(formData: FormData) {
   const commentId = formData.get("comment-id") as Comment["id"] | undefined;

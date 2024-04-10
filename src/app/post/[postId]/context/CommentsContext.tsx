@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useRef, useState } from "react";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 import type { FormStatus } from "../types/formTypes";
 
 type CommentsContextType = {

@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../Card/Card";
-import type { CardPost } from "@/types/posts";
+import type { CardPost } from "@/app/lib/types/posts";
 import "./style.css";
 
 export default function AuthorCardsList({

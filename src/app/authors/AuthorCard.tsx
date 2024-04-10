@@ -4,7 +4,7 @@ import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import Image from "next/image";
 import Link from "next/link";
 import FollowAuthorBtn from "../components/FollowAuthorBtn/FollowAuthorBtn";
-import type { User } from "@/types/users";
+import type { User } from "@/app/lib/types/users";
 
 export default async function AuthorCard({ author }: { author: User }) {
   const session = await getServerSession(authOptions);

@@ -3,8 +3,8 @@ import ReactMarkdown, { type Options as ReactMarkdownOptions } from "react-markd
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import customPlugin from "@/react-markdown/plugins";
-import { markdownComponents } from "@/react-markdown/components";
+import customPlugin from "@/app/lib/react-markdown/plugins";
+import { markdownComponents } from "@/app/lib/react-markdown/components";
 import "katex/dist/katex.min.css";
 import "./style.css";
 

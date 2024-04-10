@@ -3,7 +3,7 @@
 import React, { type ComponentPropsWithoutRef } from "react";
 import useComments from "@/app/post/hooks/useComments";
 import { startViewTransition } from "@/app/helpers/helpers";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 
 type CommentActionBtnProps = {
   status: "edit" | "reply";

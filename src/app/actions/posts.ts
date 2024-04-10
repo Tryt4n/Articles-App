@@ -5,9 +5,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { checkIfPostHasChanged, createUniqueTagsArray, validatePostForm } from "./helpers";
 import { savePost } from "@/db/posts";
-import type { Post, PostCategories } from "@/types/posts";
-import type { User } from "@/types/users";
-import type { Tag } from "@/types/tags";
+import type { Post, PostCategories } from "@/app/lib/types/posts";
+import type { User } from "@/app/lib/types/users";
+import type { Tag } from "@/app/lib/types/tags";
 
 export async function createPostAction(prevState: unknown, formData: FormData) {
   const authorId = formData.get("author-id") as User["id"];

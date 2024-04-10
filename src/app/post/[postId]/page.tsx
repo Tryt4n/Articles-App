@@ -10,7 +10,7 @@ import PostComments from "@/app/post/[postId]/components/PostComments/PostCommen
 import SavePostBtn from "@/app/components/SavePostBtn/SavePostBtn";
 import CommentForm from "./components/CommentForm/CommentForm";
 import type { Metadata } from "next/types";
-import type { Post as PostType } from "@/types/posts";
+import type { Post as PostType } from "@/app/lib/types/posts";
 
 export async function generateMetadata({
   params,

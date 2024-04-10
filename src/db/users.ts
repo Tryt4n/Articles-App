@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
 import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
-import type { User, UserRole } from "@/types/users";
+import type { User, UserRole } from "@/app/lib/types/users";
 
 export const fetchUser = NextCache(
   ReactCache(async ({ id }: { id: User["id"] }) => {

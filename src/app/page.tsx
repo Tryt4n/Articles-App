@@ -1,6 +1,6 @@
 import SearchingForm from "./components/SearchingForm/SearchingForm";
 import CardsList from "./components/CardsList/CardsList";
-import type { PostCategories, PostFilteringOptions } from "@/types/posts";
+import type { PostCategories, PostFilteringOptions } from "@/app/lib/types/posts";
 import "@/app/style.css";
 
 export type SearchProps = {

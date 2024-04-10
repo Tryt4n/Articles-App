@@ -3,11 +3,11 @@ import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
 import type { Prisma } from "@prisma/client";
 import type { SearchProps } from "@/app/page";
-import type { Post } from "@/types/posts";
-import type { User } from "@/types/users";
-import type { Tag } from "@/types/tags";
-import type { Comment } from "@/types/comments";
-import type { Like } from "@/types/likes";
+import type { Post } from "@/app/lib/types/posts";
+import type { User } from "@/app/lib/types/users";
+import type { Tag } from "@/app/lib/types/tags";
+import type { Comment } from "@/app/lib/types/comments";
+import type { Like } from "@/app/lib/types/likes";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: Post["id"] }) => {

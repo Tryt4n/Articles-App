@@ -4,8 +4,8 @@ import React, { type ComponentPropsWithoutRef } from "react";
 import useComments from "@/app/post/hooks/useComments";
 import { deleteCommentAction } from "@/app/actions/comments";
 import CommentBtn from "../CommentBtn/CommentBtn";
-import type { Post } from "@/types/posts";
-import type { Comment } from "@/types/comments";
+import type { Post } from "@/app/lib/types/posts";
+import type { Comment } from "@/app/lib/types/comments";
 
 type DeleteCommentBtnProps = {
   postId: Post["id"];

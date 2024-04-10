@@ -1,8 +1,8 @@
 import React, { type ComponentPropsWithoutRef } from "react";
 import { savePostAction } from "@/app/actions/posts";
 import SaveBtn from "./SaveBtn";
-import type { Post } from "@/types/posts";
-import type { User } from "@/types/users";
+import type { Post } from "@/app/lib/types/posts";
+import type { User } from "@/app/lib/types/users";
 import "./style.css";
 
 type SavePostBtnProps = {

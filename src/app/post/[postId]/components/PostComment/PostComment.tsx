@@ -8,7 +8,7 @@ import PostLikes from "../PostLikes/PostLikes";
 import CommentActionBtn from "../CommentActionBtn/CommentActionBtn";
 import DeleteCommentBtn from "../DeleteCommentBtn/DeleteCommentBtn";
 import CommentForm from "../CommentForm/CommentForm";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 import "./style.css";
 
 export default function PostComment({ comment }: { comment: Comment }) {

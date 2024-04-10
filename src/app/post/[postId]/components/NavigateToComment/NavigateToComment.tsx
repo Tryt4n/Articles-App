@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import type { Comment } from "@/types/comments";
+import type { Comment } from "@/app/lib/types/comments";
 
 /**
  * The `NavigateToComment` component is responsible for scrolling to a specific comment

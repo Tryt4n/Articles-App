@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import MarkdownPreview from "@/app/components/MarkdownPreview/MarkdownPreview";
-import type { Post } from "@/types/posts";
-import type { Tag } from "@/types/tags";
+import type { Post } from "@/app/lib/types/posts";
+import type { Tag } from "@/app/lib/types/tags";
 import "./style.css";
 
 export type PostProps = {

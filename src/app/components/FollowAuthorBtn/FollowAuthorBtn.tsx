@@ -1,7 +1,7 @@
 import React, { type ComponentPropsWithoutRef } from "react";
 import { followAuthorAction } from "@/app/actions/follows";
 import FollowBtn from "./FollowBtn";
-import type { User } from "@/types/users";
+import type { User } from "@/app/lib/types/users";
 import "./style.css";
 
 type FollowAuthorBtnProps = {
