@@ -18,8 +18,21 @@ import ContentFieldset from "./components/ContentFieldset";
 import SavePostBtn from "./components/SavePostBtn";
 import PublishDraftBtn from "./components/PublishDraftBtn";
 import DeletePostBtn from "./components/DeletePostBtn";
-import type { PostFormProps } from "./types";
+import type { Post } from "@/app/lib/types/posts";
+import type { Tag } from "@/app/lib/types/tags";
 import "./style.css";
+
+type PostFormProps =
+  | {
+      post: Post;
+      postTags: Tag[];
+      authorId: string;
+    }
+  | {
+      post?: undefined;
+      postTags?: undefined;
+      authorId: string;
+    };
 
 export default function PostForm({ post, postTags, authorId }: PostFormProps) {
   const [errors, mainAction] = useFormState(post ? editPostAction : createPostAction, null);
