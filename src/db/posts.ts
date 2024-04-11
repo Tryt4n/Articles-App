@@ -124,16 +124,14 @@ export const fetchPostsBySearchParams = NextCache(
       },
     });
 
-    return {
-      ...posts.map((post) => ({
-        ...post,
-        author: {
-          ...post.author,
-          image: post.author.image || "/user-placeholder.svg",
-        },
-        tags: post.tags.map((postTag) => postTag.tag),
-      })),
-    } as Post[];
+    return posts.map((post) => ({
+      ...post,
+      author: {
+        ...post.author,
+        image: post.author.image || "/user-placeholder.svg",
+      },
+      tags: post.tags.map((postTag) => postTag.tag),
+    })) as Post[];
   }),
   ["post", "posts"]
 );
