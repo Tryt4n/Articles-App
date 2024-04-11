@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function ProfileEditEmailPage() {
   const session = await getServerSession(authOptions);
-  const user = session?.user && (await fetchUser({ id: session.user.id }));
+  const user = session?.user && (await fetchUser(session.user.id));
 
   // Redirect only if the user is logged in through an external auth provider
   if (session?.user.name == null) redirect("/profile");

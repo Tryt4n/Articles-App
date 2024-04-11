@@ -6,34 +6,11 @@ import { unstable_cache as NextCache } from "next/cache";
 import type { User, UserRole } from "@/app/lib/types/users";
 
 export const fetchUser = NextCache(
-  ReactCache(async ({ id }: { id: User["id"] }) => {
+  ReactCache(async (id: User["id"]) => {
     const user = await prisma.user.findUnique({
       where: { id },
       include: {
-        posts: {
-          select: {
-            id: true,
-            author: true,
-            authorId: true,
-            category: true,
-            comments: true,
-            likes: true,
-            savedBy: true,
-            title: true,
-            content: true,
-            image: true,
-            published: true,
-            publishedAt: true,
-            createdAt: true,
-            updatedAt: true,
-            tags: {
-              select: {
-                tag: true,
-              },
-            },
-          },
-          orderBy: { createdAt: "desc" },
-        },
+        posts: { include: { tags: { select: { tag: true } } }, orderBy: { createdAt: "desc" } },
         comments: {
           include: { likes: true },
           orderBy: { updatedAt: "desc" },

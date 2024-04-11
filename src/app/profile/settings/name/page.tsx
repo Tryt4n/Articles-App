@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function ProfileEditNamePage() {
   const session = await getServerSession(authOptions);
-  const user = session?.user && (await fetchUser({ id: session.user.id }));
+  const user = session?.user && (await fetchUser(session.user.id));
 
   return (
     <>

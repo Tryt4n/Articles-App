@@ -14,13 +14,13 @@ export async function generateMetadata({
 }: {
   params: { authorId: User["id"] };
 }): Promise<Metadata> {
-  const author = await fetchUser({ id: params.authorId });
+  const author = await fetchUser(params.authorId);
 
   return { title: author.name };
 }
 
 export default async function AuthorPage({ params }: { params: { authorId: User["id"] } }) {
-  const author = await fetchUser({ id: params.authorId });
+  const author = await fetchUser(params.authorId);
   const session = await getServerSession(authOptions);
 
   const authorPublishedPosts = author.posts?.filter((post) => post.published);
