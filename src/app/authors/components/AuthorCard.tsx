@@ -1,10 +1,11 @@
 import React from "react";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import { authOptions } from "../../api/auth/[...nextauth]/authOptions";
 import Image from "next/image";
 import Link from "next/link";
-import FollowAuthorBtn from "../components/FollowAuthorBtn/FollowAuthorBtn";
+import FollowAuthorBtn from "../../components/FollowAuthorBtn/FollowAuthorBtn";
 import type { User } from "@/app/lib/types/users";
+import "./style.css";
 
 export default async function AuthorCard({ author }: { author: User }) {
   const session = await getServerSession(authOptions);

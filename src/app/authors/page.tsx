@@ -1,6 +1,6 @@
 import React from "react";
 import { fetchAllAuthors } from "@/db/users";
-import AuthorCard from "./AuthorCard";
+import AuthorCard from "./components/AuthorCard";
 import type { Metadata } from "next/types";
 import "./style.css";
 
