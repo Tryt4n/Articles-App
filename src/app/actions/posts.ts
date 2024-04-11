@@ -86,6 +86,7 @@ export async function editPostAction(prevState: unknown, formData: FormData) {
       revalidatePath("/drafts");
       revalidatePath(`/drafts/${postId}`);
       revalidatePath(`/post/${postId}`);
+      revalidatePath("/profile");
     }
 
     redirect("/drafts");
@@ -152,6 +153,7 @@ export async function deletePostAction(formData: FormData) {
   revalidatePath("/drafts");
   revalidatePath(`/post/${postId}`);
   revalidatePath("/post/published");
+  revalidatePath("/profile");
   redirect("/drafts");
 }
 
