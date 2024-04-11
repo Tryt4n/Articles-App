@@ -44,28 +44,18 @@ export const fetchPost = NextCache(
       ]);
 
     return {
-      ...(post as Post),
-      tags: postTags.map((postTag) => postTag.tag) as Tag[],
-      comments: (postComments as Comment[]).map((comment) => ({
+      ...post,
+      tags: postTags.map((postTag) => postTag.tag),
+      comments: postComments.map((comment) => ({
         ...comment,
         // Filter replies related to the comment
-        replies: (postReplies as Comment[]).filter((reply) => reply.replyToId === comment.id),
-      })) as Comment[],
-      likes: postReceivedLikes as Like[],
+        replies: postReplies.filter((reply) => reply.replyToId === comment.id),
+      })),
+      likes: postReceivedLikes,
       savedPosts: savedPosts,
     } as Post;
   }),
   ["post"]
-);
-
-export const fetchPostsById = NextCache(
-  ReactCache(async (ids: Post["id"][]) => {
-    return (await prisma.post.findMany({
-      where: { published: true, id: { in: ids } },
-      orderBy: { publishedAt: "desc" },
-    })) as Post[];
-  }),
-  ["savedPosts"]
 );
 
 export const fetchPostsBySearchParams = NextCache(
