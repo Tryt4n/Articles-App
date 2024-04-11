@@ -15,23 +15,30 @@ import "./style.css";
 
 export default async function Card({
   post,
-  priority,
+  priority = false,
   searchParams,
   appearance = "with-author-info",
   editAccess,
+  headingLevel = 3,
+  children,
 }: {
   post: CardPost;
-  priority: boolean;
+  priority?: boolean;
   searchParams?: SearchProps["searchParams"];
   appearance?: CardAppearance;
   editAccess?: boolean;
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  children?: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
 
   const LinkComponent = post.published ? "a" : "div";
+  const HeadingComponent = `h${headingLevel}` as keyof JSX.IntrinsicElements;
 
   return (
     <li className="post-card">
+      {children}
+
       {editAccess ? (
         <Link
           href={`/drafts/${post.id}`}
@@ -81,11 +88,11 @@ export default async function Card({
               }
             />
 
-            <h3 className="post-card-header">
+            <HeadingComponent className="post-card-header">
               {searchParams && searchParams.filterBy === "title" && searchParams.query !== ""
                 ? markSearchedPhrase(post.title, searchParams.query)
                 : post.title}
-            </h3>
+            </HeadingComponent>
 
             <FirstWords content={post.content} />
 
