@@ -2,12 +2,10 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import { fetchProfileInformations } from "@/db/profileInformations";
-import { format } from "date-fns/format";
-import Link from "next/link";
 import EditProfileBtn from "./components/EditProfileBtn";
 import AuthorCardsList from "../components/AuthorCardsList/AuthorCardsList";
-import Card from "../components/Card/Card";
 import AuthorCard from "../authors/components/AuthorCard";
+import ProfileActivityComments from "./components/ProfileActivityComments/ProfileActivityComments";
 import type { Metadata } from "next/types";
 
 export const metadata: Metadata = {
@@ -20,8 +18,6 @@ export default async function ProfilePage() {
     session?.user &&
     session.user.followings &&
     (await fetchProfileInformations(session.user.id, session.user.followings));
-
-  const formatDate = (date: Date) => format(date, "H:mm, dd.MM.yyyy");
 
   return (
     <>
@@ -74,50 +70,18 @@ export default async function ProfilePage() {
                 </section>
               )}
 
+            <hr />
+
             {userProfileInformations.user.comments &&
               userProfileInformations.user.comments.length > 0 && (
                 <section>
-                  <h3 className="profile-subheader">Your Comments</h3>
-                  <ul>
-                    {userProfileInformations.user.comments.map((comment) => {
-                      const formattedCommentDate = formatDate(comment.createdAt);
-                      const formattedUpdatedCommentDate = formatDate(comment.updatedAt);
+                  <h3>Your Comments:</h3>
 
-                      const isUpdated = formattedCommentDate !== formattedUpdatedCommentDate;
-                      const displayDate = isUpdated
-                        ? formattedUpdatedCommentDate
-                        : formattedCommentDate;
-                      const displayText = isUpdated ? "Updated at: " : "Created at: ";
-
-                      return (
-                        <React.Fragment key={comment.id}>
-                          <li>
-                            <p aria-label="Comment content">
-                              <strong>{comment.content}</strong>
-                            </p>
-                            {comment.likes && comment.likes.length > 0 && (
-                              <p aria-label="Received likes for the comments">
-                                Likes: <strong>{comment.likes.length}</strong>
-                              </p>
-                            )}
-                            <time dateTime={displayDate}>
-                              {displayText} {displayDate}
-                            </time>
-                            <Link
-                              href={`/post/${comment.postId}#${comment.id}`}
-                              className="btn"
-                            >
-                              Click to see
-                            </Link>
-                          </li>
-                          <hr />
-                          <br />
-                        </React.Fragment>
-                      );
-                    })}
-                  </ul>
+                  <ProfileActivityComments comments={userProfileInformations.user.comments} />
                 </section>
               )}
+
+            <hr />
 
             {(userProfileInformations.likedPosts || userProfileInformations.likedComments) && (
               <section>
@@ -128,18 +92,9 @@ export default async function ProfilePage() {
                     <section>
                       <h4>For posts:</h4>
 
-                      <ul>
-                        {userProfileInformations.likedPosts.map((post) => (
-                          <React.Fragment key={post.post.id}>
-                            <Card
-                              post={post.post}
-                              headingLevel={5}
-                            >
-                              <p>{`Liked at: ${formatDate(post.likedAt)}`}</p>
-                            </Card>
-                          </React.Fragment>
-                        ))}
-                      </ul>
+                      <AuthorCardsList
+                        posts={userProfileInformations.likedPosts.map((post) => post.post)}
+                      />
                     </section>
                   )}
 
@@ -148,32 +103,12 @@ export default async function ProfilePage() {
                     <section>
                       <h4>For comments:</h4>
 
-                      <ul>
-                        {userProfileInformations.likedComments.map(({ comment, likedAt }) => {
-                          const formattedLikedDate = formatDate(likedAt);
-
-                          return (
-                            <React.Fragment key={comment.id}>
-                              <li>
-                                <p aria-label="Comment content">
-                                  <strong>{comment.content}</strong>
-                                </p>
-                                <time
-                                  dateTime={formattedLikedDate}
-                                >{`Liked at: ${formattedLikedDate}`}</time>
-                                <Link
-                                  href={`/post/${comment.postId}#${comment.id}`}
-                                  className="btn"
-                                >
-                                  Click to see
-                                </Link>
-                              </li>
-                              <hr />
-                              <br />
-                            </React.Fragment>
-                          );
-                        })}
-                      </ul>
+                      <ProfileActivityComments
+                        comments={userProfileInformations.likedComments.map(
+                          (likedComment) => likedComment.comment
+                        )}
+                        displayedDate="likeDate"
+                      />
                     </section>
                   )}
               </section>
