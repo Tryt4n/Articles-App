@@ -34,10 +34,20 @@ export const fetchProfileInformations = NextCache(
       user: user as User,
       likedPosts: likes
         .filter((like) => like.post !== null)
-        .map((like) => ({ post: like.post as Post, likedAt: like.createdAt })),
+        .map((like) => ({
+          post: {
+            ...like.post,
+            likedAt: like.createdAt,
+          } as Post & { likedAt: Date },
+        })),
       likedComments: likes
         .filter((like) => like.comment !== null)
-        .map((like) => ({ comment: like.comment as Comment, likedAt: like.createdAt })),
+        .map((like) => ({
+          comment: {
+            ...like.comment,
+            likedAt: like.createdAt,
+          } as Comment & { likedAt: Date },
+        })),
       savedPosts: savedPosts as Post[],
       followedAuthors: follows as User[],
     };
