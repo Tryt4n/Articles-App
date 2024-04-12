@@ -306,4 +306,10 @@
     right: 1em;
     background-color: aliceblue;
   }
+
+  .post-card-liked-at {
+    padding: 0.5em;
+    font-size: 0.875em;
+    text-align: end;
+  }
 }
