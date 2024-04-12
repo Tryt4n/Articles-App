@@ -20,7 +20,6 @@ export default async function Card({
   appearance = "with-author-info",
   editAccess,
   headingLevel = 3,
-  children,
 }: {
   post: CardPost;
   priority?: boolean;
@@ -28,7 +27,6 @@ export default async function Card({
   appearance?: CardAppearance;
   editAccess?: boolean;
   headingLevel?: 2 | 3 | 4 | 5 | 6;
-  children?: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
 
@@ -37,8 +35,6 @@ export default async function Card({
 
   return (
     <li className="post-card">
-      {children}
-
       {editAccess ? (
         <Link
           href={`/drafts/${post.id}`}
@@ -138,6 +134,16 @@ export default async function Card({
               </p>
             </div>
           </div>
+
+          {post.likedAt && (
+            <aside className="post-card-liked-at">
+              Liked at:&nbsp;
+              <Time
+                time={post.likedAt}
+                timeFormat="H:mm, dd.MM.yyyy"
+              />
+            </aside>
+          )}
         </LinkComponent>
       </section>
     </li>
