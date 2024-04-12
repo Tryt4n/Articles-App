@@ -62,6 +62,10 @@
         scale: 1.25;
       }
     }
+
+    @media (width < 500px) {
+      top: -1.5em;
+    }
   }
 
   .post-content-form-text-options-container {
@@ -133,8 +137,9 @@
 .post-form-btns-container {
   margin-block: 1em;
   display: flex;
-  gap: 1em;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 1em;
 }
 
 .post-content-form-textarea {
