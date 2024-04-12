@@ -15,6 +15,7 @@ export type Post = DataBasePostType & {
 export type CardPost = Post & {
   author?: Pick<User, "name" | "image">;
   tags?: Tag[];
+  likedAt?: Date;
 };
 
 export type PostCategories = (typeof postCategories)[number];
