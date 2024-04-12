@@ -3,11 +3,6 @@
     text-align: center;
   }
 
-  section {
-    display: grid;
-    place-content: center;
-  }
-
   .profile-content-wrapper {
     min-width: 300px;
     margin-bottom: 1em;
@@ -29,6 +24,20 @@
 
   .profile-go-back-btn {
     margin-inline: 3em;
+  }
+
+  & article:not(:first-of-type) {
+    margin-top: 3em;
+  }
+  & article:not(:last-of-type) {
+    margin-bottom: 3em;
+  }
+
+  & hr {
+    margin-block: 2em;
+    border-bottom: none;
+    border-color: var(--card-border);
+    width: 80%;
   }
 }
 
