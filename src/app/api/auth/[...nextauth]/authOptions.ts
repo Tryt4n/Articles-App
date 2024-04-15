@@ -2,10 +2,10 @@ import GitHubProvider, { type GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/db/db";
 import bcrypt from "bcrypt";
+import { parsedEnv } from "@/env";
 import { createNewUser, isNewUserEmailUnique } from "@/db/users";
 import type { NextAuthOptions } from "next-auth";
 import type { User, UserRole } from "@/app/lib/types/users";
-import { parsedEnv } from "@/env";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -95,5 +95,12 @@ export const authOptions: NextAuthOptions = {
       };
       return session;
     },
+  },
+
+  theme: { colorScheme: "light" },
+
+  session: {
+    maxAge: 30 * 60, // 30 minutes
+    updateAge: 15 * 60, // 15 minutes
   },
 };
