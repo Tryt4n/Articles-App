@@ -58,9 +58,7 @@ export async function createNewUser(
   if (user.password) {
     user.password = await bcrypt.hash(user.password, 10);
   }
-  await prisma.user.create({ data: user }).then(() => {
-    redirect("/api/auth/signin");
-  });
+  await prisma.user.create({ data: user });
 }
 
 export async function isNewUserEmailUnique(email: User["email"]) {
