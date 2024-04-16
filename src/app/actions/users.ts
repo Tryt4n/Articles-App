@@ -75,13 +75,13 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
       role: "user",
     };
 
-    await createNewUser(newUser); // Type assertion to satisfy TypeScript
-
-    revalidatePath("/");
-    revalidatePath("/profile");
-    revalidatePath("/profile/settings");
-    revalidatePath("/signup");
-    redirect("/api/auth/signin");
+    await createNewUser(newUser).then(() => {
+      revalidatePath("/");
+      revalidatePath("/profile");
+      revalidatePath("/profile/settings");
+      revalidatePath("/signup");
+      redirect("/api/auth/signin");
+    });
   }
 }
 
