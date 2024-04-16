@@ -23,7 +23,7 @@ export default function SignupForm() {
       <FormInput
         label="Enter email:"
         id="signup-email"
-        type="text"
+        type="email"
         autoFocus
         autoComplete="off"
         placeholder="Enter your email"
