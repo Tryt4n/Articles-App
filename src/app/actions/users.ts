@@ -18,6 +18,7 @@ import {
 } from "@/app/lib/zod/userSchema";
 import type { User } from "@/app/lib/types/users";
 import type { ErrorKeys } from "./types";
+import { wait } from "../helpers/helpers";
 
 export async function signupUserAction(prevState: unknown, formData: FormData) {
   const email = formData.get("signup-email") as string;
@@ -75,11 +76,13 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
       role: "user",
     };
 
-    await createNewUser(newUser).then(() => {
-      revalidatePath("/");
-      revalidatePath("/profile");
-      revalidatePath("/profile/settings");
-      revalidatePath("/signup");
+    await createNewUser(newUser);
+
+    revalidatePath("/");
+    revalidatePath("/profile");
+    revalidatePath("/profile/settings");
+    revalidatePath("/signup");
+    await wait(1000).then(() => {
       redirect("/api/auth/signin");
     });
   }
