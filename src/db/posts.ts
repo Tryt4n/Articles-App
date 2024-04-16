@@ -6,8 +6,6 @@ import type { SearchProps } from "@/app/page";
 import type { Post } from "@/app/lib/types/posts";
 import type { User } from "@/app/lib/types/users";
 import type { Tag } from "@/app/lib/types/tags";
-import type { Comment } from "@/app/lib/types/comments";
-import type { Like } from "@/app/lib/types/likes";
 
 export const fetchPost = NextCache(
   ReactCache(async ({ id }: { id: Post["id"] }) => {
