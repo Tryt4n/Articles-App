@@ -82,9 +82,6 @@ export async function signupUserAction(prevState: unknown, formData: FormData) {
     revalidatePath("/profile");
     revalidatePath("/profile/settings");
     revalidatePath("/signup");
-    await wait(1000).then(() => {
-      redirect("/api/auth/signin");
-    });
   }
 }
 

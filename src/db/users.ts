@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
 import { cache as ReactCache } from "react";
 import { unstable_cache as NextCache } from "next/cache";
+import { redirect } from "next/navigation";
 import type { User, UserRole } from "@/app/lib/types/users";
 
 export const fetchUser = NextCache(
@@ -57,7 +58,9 @@ export async function createNewUser(
   if (user.password) {
     user.password = await bcrypt.hash(user.password, 10);
   }
-  return await prisma.user.create({ data: user });
+  await prisma.user.create({ data: user }).then(() => {
+    redirect("/api/auth/signin");
+  });
 }
 
 export async function isNewUserEmailUnique(email: User["email"]) {
