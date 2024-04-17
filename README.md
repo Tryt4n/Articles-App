@@ -12,7 +12,6 @@ If the user has the _admin_ role, they additionally have permissions to the admi
 
 ---
 
-<<<<<<< HEAD
 **Examples account**:
 
 - _email_: **admin@admin.com** _password_: **admin**
@@ -22,8 +21,6 @@ If the user has the _admin_ role, they additionally have permissions to the admi
 
 ---
 
-=======
->>>>>>> bf0c6cffbbf43d856c95a34f5d8577fe7261bc1c
 ## Used technologies:
 
 - `prisma` to working and interacting with the database
