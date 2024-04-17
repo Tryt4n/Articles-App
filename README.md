@@ -19,8 +19,6 @@ If the user has the _admin_ role, they additionally have permissions to the admi
 - _email_: **alice@example.com** _password_: **password123**
 - _email_: **john@example.com** _password_: **password123**
 
----
-
 ## Used technologies:
 
 - `prisma` to working and interacting with the database
